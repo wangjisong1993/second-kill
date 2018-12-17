@@ -1,4 +1,4 @@
-package com.eric.cache.anno;
+package com.eric.seckill.cache.anno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

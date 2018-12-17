@@ -1,4 +1,4 @@
-package com.eric.common.bean;
+package com.eric.seckill.common.bean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

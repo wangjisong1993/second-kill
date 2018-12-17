@@ -1,7 +1,7 @@
 package com.eric.seckill.service.base;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.eric.common.bean.SkOrderInfo;
+import com.eric.seckill.common.bean.SkOrderInfo;
 import com.eric.seckill.dao.seckill.SkOrderInfoMapper;
 import org.springframework.stereotype.Service;
 

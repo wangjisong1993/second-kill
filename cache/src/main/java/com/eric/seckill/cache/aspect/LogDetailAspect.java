@@ -1,8 +1,8 @@
-package com.eric.cache.aspect;
+package com.eric.seckill.cache.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.eric.cache.anno.LogDetail;
+import com.eric.seckill.cache.anno.LogDetail;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -1,7 +1,7 @@
 package com.eric.seckill.dao.seckill;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.eric.common.bean.SkGoodsSeckill;
+import com.eric.seckill.common.bean.SkGoodsSeckill;
 
 /**
  * @author wang.js
