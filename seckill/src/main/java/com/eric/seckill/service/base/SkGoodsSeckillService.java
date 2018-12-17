@@ -2,7 +2,7 @@ package com.eric.seckill.service.base;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.seckill.common.bean.SkGoodsSeckill;
-import com.eric.seckill.dao.seckill.SkGoodsSeckillMapper;
+import com.eric.seckill.dao.SkGoodsSeckillMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  * @copyright yougou.com
  */
 @Service
-public class SkGoodsSeckillServiceImpl extends ServiceImpl<SkGoodsSeckillMapper, SkGoodsSeckill> {
+public class SkGoodsSeckillService extends ServiceImpl<SkGoodsSeckillMapper, SkGoodsSeckill> {
 }

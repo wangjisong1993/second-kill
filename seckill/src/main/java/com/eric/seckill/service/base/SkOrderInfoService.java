@@ -1,8 +1,5 @@
 package com.eric.seckill.service.base;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.eric.seckill.common.bean.SkOrderInfo;
-import com.eric.seckill.dao.seckill.SkOrderInfoMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +8,5 @@ import org.springframework.stereotype.Service;
  * @copyright yougou.com
  */
 @Service
-public class SkOrderInfoService extends ServiceImpl<SkOrderInfoMapper, SkOrderInfo> {
+public class SkOrderInfoService /*extends ServiceImpl<SkOrderInfoMapper, SkOrderInfo>*/ {
 }

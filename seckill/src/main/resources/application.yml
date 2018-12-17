@@ -2,33 +2,19 @@ server:
   port: 12401
   context-path: /secKill
 
-mysql:
-  server:
-    seckill:
-      driverClassName: com.mysql.jdbc.Driver
-      url: "jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8"
-      username: root
-      password: 123456
-      maxActive: 50
-      maxWait: 5000
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: SELECT 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      maxOpenPreparedStatements: 20
-      removeAbandoned: true
-      removeAbandonedTimeout: 1800
-      logAbandoned: true
 spring:
   redis:
     host: 127.0.0.1
     port: 6379
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8"
+    username: root
+    password: 123456
 
 mybatis-plus:
   datasource: dataSource
-  mapper-locations: classpath:/mapper/seckill/*xml
+  mapper-locations: classpath:mapper/*xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.eric.seckill.common.bean
   global-config:

@@ -2,7 +2,7 @@ package com.eric.seckill;
 
 import com.alibaba.fastjson.JSON;
 import com.eric.seckill.common.bean.SkUser;
-import com.eric.seckill.service.base.SkUserService;
+import com.eric.seckill.service.SkUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
