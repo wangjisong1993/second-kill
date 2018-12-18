@@ -1,9 +1,16 @@
 package com.eric.seckill.cache.anno;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * @author Eric on 2018/12/16.
  * @version 1.0
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface MethodCache {
 
 	/**
@@ -32,6 +39,6 @@ public @interface MethodCache {
 	 *
 	 * @return
 	 */
-	int limitQuerySeconds() default 3;
+	int limitQuerySeconds() default 5;
 
 }

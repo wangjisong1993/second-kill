@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wang.js
@@ -25,11 +27,36 @@ public class CacheMethodTest {
 	@Autowired
 	private SkUserService skUserService;
 
+	@Autowired
+	private ExecutorService executorService;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(CacheMethodTest.class);
 
 	@Test
 	public void t1() {
 		List<SkUser> skUserList = skUserService.listAll();
 		LOGGER.info("返回结果为:" + JSON.toJSONString(skUserList));
+	}
+
+	@Test
+	public void t2() {
+		String id = "1";
+		String nickname = "大傻逼";
+		for (int i = 0; i < 10; i++) {
+			int finalI = i;
+			executorService.submit(new Runnable() {
+				@Override
+				public void run() {
+					LOGGER.info(finalI + "个线程开始执行");
+					SkUser user = skUserService.findOne(id);
+					LOGGER.info("返回结果为:" + JSON.toJSONString(user));
+				}
+			});
+		}
+		try {
+			TimeUnit.SECONDS.sleep(40);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
