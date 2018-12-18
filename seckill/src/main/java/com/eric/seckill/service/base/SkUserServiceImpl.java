@@ -10,9 +10,7 @@ import com.eric.seckill.service.SkUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author wang.js
@@ -34,19 +32,13 @@ public class SkUserServiceImpl extends ServiceImpl<SkUserMapper, SkUser> impleme
 		return baseMapper.selectList(null);
 	}
 
-	@MethodCache(limitQuerySeconds = 10)
 	@LogDetail
 	@Override
 	public SkUser findOne(String id) {
-		try {
-			TimeUnit.SECONDS.sleep(2);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return getById(id);
 	}
 
-	@MethodCache(limitQuerySeconds = 10)
+	@MethodCache
 	@LogDetail
 	@Override
 	public List<SkUser> listByCondition(String id, String nickname) {
@@ -56,11 +48,6 @@ public class SkUserServiceImpl extends ServiceImpl<SkUserMapper, SkUser> impleme
 		}
 		if (StringUtils.isNotBlank(nickname)) {
 			wrapper.eq("nickname", nickname);
-		}
-		try {
-			TimeUnit.SECONDS.sleep(2);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 		return list(wrapper);
 	}

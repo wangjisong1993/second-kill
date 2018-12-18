@@ -44,13 +44,10 @@ public class CacheMethodTest {
 		String nickname = "大傻逼";
 		for (int i = 0; i < 10; i++) {
 			int finalI = i;
-			executorService.submit(new Runnable() {
-				@Override
-				public void run() {
-					LOGGER.info(finalI + "个线程开始执行");
-					SkUser user = skUserService.findOne(id);
-					LOGGER.info("返回结果为:" + JSON.toJSONString(user));
-				}
+			executorService.submit(() -> {
+				LOGGER.info(finalI + "个线程开始执行");
+				SkUser user = skUserService.findOne(id);
+				LOGGER.info(finalI + "个线程返回结果为:" + JSON.toJSONString(user));
 			});
 		}
 		try {

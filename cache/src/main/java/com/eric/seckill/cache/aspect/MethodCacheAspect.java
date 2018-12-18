@@ -2,6 +2,7 @@ package com.eric.seckill.cache.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.eric.seckill.cache.anno.MethodCache;
+import com.eric.seckill.cache.utils.DisLockUtil;
 import com.eric.seckill.common.utils.HashAlgorithms;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -36,13 +37,16 @@ public class MethodCacheAspect {
 	@Resource
 	private Jedis jedis;
 
+	@Resource
+	private DisLockUtil disLockUtil;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodCacheAspect.class);
 
 	/**
 	 * 切面具体的操作
 	 *
 	 * @param proceedingJoinPoint 切面
-	 * @param methodCache 注解
+	 * @param methodCache         注解
 	 * @return Object
 	 * @throws Throwable 抛出异常
 	 */
@@ -69,8 +73,7 @@ public class MethodCacheAspect {
 		Object proceed = null;
 		if (methodCache.limitQuery()) {
 			String mutexKey = "mutex_" + key;
-			if (jedis.setnx(mutexKey, "1") == 1) {
-				jedis.expire(mutexKey, methodCache.limitQuerySeconds());
+			if (disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds())) {
 				// 允许查询
 				proceed = proceedingJoinPoint.proceed();
 				if (proceed != null) {

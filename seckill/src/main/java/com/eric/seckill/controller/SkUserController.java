@@ -1,10 +1,12 @@
 package com.eric.seckill.controller;
 
 import com.eric.seckill.common.bean.SkUser;
+import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.PageResult;
 import com.eric.seckill.service.SkUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ import java.util.List;
 @RequestMapping("/skUser")
 public class SkUserController {
 
-	@Autowired
+	@Resource
 	private SkUserService skUserService;
 
 	/**
@@ -25,8 +27,9 @@ public class SkUserController {
 	 * @return
 	 */
 	@GetMapping("/listAll")
-	public List<SkUser> listAll() {
-		return skUserService.listAll();
+	public PageResult<SkUser> listAll() {
+		List<SkUser> skUsers = skUserService.listAll();
+		return PageResult.success(skUsers);
 	}
 
 	/**
@@ -36,8 +39,8 @@ public class SkUserController {
 	 * @return
 	 */
 	@GetMapping("/findOne/{id}")
-	public SkUser findOne(@PathVariable("id") String id) {
-		return skUserService.findOne(id);
+	public CommonResult findOne(@PathVariable("id") String id) {
+		return CommonResult.success(skUserService.findOne(id));
 	}
 
 	/**
@@ -48,8 +51,8 @@ public class SkUserController {
 	 * @return
 	 */
 	@GetMapping("/listByCondition")
-	public List<SkUser> listByCondition(@RequestParam(value = "id", required = false) String id,
-	                                    @RequestParam(value = "nickname", required = false) String nickname) {
-		return skUserService.listByCondition(id, nickname);
+	public PageResult<SkUser> listByCondition(@RequestParam(value = "id", required = false) String id,
+	                                          @RequestParam(value = "nickname", required = false) String nickname) {
+		return PageResult.success(skUserService.listByCondition(id, nickname));
 	}
 }
