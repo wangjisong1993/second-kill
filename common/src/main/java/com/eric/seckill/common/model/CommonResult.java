@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 通用结果返回
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
  * @date 2018/12/18
  * @copyright yougou.com
  */
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor

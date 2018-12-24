@@ -4,6 +4,7 @@ import com.eric.seckill.common.constant.ErrorCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * @author wang.js
@@ -13,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-abstract class BaseResult {
+@Accessors(chain = true)
+public abstract class BaseResult {
 
 	/**
 	 * 接口请求状态：true-请求成功，false-请求失败

@@ -1,6 +1,8 @@
 package com.eric.seckill.cache.utils;
 
 import org.hibernate.validator.HibernateValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -16,6 +18,8 @@ public class ValidationUtils {
 
 	private ValidationUtils() {
 	}
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ValidationUtils.class);
 
 	/**
 	 * 使用hibernate的注解来进行验证
@@ -36,6 +40,7 @@ public class ValidationUtils {
 		Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
 		// 抛出检验异常
 		if (constraintViolations.size() > 0) {
+			LOGGER.info("参数校验失败: {}", constraintViolations.iterator().next().getMessage());
 			throw new RuntimeException(String.format("参数校验失败:%s", constraintViolations.iterator().next().getMessage()));
 		}
 	}
