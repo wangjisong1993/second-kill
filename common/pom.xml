@@ -18,6 +18,14 @@
             <scope>provided</scope>
             <version>1.18.2</version>
         </dependency>
+
+        <!-- 参数校验依赖开始 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
+        <!-- 参数校验依赖开始 -->
     </dependencies>
 
     <build>

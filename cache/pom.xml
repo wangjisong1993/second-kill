@@ -58,6 +58,14 @@
             <version>2.9.0</version>
         </dependency>
 
+        <!-- 参数校验依赖开始 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
+        <!-- 参数校验依赖开始 -->
+
         <!-- 日志包...开始 -->
         <!-- log配置：Log4j2 + Slf4j -->
         <dependency>

@@ -1,7 +1,9 @@
 package com.eric.seckill;
 
 import com.alibaba.fastjson.JSON;
+import com.eric.seckill.common.bean.SkGoods;
 import com.eric.seckill.common.bean.SkUser;
+import com.eric.seckill.service.SkGoodsService;
 import com.eric.seckill.service.SkUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +32,9 @@ public class CacheMethodTest {
 
 	@Autowired
 	private ExecutorService executorService;
+
+	@Resource
+	private SkGoodsService skGoodsService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CacheMethodTest.class);
 
@@ -55,5 +61,12 @@ public class CacheMethodTest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void t3() {
+		SkGoods skGoods = new SkGoods().setId(1L);
+		skGoodsService.findSkGoodsById(skGoods);
+		LOGGER.info("返回结果为:" + skGoods);
 	}
 }
