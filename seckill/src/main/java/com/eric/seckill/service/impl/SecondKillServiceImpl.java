@@ -5,6 +5,7 @@ import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.service.SecondKillService;
 import com.eric.seckill.service.SkGoodsSeckillService;
+import com.eric.seckill.service.SkOrderService;
 import com.eric.seckill.service.SkProjectService;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class SecondKillServiceImpl implements SecondKillService {
 	@Resource
 	private SkGoodsSeckillService skGoodsSeckillService;
 
+	@Resource
+	private SkOrderService skOrderService;
+
 	@Override
 	public CommonResult<Void> join(String projectId, String userId) {
 		// 判断秒杀项目是否已经开始
@@ -33,6 +37,8 @@ public class SecondKillServiceImpl implements SecondKillService {
 		// 根据项目id获取秒杀的库存
 		long seckill = skGoodsSeckillService.seckill(skProject.getGoodsId());
 		if (seckill >= 0) {
+			// 存入订单系统
+			skOrderService.saveOrder(userId, skProject.getGoodsId());
 			return CommonResult.success(null);
 		}
 		return CommonResult.fail("秒杀已结束", ErrorCodeEnum.SECKILL_END.getErrCode());

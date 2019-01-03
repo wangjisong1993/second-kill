@@ -10,6 +10,14 @@ import com.eric.seckill.common.bean.SkGoods;
 public interface SkGoodsService {
 
 	/**
+	 * 根据商品id获取商品信息
+	 *
+	 * @param id
+	 * @return
+	 */
+	SkGoods findById(String id);
+
+	/**
 	 * 根据id查找具体的货品
 	 * @param skGoods
 	 * @return

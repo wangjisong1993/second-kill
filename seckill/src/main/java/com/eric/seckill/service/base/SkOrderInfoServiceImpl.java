@@ -13,4 +13,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SkOrderInfoServiceImpl extends ServiceImpl<SkOrderInfoMapper, SkOrderInfo> implements SkOrderInfoService {
+
+	@Override
+	public int insert(SkOrderInfo info) {
+		return baseMapper.insert(info);
+	}
 }

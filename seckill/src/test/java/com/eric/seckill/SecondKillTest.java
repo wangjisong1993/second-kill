@@ -34,14 +34,9 @@ public class SecondKillTest {
 	@Test
 	public void t1() {
 		String projectId = "1";
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			int finalI = i;
-			EXECUTOR_SERVICE.submit(new Runnable() {
-				@Override
-				public void run() {
-					t2(projectId, finalI);
-				}
-			});
+			EXECUTOR_SERVICE.submit(() -> t2(projectId, finalI));
 		}
 		try {
 			TimeUnit.SECONDS.sleep(10);
