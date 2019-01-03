@@ -6,4 +6,19 @@ package com.eric.seckill.service;
  * @copyright yougou.com
  */
 public interface SkGoodsSeckillService {
+
+	/**
+	 * 根据商品id获取库存数量
+	 *
+	 * @param goodsId
+	 * @return
+	 */
+	Integer findSkGoodsStockById(String goodsId);
+
+	/**
+	 * 减库存
+	 * @param goodsId
+	 * @return
+	 */
+	long seckill(String goodsId);
 }

@@ -7,3 +7,12 @@ CREATE TABLE `id_segment` (
   `last_update_time` datetime DEFAULT NULL COMMENT '上次更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='号段存储表';
 
+CREATE TABLE `sk_project` (
+  `project_id` varchar(40) DEFAULT NULL,
+  `project_name` varchar(40) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
