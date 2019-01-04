@@ -36,6 +36,11 @@ public class SecondKillServiceImpl implements SecondKillService {
 	public CommonResult<Void> join(String projectId, String userId) {
 		// 判断秒杀项目是否已经开始
 		SkProject skProject = skProjectService.checkCanJoin(projectId);
+		// 判断用户是否已经秒杀到
+		boolean result = skOrderService.countByUserIdAndGoodsId(userId, skProject.getGoodsId());
+		if (result) {
+			return CommonResult.fail("已经秒杀到该商品", ErrorCodeEnum.GOODS_KILLED.getErrCode());
+		}
 		// 根据项目id获取秒杀的库存
 		long seckill = skGoodsSeckillService.seckill(skProject.getGoodsId());
 		if (seckill >= 0) {

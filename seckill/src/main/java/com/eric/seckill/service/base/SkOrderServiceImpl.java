@@ -1,5 +1,6 @@
 package com.eric.seckill.service.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.seckill.common.bean.SkOrder;
 import com.eric.seckill.dao.SkOrderMapper;
@@ -31,6 +32,13 @@ public class SkOrderServiceImpl extends ServiceImpl<SkOrderMapper, SkOrder> impl
 		// 减库存
 		skGoodsSeckillService.reduceStock(goodsId);
 		return baseMapper.insert(t) > 0;
+	}
+
+	@Override
+	public boolean countByUserIdAndGoodsId(String userId, String goodsId) {
+		QueryWrapper<SkOrder> wrapper = new QueryWrapper<>();
+		wrapper.eq("user_id", userId).eq("goods_id", goodsId);
+		return baseMapper.selectCount(wrapper) > 0;
 	}
 
 }

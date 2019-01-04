@@ -15,4 +15,13 @@ public interface SkOrderService {
 	 * @return boolean
 	 */
 	boolean saveOrder(String userId, String goodsId);
+
+	/**
+	 * 判断是否已经秒杀到
+	 *
+	 * @param userId 用户id
+	 * @param goodsId 商品id
+	 * @return boolean
+	 */
+	boolean countByUserIdAndGoodsId(String userId, String goodsId);
 }

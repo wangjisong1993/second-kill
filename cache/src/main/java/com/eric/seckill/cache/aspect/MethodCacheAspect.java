@@ -74,6 +74,7 @@ public class MethodCacheAspect {
 		if (methodCache.limitQuery()) {
 			String mutexKey = "mutex_" + key;
 			if (disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds())) {
+				jedis.expire(mutexKey, methodCache.limitQuerySeconds());
 				// 允许查询
 				proceed = proceedingJoinPoint.proceed();
 				if (proceed != null) {
@@ -83,6 +84,9 @@ public class MethodCacheAspect {
 				jedis.del(mutexKey);
 			} else {
 				LOGGER.warn("设置防击穿锁失败, key为:" + mutexKey);
+				if (jedis.ttl(mutexKey) < 0) {
+					jedis.expire(mutexKey, methodCache.limitQuerySeconds());
+				}
 			}
 		}
 		return proceed;
