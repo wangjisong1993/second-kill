@@ -6,6 +6,7 @@ import com.eric.seckill.dao.SkOrderMapper;
 import com.eric.seckill.service.SkOrderService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.UUID;
 
 /**
@@ -16,6 +17,9 @@ import java.util.UUID;
 @Service
 public class SkOrderServiceImpl extends ServiceImpl<SkOrderMapper, SkOrder> implements SkOrderService {
 
+	@Resource
+	private SkGoodsSeckillServiceImpl skGoodsSeckillService;
+
 	@Override
 	public boolean saveOrder(String userId, String goodsId) {
 		SkOrder t = new SkOrder();
@@ -24,6 +28,8 @@ public class SkOrderServiceImpl extends ServiceImpl<SkOrderMapper, SkOrder> impl
 		String orderId = UUID.randomUUID().toString();
 		t.setOrderId(orderId);
 		t.setUserId(userId);
+		// 减库存
+		skGoodsSeckillService.reduceStock(goodsId);
 		return baseMapper.insert(t) > 0;
 	}
 

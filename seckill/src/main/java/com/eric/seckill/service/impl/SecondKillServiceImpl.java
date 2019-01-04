@@ -1,5 +1,6 @@
 package com.eric.seckill.service.impl;
 
+import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.bean.SkProject;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
@@ -31,6 +32,7 @@ public class SecondKillServiceImpl implements SecondKillService {
 	private SkOrderService skOrderService;
 
 	@Override
+	@LogDetail
 	public CommonResult<Void> join(String projectId, String userId) {
 		// 判断秒杀项目是否已经开始
 		SkProject skProject = skProjectService.checkCanJoin(projectId);

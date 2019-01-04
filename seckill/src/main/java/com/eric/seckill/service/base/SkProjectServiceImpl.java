@@ -33,6 +33,7 @@ public class SkProjectServiceImpl extends ServiceImpl<SkProjectMapper, SkProject
 	}
 
 	@Override
+	@MethodCache
 	public SkProject checkCanJoin(String projectId) {
 		if (StringUtils.isBlank(projectId)) {
 			throw new CustomException("项目id为空");

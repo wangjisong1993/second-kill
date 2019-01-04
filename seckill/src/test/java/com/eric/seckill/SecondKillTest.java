@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.ExecutorService;
@@ -29,17 +30,19 @@ public class SecondKillTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SecondKillTest.class);
 
-	private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+	@Autowired
+	private ThreadPoolTaskExecutor executorService;
 
 	@Test
 	public void t1() {
+		ExecutorService executorService = Executors.newCachedThreadPool();
 		String projectId = "1";
 		for (int i = 0; i < 1000; i++) {
 			int finalI = i;
-			EXECUTOR_SERVICE.submit(() -> t2(projectId, finalI));
+			executorService.submit(() -> t2(projectId, finalI));
 		}
 		try {
-			TimeUnit.SECONDS.sleep(10);
+			TimeUnit.SECONDS.sleep(50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -51,6 +54,7 @@ public class SecondKillTest {
 	}
 
 	private void t2(String projectId, int i) {
+		LOGGER.info("线程号:" + i + "开始执行");
 		CommonResult<Void> result = secondKillService.join(projectId, String.valueOf(i));
 		LOGGER.info("返回结果为:" + JSON.toJSONString(result));
 	}

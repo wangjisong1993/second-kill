@@ -2,6 +2,7 @@ package com.eric.seckill.dao;
 
 import com.eric.seckill.common.bean.SkGoodsSeckill;
 import com.eric.seckill.utils.SuperMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author wang.js
@@ -9,4 +10,11 @@ import com.eric.seckill.utils.SuperMapper;
  * @copyright yougou.com
  */
 public interface SkGoodsSeckillMapper extends SuperMapper<SkGoodsSeckill> {
+	/**
+	 * 减库存
+	 *
+	 * @param goodsId
+	 * @return
+	 */
+	int reduceStock(@Param("goodsId") String goodsId);
 }

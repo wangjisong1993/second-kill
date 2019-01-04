@@ -21,4 +21,12 @@ public interface SkGoodsSeckillService {
 	 * @return
 	 */
 	long seckill(String goodsId);
+
+	/**
+	 * 减库存操作
+	 *
+	 * @param goodsId
+	 * @return
+	 */
+	boolean reduceStock(String goodsId);
 }

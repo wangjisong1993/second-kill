@@ -50,6 +50,6 @@
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
         </root>
-        <logger name="com.eric.seckill" level="debug"></logger>
+        <logger name="com.eric.seckill" level="info"></logger>
     </loggers>
 </configuration>

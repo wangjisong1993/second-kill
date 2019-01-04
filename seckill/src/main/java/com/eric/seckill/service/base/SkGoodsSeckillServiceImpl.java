@@ -36,8 +36,12 @@ public class SkGoodsSeckillServiceImpl extends ServiceImpl<SkGoodsSeckillMapper,
 	@Override
 	public long seckill(String goodsId) {
 		Long stock = jedis.decr(SecondKillCacheName.SECOND_PROJECT_PREFIX + goodsId);
-		LOGGER.info("当前库存数量为:{}", stock);
 		return stock;
+	}
+
+	@Override
+	public boolean reduceStock(String goodsId) {
+		return baseMapper.reduceStock(goodsId) > 0;
 	}
 
 	@MethodCache
