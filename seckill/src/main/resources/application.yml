@@ -1,6 +1,17 @@
 server:
   port: 12401
   context-path: /secKill
+  undertow:
+    io-threads: 16
+    worker-threads: 256
+    buffer-size: 1024
+    buffers-per-region: 1024
+    direct-buffers: true
+    accesslog:
+      dir: my-undertow
+      enabled: true
+      pattern: '%t %a "%r" %s (%D ms)'
+
 
 spring:
   redis:
@@ -11,6 +22,18 @@ spring:
     url: "jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8"
     username: root
     password: 123456
+    maxActive: 50
+    maxWait: 5000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    maxOpenPreparedStatements: 20
+    removeAbandoned: true
+    removeAbandonedTimeout: 1800
+    logAbandoned: true
 
 mybatis-plus:
   datasource: dataSource

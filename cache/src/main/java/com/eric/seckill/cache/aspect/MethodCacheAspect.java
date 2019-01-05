@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ import java.util.List;
 public class MethodCacheAspect {
 
 	@Resource
-	private Jedis jedis;
+	private JedisPool jedisPool;
 
 	@Resource
 	private DisLockUtil disLockUtil;
@@ -64,10 +65,15 @@ public class MethodCacheAspect {
 		if (StringUtils.isBlank(key)) {
 			key = getSignature(method) + HashAlgorithms.mixHash(JSON.toJSONString(list));
 		}
+		Jedis jedis = jedisPool.getResource();
 		String cacheResult = jedis.get(key);
 		if (StringUtils.isNotBlank(cacheResult)) {
 			LOGGER.info("key:" + key + "获取到缓存");
-			return JSON.parseObject(cacheResult, method.getReturnType());
+			Object o = JSON.parseObject(cacheResult, method.getReturnType());
+			if (o != null) {
+				jedis.close();
+				return o;
+			}
 		}
 		// 缓存中不存在, 需要执行方法查询
 		Object proceed = null;
@@ -89,6 +95,7 @@ public class MethodCacheAspect {
 				}
 			}
 		}
+		jedis.close();
 		return proceed;
 	}
 

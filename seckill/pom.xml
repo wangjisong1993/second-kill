@@ -106,6 +106,12 @@
             <version>1.2.32</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
         <!-- 日志包...开始 -->
         <!-- log配置：Log4j2 + Slf4j -->
         <dependency>

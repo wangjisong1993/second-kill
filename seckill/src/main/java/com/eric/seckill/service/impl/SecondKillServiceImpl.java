@@ -3,11 +3,14 @@ package com.eric.seckill.service.impl;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.bean.SkProject;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
+import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.service.SecondKillService;
 import com.eric.seckill.service.SkGoodsSeckillService;
 import com.eric.seckill.service.SkOrderService;
 import com.eric.seckill.service.SkProjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,11 +34,16 @@ public class SecondKillServiceImpl implements SecondKillService {
 	@Resource
 	private SkOrderService skOrderService;
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SecondKillServiceImpl.class);
+
 	@Override
 	@LogDetail
 	public CommonResult<Void> join(String projectId, String userId) {
 		// 判断秒杀项目是否已经开始
 		SkProject skProject = skProjectService.checkCanJoin(projectId);
+		if (skProject == null) {
+			throw new CustomException("获取秒杀项目失败, 请稍后再试");
+		}
 		// 判断用户是否已经秒杀到
 		boolean result = skOrderService.countByUserIdAndGoodsId(userId, skProject.getGoodsId());
 		if (result) {
@@ -45,6 +53,7 @@ public class SecondKillServiceImpl implements SecondKillService {
 		long seckill = skGoodsSeckillService.seckill(skProject.getGoodsId());
 		if (seckill >= 0) {
 			// 存入订单系统
+			LOGGER.info("用户{}秒杀到商品:{}", userId, skProject.getGoodsId());
 			skOrderService.saveOrder(userId, skProject.getGoodsId());
 			return CommonResult.success(null);
 		}

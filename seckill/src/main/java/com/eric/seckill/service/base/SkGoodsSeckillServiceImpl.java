@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
 
@@ -23,7 +24,7 @@ import javax.annotation.Resource;
 public class SkGoodsSeckillServiceImpl extends ServiceImpl<SkGoodsSeckillMapper, SkGoodsSeckill> implements SkGoodsSeckillService {
 
 	@Resource
-	private Jedis jedis;
+	private JedisPool jedisPool;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SkGoodsSeckillServiceImpl.class);
 
@@ -35,7 +36,9 @@ public class SkGoodsSeckillServiceImpl extends ServiceImpl<SkGoodsSeckillMapper,
 
 	@Override
 	public long seckill(String goodsId) {
+		Jedis jedis = jedisPool.getResource();
 		Long stock = jedis.decr(SecondKillCacheName.SECOND_PROJECT_PREFIX + goodsId);
+		jedis.close();
 		return stock;
 	}
 

@@ -1,11 +1,10 @@
 package com.eric.seckill.controller;
 
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.service.InitService;
 import com.eric.seckill.service.SecondKillService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.google.common.util.concurrent.RateLimiter;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -23,6 +22,11 @@ public class SecondKillController {
 	@Resource
 	private SecondKillService secondKillService;
 
+	@Resource
+	private InitService initService;
+
+	private static RateLimiter rateLimiter = RateLimiter.create(20);
+
 	/**
 	 * 参加一个秒杀项目
 	 * @param projectId 秒杀项目id
@@ -31,6 +35,18 @@ public class SecondKillController {
 	@RequestMapping("/join/{projectId}")
 	public CommonResult<Void> join(@PathVariable(name = "projectId") String projectId,
 	                               @RequestParam("userId") String userId) {
+		rateLimiter.tryAcquire();
 		return secondKillService.join(projectId, userId);
+	}
+
+	/**
+	 * 初始化库存
+	 *
+	 * @return CommonResult<Void>
+	 */
+	@GetMapping("/initStock")
+	public CommonResult<Void> initStock() {
+		initService.initStock();
+		return CommonResult.success(null);
 	}
 }

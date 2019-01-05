@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.Collections;
 
@@ -18,7 +19,7 @@ import java.util.Collections;
 public class DisLockUtil {
 
 	@Autowired
-	private Jedis jedis;
+	private JedisPool jedisPool;
 
 	private static final int DEFAULT_EXPIRE_TIME = 5;
 
@@ -73,16 +74,20 @@ public class DisLockUtil {
 	 * @return
 	 */
 	public final boolean unlock(String key) {
+		Jedis jedis = jedisPool.getResource();
 		String expireTimeCache = jedis.get(key);
 		// 判断锁是否过期了
 		if (StringUtils.isBlank(expireTimeCache)) {
+			jedis.close();
 			return true;
 		}
 		if (System.currentTimeMillis() - Long.parseLong(expireTimeCache) > 0) {
 			// 直接删除
 			jedis.del(key);
+			jedis.close();
 			return true;
 		}
+		jedis.close();
 		return false;
 	}
 
@@ -104,15 +109,18 @@ public class DisLockUtil {
 		if (result) {
 			return true;
 		}
+		Jedis jedis = jedisPool.getResource();
 		String expireTimeCache = jedis.get(key);
 		// 判断锁是否过期了
 		if (StringUtils.isNotBlank(expireTimeCache) && System.currentTimeMillis() - Long.parseLong(expireTimeCache) > 0) {
 			String oldExpireTime = jedis.getSet(key, String.valueOf(expireTime));
 			if (StringUtils.isNotBlank(oldExpireTime) && oldExpireTime.equals(String.valueOf(expireTime))) {
 				jedis.expire(key, expireSecond);
+				jedis.close();
 				return true;
 			}
 		}
+		jedis.close();
 		return false;
 	}
 
@@ -125,14 +133,17 @@ public class DisLockUtil {
 	 * @return
 	 */
 	private final boolean setNx(String key, int expireSecond, long expireTime) {
+		Jedis jedis = jedisPool.getResource();
 		if (jedis.setnx(key, String.valueOf(expireTime)) == 1) {
 			if (jedis.ttl(key) < 0) {
 				jedis.expire(key, expireSecond);
 			}
 			// 说明加锁成功
+			jedis.close();
 			return true;
 		}
 		// 说明加锁失败
+		jedis.close();
 		return false;
 	}
 

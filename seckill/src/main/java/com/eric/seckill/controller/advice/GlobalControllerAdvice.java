@@ -23,6 +23,7 @@ public class GlobalControllerAdvice {
 	 */
 	@ExceptionHandler(Exception.class)
 	public BaseResult errorHandler(Exception ex) {
+		ex.printStackTrace();
 		return new CommonResult().setCode("500").setMessage(ex.getMessage()).setSuccess(false);
 	}
 
@@ -34,6 +35,7 @@ public class GlobalControllerAdvice {
 	 */
 	@ExceptionHandler(CustomException.class)
 	public BaseResult customExceptionHandler(CustomException customException) {
+		customException.printStackTrace();
 		return new CommonResult().setCode("500").setMessage(customException.getMessage()).setSuccess(false);
 	}
 
