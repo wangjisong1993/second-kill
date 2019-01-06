@@ -13,6 +13,7 @@
         <module>cache</module>
         <module>common</module>
         <module>seckill</module>
+        <module>lottery</module>
     </modules>
 
     <parent>

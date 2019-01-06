@@ -3,6 +3,7 @@ package com.eric.seckill.cache.aspect;
 import com.alibaba.fastjson.JSON;
 import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.utils.DisLockUtil;
+import com.eric.seckill.cache.utils.KryoUtil;
 import com.eric.seckill.common.utils.HashAlgorithms;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -66,13 +67,13 @@ public class MethodCacheAspect {
 			key = getSignature(method) + HashAlgorithms.mixHash(JSON.toJSONString(list));
 		}
 		Jedis jedis = jedisPool.getResource();
-		String cacheResult = jedis.get(key);
-		if (StringUtils.isNotBlank(cacheResult)) {
-			LOGGER.info("key:" + key + "获取到缓存");
-			Object o = JSON.parseObject(cacheResult, method.getReturnType());
-			if (o != null) {
+		byte[] resultBytes = jedis.get(key.getBytes());
+		if (resultBytes != null) {
+			LOGGER.info("key:{}获取到缓存", key);
+			Object deserialize = KryoUtil.readFromByteArray(resultBytes);
+			if (deserialize != null) {
 				jedis.close();
-				return o;
+				return deserialize;
 			}
 		}
 		// 缓存中不存在, 需要执行方法查询
@@ -84,7 +85,7 @@ public class MethodCacheAspect {
 				// 允许查询
 				proceed = proceedingJoinPoint.proceed();
 				if (proceed != null) {
-					jedis.setnx(key, JSON.toJSONString(proceed));
+					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
 					jedis.expire(key, methodCache.expireSeconds());
 				}
 				jedis.del(mutexKey);

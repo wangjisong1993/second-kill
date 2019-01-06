@@ -41,7 +41,7 @@ public class CacheMethodTest {
 	@Test
 	public void t1() {
 		List<SkUser> skUserList = skUserService.listAll();
-		LOGGER.info("返回结果为:" + JSON.toJSONString(skUserList));
+		LOGGER.info("返回结果为:{}", JSON.toJSONString(skUserList));
 	}
 
 	@Test
@@ -51,9 +51,9 @@ public class CacheMethodTest {
 		for (int i = 0; i < 10; i++) {
 			int finalI = i;
 			executorService.submit(() -> {
-				LOGGER.info(finalI + "个线程开始执行");
+				LOGGER.info("{}个线程开始执行", finalI);
 				SkUser user = skUserService.findOne(id);
-				LOGGER.info(finalI + "个线程返回结果为:" + JSON.toJSONString(user));
+				LOGGER.info("{}个线程返回结果为:{}", finalI, JSON.toJSONString(user));
 			});
 		}
 		try {
@@ -67,6 +67,6 @@ public class CacheMethodTest {
 	public void t3() {
 		SkGoods skGoods = new SkGoods().setId(1L);
 		skGoodsService.findSkGoodsById(skGoods);
-		LOGGER.info("返回结果为:" + skGoods);
+		LOGGER.info("返回结果为:{}", skGoods);
 	}
 }
