@@ -17,7 +17,7 @@ public class MybatisPlusConfig {
     /**
      * 分页插件
      *
-     * @return
+     * @return PaginationInterceptor
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
@@ -27,9 +27,9 @@ public class MybatisPlusConfig {
     /**
      * 性能分析插件
      *
-     * @return
+     * @return PerformanceInterceptor
      */
-//    @Bean
+    @Bean
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         performanceInterceptor.setFormat(true);
@@ -39,7 +39,7 @@ public class MybatisPlusConfig {
     /**
      * 乐观锁插件
      *
-     * @return
+     * @return OptimisticLockerInterceptor
      */
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {

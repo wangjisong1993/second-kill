@@ -23,7 +23,7 @@ public class SkUserServiceImpl extends ServiceImpl<SkUserMapper, SkUser> impleme
 	/**
 	 * 获取所有的用户信息
 	 *
-	 * @return
+	 * @return List<SkUser>
 	 */
 	@MethodCache
 	@LogDetail

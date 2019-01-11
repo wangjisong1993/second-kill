@@ -9,6 +9,7 @@ import com.eric.seckill.dao.SkProjectMapper;
 import com.eric.seckill.service.SkProjectService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class SkProjectServiceImpl extends ServiceImpl<SkProjectMapper, SkProject
 		QueryWrapper<SkProject> wrapper = new QueryWrapper<>();
 		wrapper.eq("project_id", id).eq("is_active", "1");
 		List<SkProject> skProjects = baseMapper.selectList(wrapper);
-		if (skProjects == null || skProjects.size() == 0 || skProjects.size() > 1) {
+		if (CollectionUtils.isEmpty(skProjects) || skProjects.size() > 1) {
 			throw new CustomException("秒杀项目配置不正确");
 		}
 		return skProjects.get(0);

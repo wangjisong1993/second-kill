@@ -4,8 +4,8 @@ package com.eric.seckill.common.utils;
  * hash算法
  *
  * @author user
- * @date 2018/7/16 10:25
  * @version 1.0.0
+ * @date 2018/7/16 10:25
  * @copyright wonhigh.cn
  */
 public class HashAlgorithms {
@@ -20,7 +20,7 @@ public class HashAlgorithms {
 
 	/**
 	 * 加法hash
-	 * 
+	 *
 	 * @param key   字符串
 	 * @param prime 一个质数
 	 * @return hash结果
@@ -38,7 +38,7 @@ public class HashAlgorithms {
 
 	/**
 	 * 旋转hash
-	 * 
+	 *
 	 * @param key   输入字符串
 	 * @param prime 质数
 	 * @return hash值
@@ -54,7 +54,7 @@ public class HashAlgorithms {
 
 	/**
 	 * 一次一个hash
-	 * 
+	 *
 	 * @param key 输入字符串
 	 * @return 输出hash值
 	 */
@@ -76,7 +76,7 @@ public class HashAlgorithms {
 
 	/**
 	 * Bernstein's hash
-	 * 
+	 *
 	 * @param key 输入字节数组
 	 * @return 结果hash
 	 */
@@ -146,7 +146,7 @@ public class HashAlgorithms {
 
 	/**
 	 * 32位的FNV算法
-	 * 
+	 *
 	 * @param data 数组
 	 * @return int值
 	 */
@@ -160,7 +160,7 @@ public class HashAlgorithms {
 
 	/**
 	 * 改进的32位FNV算法1
-	 * 
+	 *
 	 * @param data 数组
 	 * @return int值
 	 */
@@ -180,7 +180,7 @@ public class HashAlgorithms {
 
 	/**
 	 * 改进的32位FNV算法1
-	 * 
+	 *
 	 * @param data 字符串
 	 * @return int值
 	 */
@@ -215,7 +215,7 @@ public class HashAlgorithms {
 
 	/**
 	 * RS算法hash
-	 * 
+	 *
 	 * @param str 字符串
 	 */
 	public static int rsHash(String str) {

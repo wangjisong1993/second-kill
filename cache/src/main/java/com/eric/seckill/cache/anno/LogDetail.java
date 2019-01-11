@@ -17,7 +17,7 @@ public @interface LogDetail {
 
     /**
      * 限制时间, 默认是1000毫秒
-     * @return
+     * @return long
      */
     long limitTime() default 1000;
 }

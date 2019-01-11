@@ -13,7 +13,7 @@ public interface LotteryItemMapper extends BaseMapper<LotteryItem> {
 
 	/**
 	 * 列出所有的抽奖活动id
-	 * @return
+	 * @return List
 	 */
 	List<String> listAllProjectId();
 }

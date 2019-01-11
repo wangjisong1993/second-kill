@@ -13,24 +13,24 @@ public interface SkUserService {
 	/**
 	 * 列出所有的user
 	 *
-	 * @return
+	 * @return List<SkUser>
 	 */
 	List<SkUser> listAll();
 
 	/**
 	 * 根据id查询user
 	 *
-	 * @param id
-	 * @return
+	 * @param id 用户id
+	 * @return SkUser
 	 */
 	SkUser findOne(String id);
 
 	/**
 	 * 条件筛选
 	 *
-	 * @param id
-	 * @param nickname
-	 * @return
+	 * @param id 用户id
+	 * @param nickname 用户昵称
+	 * @return List<SkUser>
 	 */
 	List<SkUser> listByCondition(String id, String nickname);
 }

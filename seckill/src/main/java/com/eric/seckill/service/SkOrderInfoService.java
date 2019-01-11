@@ -12,8 +12,8 @@ public interface SkOrderInfoService {
 	/**
 	 * 插入订单详情
 	 *
-	 * @param info
-	 * @return
+	 * @param info 订单详情
+	 * @return int
 	 */
 	int insert(SkOrderInfo info);
 }

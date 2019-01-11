@@ -26,11 +26,11 @@ public class CommonResult<T> extends BaseResult {
 	/**
 	 * 查询成功返回数据
 	 *
-	 * @param data
-	 * @param <T>
-	 * @return
+	 * @param data 要返回的数据
+	 * @param <T> 返回的数据类型
+	 * @return CommonResult
 	 */
-	public static <T> CommonResult success(T data) {
+	public static <T> CommonResult<T> success(T data) {
 		CommonResult<T> result = new CommonResult<>();
 		result.setData(data);
 		return result;
@@ -39,12 +39,12 @@ public class CommonResult<T> extends BaseResult {
 	/**
 	 * 查询失败
 	 *
-	 * @param message
-	 * @param code
-	 * @param <T>
-	 * @return
+	 * @param message 错误信息
+	 * @param code 错误码
+	 * @param <T> 泛型
+	 * @return CommonResult
 	 */
-	public static <T> CommonResult fail(String message, String code) {
+	public static <T> CommonResult<T> fail(String message, String code) {
 		CommonResult<T> result = new CommonResult<>();
 		result.setMessage(message);
 		result.setCode(code);

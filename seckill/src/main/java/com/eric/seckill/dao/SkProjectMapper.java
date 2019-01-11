@@ -15,7 +15,7 @@ public interface SkProjectMapper extends SuperMapper<SkProject> {
 	/**
 	 * 列出所有的商品id
 	 *
-	 * @return
+	 * @return List<String>
 	 */
 	List<String> listAllGoodsId();
 }

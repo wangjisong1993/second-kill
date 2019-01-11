@@ -155,7 +155,7 @@ public class SnowflakeIdWorker {
 	 *
 	 * @return 当前时间(毫秒)
 	 */
-	protected long timeGen() {
+	private long timeGen() {
 		return System.currentTimeMillis();
 	}
 }

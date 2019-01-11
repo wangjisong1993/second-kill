@@ -1,16 +1,12 @@
 package com.eric.seckill.cache.aspect;
 
-import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.cache.utils.ValidationUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 /**
  * 参数校验的切面
@@ -27,10 +23,10 @@ public class ParamCheckAspect {
 	/**
 	 * 参数校验的切面
 	 *
-	 * @param proceedingJoinPoint
-	 * @param paramCheck
-	 * @return
-	 * @throws Throwable
+	 * @param proceedingJoinPoint 切面
+	 * @param paramCheck 校验参数的注解
+	 * @return Object
+	 * @throws Throwable 异常
 	 */
 	@Around("@annotation(paramCheck)")
 	public Object execute(ProceedingJoinPoint proceedingJoinPoint, ParamCheck paramCheck) throws Throwable {

@@ -56,10 +56,10 @@ public class PageResult<T> extends BaseResult {
 	/**
 	 * 查询失败的情况
 	 *
-	 * @param message
-	 * @param code
-	 * @param <T>
-	 * @return
+	 * @param message 错误信息
+	 * @param code 错误码
+	 * @param <T> 泛型
+	 * @return PageResult
 	 */
 	public static <T> PageResult<T> fail(String message, String code) {
 		PageResult<T> result = new PageResult<>();

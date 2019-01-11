@@ -16,7 +16,7 @@ public interface SecondKillService {
 	 *
 	 * @param projectId 秒杀项目id
 	 * @param userId 用户id
-	 * @return
+	 * @return CommonResult<Void>
 	 */
 	CommonResult<Void> join(String projectId, String userId);
 }

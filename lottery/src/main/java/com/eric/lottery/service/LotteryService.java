@@ -11,9 +11,9 @@ public interface LotteryService {
 	/**
 	 * 抽奖
 	 *
-	 * @param projectId
-	 * @param userId
-	 * @return
+	 * @param projectId 参与的抽奖项目id
+	 * @param userId 参与的用户id
+	 * @return CommonResult
 	 */
 	CommonResult<Void> join(String projectId, String userId);
 }

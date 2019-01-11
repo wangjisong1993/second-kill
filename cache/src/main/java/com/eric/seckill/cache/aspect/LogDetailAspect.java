@@ -1,7 +1,6 @@
 package com.eric.seckill.cache.aspect;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.JSON;
 import com.eric.seckill.cache.anno.LogDetail;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,46 +25,38 @@ import java.lang.reflect.Method;
 @Component
 public class LogDetailAspect {
 
-    public static final String DATE_FORMAT = "yyyy:MM:dd HH:mm:ss";
+	private static final Logger LOGGER = LoggerFactory.getLogger(LogDetailAspect.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LogDetailAspect.class);
+	@Around(value = "@annotation(logDetail)")
+	public Object execute(ProceedingJoinPoint proceedingJoinPoint, LogDetail logDetail) throws Throwable {
+		Method method = getMethod(proceedingJoinPoint);
+		Class<?> targetClass = method.getDeclaringClass();
+		StringBuilder classAndMethod = new StringBuilder();
+		classAndMethod.append(targetClass.getSimpleName()).append("#").append(method.getName());
+		//拼凑目标类名和参数名
+		String params = JSON.toJSONString(proceedingJoinPoint.getArgs());
+		long startTime = System.currentTimeMillis();
+		Object proceed = proceedingJoinPoint.proceed();
+		long timeCost = System.currentTimeMillis() - startTime;
+		if (timeCost > logDetail.limitTime()) {
+			LOGGER.error("方法{}处理耗时:{}", method.getName(), timeCost);
+		}
 
-    @Around("@annotation(logDetail)")
-    public Object execute(ProceedingJoinPoint proceedingJoinPoint, LogDetail logDetail) throws Throwable {
-        Method method = getMethod(proceedingJoinPoint);
-        Class<?> targetClass = method.getDeclaringClass();
-        StringBuffer classAndMethod = new StringBuffer();
+		LOGGER.info("开始调用--> {} 参数:{}", classAndMethod, params);
+		String result = JSON.toJSONString(proceed);
+		LOGGER.info("调用结束<-- {} 返回值:{}", classAndMethod, result);
+		return proceed;
+	}
 
-        long startTime = System.currentTimeMillis();
-        Object proceed = proceedingJoinPoint.proceed();
-        long timeCost = System.currentTimeMillis() - startTime;
-        if (timeCost > logDetail.limitTime()) {
-            LOGGER.error(method.getName() + "处理耗时:" + timeCost);
-        }
-        //拼凑目标类名和参数名
-        String target = targetClass.getName() + "#" + method.getName();
-        String params = JSONObject.toJSONStringWithDateFormat(proceedingJoinPoint.getArgs(), DATE_FORMAT, SerializerFeature.WriteMapNullValue);
-
-        LOGGER.info("{} 开始调用--> {} 参数:{}", classAndMethod.toString(), target, params);
-
-        LOGGER.info("{} 调用结束<-- {} 返回值:{}", classAndMethod.toString(), target, JSONObject.toJSONStringWithDateFormat(proceed, DATE_FORMAT, SerializerFeature.WriteMapNullValue));
-        return proceed;
-    }
-
-    /**
-     * 获取被拦截的方法对象
-     *
-     * @param joinPoint
-     * @return
-     * @throws Exception
-     */
-    protected Method getMethod(JoinPoint joinPoint) throws Exception {
-
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-
-        Method method = methodSignature.getMethod();
-
-        return method;
-    }
+	/**
+	 * 获取被拦截的方法对象
+	 *
+	 * @param joinPoint 切面
+	 * @return Method
+	 */
+	private Method getMethod(JoinPoint joinPoint) {
+		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+		return methodSignature.getMethod();
+	}
 
 }

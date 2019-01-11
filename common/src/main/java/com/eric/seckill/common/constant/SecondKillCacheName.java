@@ -8,6 +8,10 @@ package com.eric.seckill.common.constant;
  */
 public class SecondKillCacheName {
 
+	private SecondKillCacheName() {
+
+	}
+
 	/**
 	 * 秒杀系统各个项目记录剩余库存
 	 */

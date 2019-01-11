@@ -13,8 +13,8 @@ public interface SkGoodsSeckillMapper extends SuperMapper<SkGoodsSeckill> {
 	/**
 	 * 减库存
 	 *
-	 * @param goodsId
-	 * @return
+	 * @param goodsId 商品id
+	 * @return int
 	 */
 	int reduceStock(@Param("goodsId") String goodsId);
 }

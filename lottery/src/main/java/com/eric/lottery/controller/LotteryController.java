@@ -31,9 +31,9 @@ public class LotteryController {
 	/**
 	 * 参与某个抽奖活动
 	 *
-	 * @param projectId
-	 * @param userId
-	 * @return
+	 * @param projectId 参与抽奖的项目id
+	 * @param userId 用户id
+	 * @return CommonResult
 	 */
 	@RequestMapping("/join/{projectId}")
 	public CommonResult<Void> join(@PathVariable("projectId") String projectId,
@@ -44,8 +44,8 @@ public class LotteryController {
 	/**
 	 * 初始化库存
 	 *
-	 * @param projectId
-	 * @return
+	 * @param projectId 参与抽奖的项目id
+	 * @return CommonResult<Void>
 	 */
 	@RequestMapping("/init/{projectId}")
 	public CommonResult<Void> init(@PathVariable("projectId") String projectId) {
@@ -56,7 +56,7 @@ public class LotteryController {
 	/**
 	 * 列出当前的库存
 	 *
-	 * @return
+	 * @return CommonResult
 	 */
 	@RequestMapping("/listStock/{projectId}")
 	public CommonResult<List<LotteryItem>> listStock(@PathVariable("projectId") String projectId) {

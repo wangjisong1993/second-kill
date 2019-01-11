@@ -90,7 +90,7 @@ public class MethodCacheAspect {
 				}
 				jedis.del(mutexKey);
 			} else {
-				LOGGER.warn("设置防击穿锁失败, key为:" + mutexKey);
+				LOGGER.warn("设置防击穿锁失败, key为:{}", mutexKey);
 				if (jedis.ttl(mutexKey) < 0) {
 					jedis.expire(mutexKey, methodCache.limitQuerySeconds());
 				}
@@ -103,8 +103,9 @@ public class MethodCacheAspect {
 	/**
 	 * 解析请求参数
 	 *
-	 * @param proceedingJoinPoint
-	 * @param size
+	 * @param proceedingJoinPoint 切面
+	 * @param size 参数个数
+	 * @return List<Object>
 	 */
 	private List<Object> parseRequestParam(ProceedingJoinPoint proceedingJoinPoint, int size) {
 		Object[] args = proceedingJoinPoint.getArgs();
@@ -126,8 +127,8 @@ public class MethodCacheAspect {
 	/**
 	 * 生成方法签名
 	 *
-	 * @param method
-	 * @return
+	 * @param method 方法
+	 * @return String
 	 */
 	private String getSignature(Method method) {
 		StringBuilder sb = new StringBuilder();

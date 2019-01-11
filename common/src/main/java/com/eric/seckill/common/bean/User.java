@@ -2,7 +2,6 @@ package com.eric.seckill.common.bean;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -14,7 +13,6 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-@ToString
 public class User {
 
 	/**

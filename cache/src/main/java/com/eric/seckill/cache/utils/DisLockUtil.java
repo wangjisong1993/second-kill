@@ -1,11 +1,11 @@
 package com.eric.seckill.cache.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Collections;
 @Component
 public class DisLockUtil {
 
-	@Autowired
+	@Resource
 	private JedisPool jedisPool;
 
 	private static final int DEFAULT_EXPIRE_TIME = 5;

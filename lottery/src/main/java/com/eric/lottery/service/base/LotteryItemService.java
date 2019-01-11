@@ -44,7 +44,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	/**
 	 * 初始化单个项目的库存和中奖概率
 	 *
-	 * @param projectId
+	 * @param projectId 抽奖的项目id
 	 */
 	private void initStockAndRegion(String projectId) {
 		findLotteryRegionByProjectId(projectId);
@@ -54,7 +54,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	/**
 	 * 初始化库存
 	 *
-	 * @param projectId
+	 * @param projectId 抽奖的项目id
 	 */
 	public void initStock(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
@@ -71,7 +71,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	/**
 	 * 根据项目id获取抽奖的区间范围数值
 	 *
-	 * @param projectId
+	 * @param projectId 抽奖的项目id
 	 */
 	@MethodCache
 	public List<LotteryRegion> findLotteryRegionByProjectId(String projectId) {
@@ -80,7 +80,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 		int currentIndex = 0;
 		for (LotteryItem lotteryItem : lotteryItems) {
 			int startIndex = currentIndex + 1;
-			int endIndex = new BigDecimal(lotteryItem.getLotteryRate()).multiply(new BigDecimal(LotteryConstant.BASE_NUMBER)).intValue() + currentIndex;
+			int endIndex = BigDecimal.valueOf(lotteryItem.getLotteryRate()).multiply(BigDecimal.valueOf(LotteryConstant.BASE_NUMBER)).intValue() + currentIndex;
 			lotteryRegions.add(new LotteryRegion().setStartIndex(startIndex).setLotteryItemId(lotteryItem.getId())
 					.setEndIndex(endIndex).setProjectId(projectId).setLotteryName(lotteryItem.getLotteryName()));
 			currentIndex = endIndex;
@@ -94,8 +94,8 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	/**
 	 * 根据抽奖id获取所有奖项设置
 	 *
-	 * @param projectId
-	 * @return
+	 * @param projectId 抽奖的项目id
+	 * @return List<LotteryItem>
 	 */
 	@MethodCache
 	private List<LotteryItem> listLotteryItems(String projectId) {
@@ -104,18 +104,18 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 
 	/**
 	 * 获取所有的抽奖活动id
-	 * @return
+	 * @return List<String>
 	 */
 	@MethodCache
-	public List<String> listAllProjectId() {
+	private List<String> listAllProjectId() {
 		return baseMapper.listAllProjectId();
 	}
 
 	/**
 	 * 列出库存
 	 *
-	 * @param projectId
-	 * @return
+	 * @param projectId 抽奖的项目id
+	 * @return CommonResult
 	 */
 	public CommonResult<List<LotteryItem>> listStock(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);

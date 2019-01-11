@@ -7,8 +7,6 @@ import com.eric.seckill.common.constant.SecondKillCacheName;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.dao.SkGoodsSeckillMapper;
 import com.eric.seckill.service.SkGoodsSeckillService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -26,12 +24,9 @@ public class SkGoodsSeckillServiceImpl extends ServiceImpl<SkGoodsSeckillMapper,
 	@Resource
 	private JedisPool jedisPool;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(SkGoodsSeckillServiceImpl.class);
-
 	@Override
 	public Integer findSkGoodsStockById(String goodsId) {
-		Integer stock = getGoodsStock(goodsId);
-		return stock;
+		return getGoodsStock(goodsId);
 	}
 
 	@Override

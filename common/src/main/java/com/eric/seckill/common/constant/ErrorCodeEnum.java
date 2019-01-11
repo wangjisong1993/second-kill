@@ -1,5 +1,7 @@
 package com.eric.seckill.common.constant;
 
+import lombok.Data;
+
 /**
  * @author wang.js
  * @date 2018/12/18
@@ -10,7 +12,7 @@ public enum ErrorCodeEnum {
 	SUCCESS("查询成功", "200"),
 	SERVER_ERROR("服务器异常", "500"),
 	SECKILL_END("秒杀活动已结束", "250"),
-	GOODS_KILLED("秒杀到", "502"),
+	GOODS_KILLED("秒杀成功", "502"),
 	SERVER_TIMEOUT("调用超时", "501");
 
 	/**

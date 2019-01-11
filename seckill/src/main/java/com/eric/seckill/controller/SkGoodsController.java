@@ -24,8 +24,8 @@ public class SkGoodsController {
 	/**
 	 * 根据id查询用户信息
 	 *
-	 * @param skGoods
-	 * @return
+	 * @param skGoods 货品信息
+	 * @return CommonResult<SkGoods>
 	 */
 	@PostMapping("/findSkGoodsById")
 	public CommonResult<SkGoods> findSkGoodsById(@RequestBody SkGoods skGoods) {

@@ -18,9 +18,9 @@ public class CacheNameUtil {
 	/**
 	 * 按照不同的业务含义获取redis的key
 	 *
-	 * @param cacheName
-	 * @param key
-	 * @return
+	 * @param cacheName 缓存名字
+	 * @param key 存储的key
+	 * @return String
 	 */
 	public static String getCacheName(CacheName cacheName, String key) {
 		StringBuilder sb = new StringBuilder();

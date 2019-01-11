@@ -24,7 +24,7 @@ public class SkUserController {
 	/**
 	 * 列出所有的用户
 	 *
-	 * @return
+	 * @return PageResult<SkUser>
 	 */
 	@GetMapping("/listAll")
 	public PageResult<SkUser> listAll() {
@@ -35,8 +35,8 @@ public class SkUserController {
 	/**
 	 * 根据id查询用户
 	 *
-	 * @param id
-	 * @return
+	 * @param id 用户id
+	 * @return CommonResult
 	 */
 	@GetMapping("/findOne/{id}")
 	public CommonResult findOne(@PathVariable("id") String id) {
@@ -46,9 +46,9 @@ public class SkUserController {
 	/**
 	 * 根据条件筛选用户
 	 *
-	 * @param id
-	 * @param nickname
-	 * @return
+	 * @param id 用户id
+	 * @param nickname 用户昵称
+	 * @return PageResult<SkUser>
 	 */
 	@GetMapping("/listByCondition")
 	public PageResult<SkUser> listByCondition(@RequestParam(value = "id", required = false) String id,

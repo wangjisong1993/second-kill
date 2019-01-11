@@ -66,7 +66,7 @@ public class LotteryServiceImpl implements LotteryService {
 				.setLotteryName(region.getLotteryName()).setProjectId(projectId)
 				.setLotteryItemId(region.getLotteryItemId());
 		lotteryRecordService.save(record);
-		CommonResult baseResult = new CommonResult<>();
+		CommonResult<Void> baseResult = new CommonResult<>();
 		baseResult.setMessage("您中了" + region.getLotteryName());
 		return baseResult;
 	}
@@ -74,9 +74,9 @@ public class LotteryServiceImpl implements LotteryService {
 	/**
 	 * 判断具体的奖项
 	 *
-	 * @param regions
-	 * @param randomNum
-	 * @return
+	 * @param regions 各个奖项的中奖范围
+	 * @param randomNum 产生的随机数
+	 * @return LotteryRegion
 	 */
 	private LotteryRegion findRegion(List<LotteryRegion> regions, int randomNum) {
 		for (LotteryRegion region : regions) {
