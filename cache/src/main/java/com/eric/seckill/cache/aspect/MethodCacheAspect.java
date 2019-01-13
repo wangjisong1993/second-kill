@@ -80,12 +80,9 @@ public class MethodCacheAspect {
 				proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
 				// 缓存中不存在, 需要执行方法查询
 				if (proceed != null) {
-					Jedis jedis = jedisPool.getResource();
-					try {
+					try (Jedis jedis = jedisPool.getResource()) {
 						jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
 						jedis.expire(key, methodCache.expireSeconds());
-					} finally {
-						jedis.close();
 					}
 				}
 			} else {
@@ -123,14 +120,11 @@ public class MethodCacheAspect {
 	 */
 	private Object tryGetFromCache(String key) {
 		byte[] resultBytes;
-		Jedis jedis = jedisPool.getResource();
-		try {
+		try (Jedis jedis = jedisPool.getResource()) {
 			if (!jedis.exists(key)) {
 				return null;
 			}
 			resultBytes = jedis.get(key.getBytes());
-		} finally {
-			jedis.close();
 		}
 		if (resultBytes != null) {
 			LOGGER.info("key:{}获取到缓存", key);

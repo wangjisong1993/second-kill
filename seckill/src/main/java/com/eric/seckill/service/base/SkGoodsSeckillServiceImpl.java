@@ -31,12 +31,9 @@ public class SkGoodsSeckillServiceImpl extends ServiceImpl<SkGoodsSeckillMapper,
 
 	@Override
 	public long seckill(String goodsId) {
-		Jedis jedis = jedisPool.getResource();
 		long stock;
-		try {
+		try (Jedis jedis = jedisPool.getResource()) {
 			stock = jedis.decr(SecondKillCacheName.SECOND_PROJECT_PREFIX + goodsId);
-		} finally {
-			jedis.close();
 		}
 		return stock;
 	}

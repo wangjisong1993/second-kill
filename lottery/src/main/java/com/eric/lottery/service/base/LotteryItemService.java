@@ -58,13 +58,10 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	 */
 	private void initStock(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
-		Jedis jedis = jedisPool.getResource();
-		try {
+		try (Jedis jedis = jedisPool.getResource()) {
 			for (LotteryItem lotteryItem : lotteryItems) {
 				jedis.set(LotteryConstant.STOCK_NAME + lotteryItem.getId(), String.valueOf(lotteryItem.getStockCount()));
 			}
-		} finally {
-			jedis.close();
 		}
 	}
 
@@ -119,16 +116,13 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	 */
 	public CommonResult<List<LotteryItem>> listStock(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
-		Jedis jedis = jedisPool.getResource();
-		try {
+		try (Jedis jedis = jedisPool.getResource()) {
 			if (lotteryItems != null) {
 				for (LotteryItem lotteryItem : lotteryItems) {
 					String stock = jedis.get(LotteryConstant.STOCK_NAME + lotteryItem.getId());
 					lotteryItem.setStockCount(Integer.parseInt(stock));
 				}
 			}
-		} finally {
-			jedis.close();
 		}
 		return CommonResult.success(lotteryItems);
 	}
