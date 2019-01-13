@@ -66,38 +66,77 @@ public class MethodCacheAspect {
 		if (StringUtils.isBlank(key)) {
 			key = getSignature(method) + HashAlgorithms.mixHash(JSON.toJSONString(list));
 		}
-		Jedis jedis = jedisPool.getResource();
-		byte[] resultBytes = jedis.get(key.getBytes());
-		if (resultBytes != null) {
-			LOGGER.info("key:{}获取到缓存", key);
-			Object deserialize = KryoUtil.readFromByteArray(resultBytes);
-			if (deserialize != null) {
-				jedis.close();
-				return deserialize;
-			}
+		Object deserialize = tryGetFromCache(key);
+		if (deserialize != null) {
+			return deserialize;
 		}
-		// 缓存中不存在, 需要执行方法查询
-		Object proceed = null;
+		Object proceed;
+		String mutexKey = "mutex_" + key;
+		proceed = null;
 		if (methodCache.limitQuery()) {
-			String mutexKey = "mutex_" + key;
-			if (disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds())) {
-				jedis.expire(mutexKey, methodCache.limitQuerySeconds());
+			boolean lock = disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds());
+			if (lock) {
 				// 允许查询
-				proceed = proceedingJoinPoint.proceed();
+				proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
+				// 缓存中不存在, 需要执行方法查询
 				if (proceed != null) {
-					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
-					jedis.expire(key, methodCache.expireSeconds());
+					Jedis jedis = jedisPool.getResource();
+					try {
+						jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
+						jedis.expire(key, methodCache.expireSeconds());
+					} finally {
+						jedis.close();
+					}
 				}
-				jedis.del(mutexKey);
 			} else {
 				LOGGER.warn("设置防击穿锁失败, key为:{}", mutexKey);
-				if (jedis.ttl(mutexKey) < 0) {
-					jedis.expire(mutexKey, methodCache.limitQuerySeconds());
-				}
 			}
+		} else {
+			// 允许查询
+			proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
 		}
-		jedis.close();
 		return proceed;
+	}
+
+	/**
+	 * 执行具体的方法
+	 *
+	 * @param proceedingJoinPoint 切面
+	 * @return Object
+	 * @throws Throwable 异常
+	 */
+	private Object executeConcreteMethod(ProceedingJoinPoint proceedingJoinPoint, String mutexKey) throws Throwable {
+		Object proceed;
+		try {
+			proceed = proceedingJoinPoint.proceed();
+		} finally {
+			disLockUtil.unlock(mutexKey, false);
+		}
+		return proceed;
+	}
+
+	/**
+	 * 尝试从缓存中获取
+	 *
+	 * @param key key
+	 * @return Object
+	 */
+	private Object tryGetFromCache(String key) {
+		byte[] resultBytes;
+		Jedis jedis = jedisPool.getResource();
+		try {
+			if (!jedis.exists(key)) {
+				return null;
+			}
+			resultBytes = jedis.get(key.getBytes());
+		} finally {
+			jedis.close();
+		}
+		if (resultBytes != null) {
+			LOGGER.info("key:{}获取到缓存", key);
+			return KryoUtil.readFromByteArray(resultBytes);
+		}
+		return null;
 	}
 
 	/**

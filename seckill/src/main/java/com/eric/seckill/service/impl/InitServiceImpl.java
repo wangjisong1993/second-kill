@@ -30,14 +30,17 @@ public class InitServiceImpl implements InitService {
 	@Override
 	public void initStock() {
 		Jedis jedis = jedisPool.getResource();
-		List<String> goodsIds = skProjectService.listAllGoodsId();
-		if (goodsIds != null) {
-			for (String goodsId : goodsIds) {
-				Integer stock = skGoodsSeckillService.findSkGoodsStockById(goodsId);
-				jedis.set(SecondKillCacheName.SECOND_PROJECT_PREFIX + goodsId, String.valueOf(stock));
+		try {
+			List<String> goodsIds = skProjectService.listAllGoodsId();
+			if (goodsIds != null) {
+				for (String goodsId : goodsIds) {
+					Integer stock = skGoodsSeckillService.findSkGoodsStockById(goodsId);
+					jedis.set(SecondKillCacheName.SECOND_PROJECT_PREFIX + goodsId, String.valueOf(stock));
+				}
 			}
+		} finally {
+			jedis.close();
 		}
-		jedis.close();
 	}
 
 }

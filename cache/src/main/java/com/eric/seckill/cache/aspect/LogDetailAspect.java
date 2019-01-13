@@ -36,11 +36,16 @@ public class LogDetailAspect {
 		//拼凑目标类名和参数名
 		String params = JSON.toJSONString(proceedingJoinPoint.getArgs());
 		long startTime = System.currentTimeMillis();
-		Object proceed = proceedingJoinPoint.proceed();
-		long timeCost = System.currentTimeMillis() - startTime;
-		if (timeCost > logDetail.limitTime()) {
-			LOGGER.error("方法{}处理耗时:{}", method.getName(), timeCost);
+		Object proceed;
+		try {
+			proceed = proceedingJoinPoint.proceed();
+		} finally {
+			long timeCost = System.currentTimeMillis() - startTime;
+			if (timeCost > logDetail.limitTime()) {
+				LOGGER.error("方法{}处理耗时:{}", method.getName(), timeCost);
+			}
 		}
+
 
 		LOGGER.info("开始调用--> {} 参数:{}", classAndMethod, params);
 		String result = JSON.toJSONString(proceed);

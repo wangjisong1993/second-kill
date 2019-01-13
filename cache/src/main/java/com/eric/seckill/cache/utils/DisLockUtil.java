@@ -73,22 +73,28 @@ public class DisLockUtil {
 	 * @param key
 	 * @return
 	 */
-	public final boolean unlock(String key) {
+	public final boolean unlock(String key, boolean needCheck) {
+		boolean result = false;
 		Jedis jedis = jedisPool.getResource();
-		String expireTimeCache = jedis.get(key);
-		// 判断锁是否过期了
-		if (StringUtils.isBlank(expireTimeCache)) {
+		try {
+			if (needCheck) {
+				String expireTimeCache = jedis.get(key);
+				// 判断锁是否过期了
+				if (StringUtils.isBlank(expireTimeCache)) {
+					result = true;
+				}
+				if (System.currentTimeMillis() - Long.parseLong(expireTimeCache) > 0) {
+					// 直接删除
+					jedis.del(key);
+					result = true;
+				}
+			} else {
+				jedis.del(key);
+			}
+		} finally {
 			jedis.close();
-			return true;
 		}
-		if (System.currentTimeMillis() - Long.parseLong(expireTimeCache) > 0) {
-			// 直接删除
-			jedis.del(key);
-			jedis.close();
-			return true;
-		}
-		jedis.close();
-		return false;
+		return result;
 	}
 
 	/**
@@ -105,46 +111,33 @@ public class DisLockUtil {
 		expireSecond = expireSecond == 0 ? DEFAULT_EXPIRE_TIME : expireSecond;
 		// 过期的时候的时间戳
 		long expireTime = System.currentTimeMillis() + expireSecond * 1000 + 1;
-		boolean result = setNx(key, expireSecond, expireTime);
-		if (result) {
-			return true;
-		}
+		boolean setResult = false;
 		Jedis jedis = jedisPool.getResource();
-		String expireTimeCache = jedis.get(key);
-		// 判断锁是否过期了
-		if (StringUtils.isNotBlank(expireTimeCache) && System.currentTimeMillis() - Long.parseLong(expireTimeCache) > 0) {
-			String oldExpireTime = jedis.getSet(key, String.valueOf(expireTime));
-			if (StringUtils.isNotBlank(oldExpireTime) && oldExpireTime.equals(String.valueOf(expireTime))) {
-				jedis.expire(key, expireSecond);
-				jedis.close();
-				return true;
+		try {
+			if (jedis.setnx(key, String.valueOf(expireTime)) == 1) {
+				// 说明加锁成功
+				setResult = true;
 			}
-		}
-		jedis.close();
-		return false;
-	}
-
-	/**
-	 * 封装redis的setNx方法
-	 *
-	 * @param key
-	 * @param expireSecond
-	 * @param expireTime
-	 * @return
-	 */
-	private final boolean setNx(String key, int expireSecond, long expireTime) {
-		Jedis jedis = jedisPool.getResource();
-		if (jedis.setnx(key, String.valueOf(expireTime)) == 1) {
 			if (jedis.ttl(key) < 0) {
 				jedis.expire(key, expireSecond);
 			}
-			// 说明加锁成功
+			if (setResult) {
+				return true;
+			}
+			String expireTimeCache = jedis.get(key);
+			System.out.println(expireTimeCache + "====" + jedis.ttl(key) + ", now:" + System.currentTimeMillis());
+			// 判断锁是否过期了
+			if (StringUtils.isNotBlank(expireTimeCache) && System.currentTimeMillis() - Long.parseLong(expireTimeCache) > 0) {
+				String oldExpireTime = jedis.getSet(key, String.valueOf(expireTime));
+				if (StringUtils.isNotBlank(oldExpireTime) && oldExpireTime.equals(String.valueOf(expireTime))) {
+					jedis.expire(key, expireSecond);
+					setResult = true;
+				}
+			}
+		} finally {
 			jedis.close();
-			return true;
 		}
-		// 说明加锁失败
-		jedis.close();
-		return false;
+		return setResult;
 	}
 
 }

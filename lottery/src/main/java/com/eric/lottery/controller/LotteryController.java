@@ -49,7 +49,7 @@ public class LotteryController {
 	 */
 	@RequestMapping("/init/{projectId}")
 	public CommonResult<Void> init(@PathVariable("projectId") String projectId) {
-		lotteryItemService.initStock(projectId);
+		lotteryItemService.initStockAndRegion(projectId);
 		return CommonResult.success(null);
 	}
 

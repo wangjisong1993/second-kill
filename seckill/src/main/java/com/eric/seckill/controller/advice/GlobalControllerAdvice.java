@@ -25,7 +25,7 @@ public class GlobalControllerAdvice {
 	 * @param ex 捕获的异常
 	 * @return BaseResult
 	 */
-	@ExceptionHandler(Exception.class)
+//	@ExceptionHandler(Exception.class)
 	public BaseResult errorHandler(Exception ex) {
 		LOGGER.error(ex.getMessage());
 		return new CommonResult().setCode("500").setMessage(ex.getMessage()).setSuccess(false);

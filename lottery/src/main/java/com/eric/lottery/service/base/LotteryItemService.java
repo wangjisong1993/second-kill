@@ -46,7 +46,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	 *
 	 * @param projectId 抽奖的项目id
 	 */
-	private void initStockAndRegion(String projectId) {
+	public void initStockAndRegion(String projectId) {
 		findLotteryRegionByProjectId(projectId);
 		initStock(projectId);
 	}
@@ -56,7 +56,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	 *
 	 * @param projectId 抽奖的项目id
 	 */
-	public void initStock(String projectId) {
+	private void initStock(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
 		Jedis jedis = jedisPool.getResource();
 		try {
@@ -73,7 +73,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	 *
 	 * @param projectId 抽奖的项目id
 	 */
-	@MethodCache
+	@MethodCache(expireSeconds = 120)
 	public List<LotteryRegion> findLotteryRegionByProjectId(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
 		List<LotteryRegion> lotteryRegions = new ArrayList<>(lotteryItems.size());
@@ -120,11 +120,15 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	public CommonResult<List<LotteryItem>> listStock(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
 		Jedis jedis = jedisPool.getResource();
-		if (lotteryItems != null) {
-			for (LotteryItem lotteryItem : lotteryItems) {
-				String stock = jedis.get(LotteryConstant.STOCK_NAME + lotteryItem.getId());
-				lotteryItem.setStockCount(Integer.parseInt(stock));
+		try {
+			if (lotteryItems != null) {
+				for (LotteryItem lotteryItem : lotteryItems) {
+					String stock = jedis.get(LotteryConstant.STOCK_NAME + lotteryItem.getId());
+					lotteryItem.setStockCount(Integer.parseInt(stock));
+				}
 			}
+		} finally {
+			jedis.close();
 		}
 		return CommonResult.success(lotteryItems);
 	}
