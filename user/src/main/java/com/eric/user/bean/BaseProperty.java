@@ -2,6 +2,7 @@ package com.eric.user.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,10 @@ import java.util.Date;
  * @version 1.0
  */
 @Data
-public abstract class BaseProperty {
+public abstract class BaseProperty implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 创建时间
