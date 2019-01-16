@@ -14,6 +14,10 @@
         <module>common</module>
         <module>seckill</module>
         <module>lottery</module>
+        <module>user</module>
+        <module>product</module>
+        <module>order</module>
+        <module>coupon</module>
     </modules>
 
     <parent>
