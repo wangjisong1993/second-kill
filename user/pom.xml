@@ -136,6 +136,14 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <!-- 日志包...结束 -->
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.18.2</version>
+        </dependency>
     </dependencies>
 
     <build>
