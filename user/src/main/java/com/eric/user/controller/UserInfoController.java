@@ -1,6 +1,6 @@
 package com.eric.user.controller;
 
-import com.eric.user.service.UserMasterService;
+import com.eric.user.service.UserInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,11 +10,11 @@ import javax.annotation.Resource;
  * @author wang.js on 2019/1/16.
  * @version 1.0
  */
-@RequestMapping("/userMaster")
+@RequestMapping("/userInfo")
 @RestController
-public class UserMasterController {
+public class UserInfoController {
 
 	@Resource
-	private UserMasterService userMasterService;
+	private UserInfoService userInfoService;
 
 }

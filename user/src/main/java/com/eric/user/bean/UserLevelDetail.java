@@ -15,23 +15,22 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserMaster extends BaseProperty {
+public class UserLevelDetail extends BaseProperty {
 
 	/**
-	 * 用户id
+	 * 数据库主键
 	 */
-	private String userId;
+	private String id;
+	/**s
+	 * 等级名称
+	 */
+	private String levelName;
 	/**
-	 * 登录名
+	 * 最小点数
 	 */
-	private String loginName;
+	private Integer minPoint;
 	/**
-	 * 密码
+	 * 最高点数
 	 */
-	private String password;
-	/**
-	 * 用户状态
-	 */
-	private String userStats;
-
+	private Integer maxPoint;
 }
