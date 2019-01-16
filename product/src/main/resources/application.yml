@@ -1,6 +1,6 @@
 server:
-  port: 12402
-  context-path: /user
+  port: 12407
+  context-path: /product
   undertow:
     io-threads: 16
     worker-threads: 256

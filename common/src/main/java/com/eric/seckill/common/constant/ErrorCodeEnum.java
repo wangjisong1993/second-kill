@@ -1,7 +1,5 @@
 package com.eric.seckill.common.constant;
 
-import lombok.Data;
-
 /**
  * @author wang.js
  * @date 2018/12/18
@@ -33,7 +31,7 @@ public enum ErrorCodeEnum {
 		return message;
 	}
 
-	public void setMessage(String message) {
+	protected void setMessage(String message) {
 		this.message = message;
 	}
 
@@ -41,7 +39,7 @@ public enum ErrorCodeEnum {
 		return errCode;
 	}
 
-	public void setErrCode(String errCode) {
+	protected void setErrCode(String errCode) {
 		this.errCode = errCode;
 	}
 }
