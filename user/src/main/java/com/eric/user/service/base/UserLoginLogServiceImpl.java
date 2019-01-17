@@ -7,6 +7,7 @@ import com.eric.user.service.UserLoginLogService;
 import org.springframework.stereotype.Service;
 
 /**
+ * 用户登录日志
  * @author Eric on 2019/1/16.
  * @version 1.0
  */

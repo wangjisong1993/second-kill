@@ -7,6 +7,8 @@ import com.eric.user.service.UserPointLogService;
 import org.springframework.stereotype.Service;
 
 /**
+ * 用户积分记录
+ *
  * @author Eric on 2019/1/16.
  * @version 1.0
  */

@@ -7,6 +7,8 @@ import com.eric.user.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 /**
+ * 用户信息
+ *
  * @author wang.js on 2019/1/16.
  * @version 1.0
  */
