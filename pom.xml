@@ -18,6 +18,7 @@
         <module>product</module>
         <module>order</module>
         <module>coupon</module>
+        <module>strategy</module>
     </modules>
 
     <parent>
