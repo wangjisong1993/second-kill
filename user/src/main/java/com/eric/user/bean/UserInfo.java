@@ -60,8 +60,8 @@ public class UserInfo extends BaseProperty {
 	 */
 	private String userLevel;
 	/**
-	 * 用户等级
+	 * 用户余额
 	 */
-	private String userBalance;
+	private Integer userBalance;
 
 }

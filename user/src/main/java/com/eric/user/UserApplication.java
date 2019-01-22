@@ -3,6 +3,7 @@ package com.eric.user;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 用户模块
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("com.eric.user.dao")
+@ComponentScan({"com.eric"})
 public class UserApplication {
 
 	public static void main(String[] args) {

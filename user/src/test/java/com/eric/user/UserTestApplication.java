@@ -1,7 +1,9 @@
 package com.eric.user;
 
 import com.eric.user.bean.UserActionLog;
+import com.eric.user.model.RegisterUserRequest;
 import com.eric.user.service.UserActionLogService;
+import com.eric.user.service.UserMasterService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,16 @@ public class UserTestApplication {
 
 	@Resource
 	private UserActionLogService userActionLogService;
+
+	@Resource
+	private UserMasterService userMasterService;
+
+	@Test
+	public void t2() {
+		RegisterUserRequest request = new RegisterUserRequest().setLoginName("大傻逼")
+				.setPassword("123").setPhone("456");
+		userMasterService.registerUser(request);
+	}
 
 	@Test
 	public void t1() {

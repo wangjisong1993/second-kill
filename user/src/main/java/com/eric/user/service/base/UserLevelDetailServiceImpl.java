@@ -13,4 +13,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserLevelDetailServiceImpl extends ServiceImpl<UserLevelDetailMapper, UserLevelDetail> implements UserLevelDetailService {
+	@Override
+	public String findBaseLevel() {
+		// TODO
+		return "1";
+	}
 }

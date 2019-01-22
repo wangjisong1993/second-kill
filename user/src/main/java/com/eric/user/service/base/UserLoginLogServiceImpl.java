@@ -12,5 +12,11 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service
-public class UserLoginLogServiceImpl extends ServiceImpl<UserLoginLogMapper, UserLoginLog> implements UserLoginLogService {
+public class UserLoginLogServiceImpl extends ServiceImpl<UserLoginLogMapper, UserLoginLog>
+		implements UserLoginLogService {
+
+	@Override
+	public int insert(UserLoginLog userLoginLog) {
+		return baseMapper.insert(userLoginLog);
+	}
 }

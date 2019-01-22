@@ -41,7 +41,6 @@ public class ValidationUtils {
 		Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
 		// 抛出检验异常
 		if (!CollectionUtils.isEmpty(constraintViolations)) {
-			LOGGER.info("参数校验失败: {}", constraintViolations.iterator().next().getMessage());
 			throw new CustomException(String.format("参数校验失败:%s", constraintViolations.iterator().next().getMessage()));
 		}
 	}

@@ -5,4 +5,10 @@ package com.eric.user.service;
  * @version 1.0
  */
 public interface UserLevelDetailService {
+
+	/**
+	 * 获取基础等级
+	 * @return
+	 */
+	String findBaseLevel();
 }
