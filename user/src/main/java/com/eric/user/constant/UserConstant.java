@@ -8,9 +8,21 @@ package com.eric.user.constant;
  */
 public class UserConstant {
 
+	private UserConstant() {
+
+	}
+
 	/**
 	 * 默认的用户id
 	 */
 	public static final String DEFAULT_USER_ID = "admin";
+	/**
+	 * 表示true
+	 */
+	public static final String CON_TRUE = "1";
+	/**
+	 * 表示false
+	 */
+	public static final String CON_FALSE = "0";
 
 }

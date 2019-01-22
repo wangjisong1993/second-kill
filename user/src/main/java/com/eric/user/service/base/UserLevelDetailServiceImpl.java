@@ -3,6 +3,7 @@ package com.eric.user.service.base;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.user.bean.UserLevelDetail;
 import com.eric.user.dao.UserLevelDetailMapper;
+import com.eric.user.service.BaseService;
 import com.eric.user.service.UserLevelDetailService;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service
-public class UserLevelDetailServiceImpl extends ServiceImpl<UserLevelDetailMapper, UserLevelDetail> implements UserLevelDetailService {
+public class UserLevelDetailServiceImpl extends ServiceImpl<UserLevelDetailMapper, UserLevelDetail>
+		implements UserLevelDetailService, BaseService {
+
 	@Override
 	public String findBaseLevel() {
-		// TODO
-		return "1";
+		return baseMapper.findBaseLevelId();
 	}
+
 }

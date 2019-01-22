@@ -8,4 +8,10 @@ import com.eric.user.bean.UserLevelDetail;
  * @version 1.0
  */
 public interface UserLevelDetailMapper extends BaseMapper<UserLevelDetail> {
+
+	/**
+	 * 获取最低的等级id
+	 * @return
+	 */
+	String findBaseLevelId();
 }

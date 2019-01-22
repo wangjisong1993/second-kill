@@ -8,15 +8,13 @@ import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserLoginLog;
 import com.eric.user.bean.UserMaster;
+import com.eric.user.constant.UserConstant;
 import com.eric.user.dao.UserMasterMapper;
 import com.eric.user.exception.ExceptionName;
 import com.eric.user.model.RegisterUser;
 import com.eric.user.model.RegisterUserRequest;
 import com.eric.user.model.UserLogin;
-import com.eric.user.service.BaseService;
-import com.eric.user.service.UserInfoService;
-import com.eric.user.service.UserLoginLogService;
-import com.eric.user.service.UserMasterService;
+import com.eric.user.service.*;
 import com.eric.user.utils.PasswordUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
@@ -27,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 用户, 主要提供用户注册, 修改信息, 注销等操作
@@ -46,6 +45,9 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 	@Resource
 	private UserLoginLogService userLoginLogService;
 
+	@Resource
+	private UserAddressService userAddressService;
+
 	@Override
 	@ParamCheck
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -64,6 +66,9 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		}
 		// 保存用户信息
 		userInfoService.insert(userMaster, registerUserRequest.getPhone());
+		// 保存用户地址信息
+		userAddressService.insertBlankAddress(userMaster.getUserId());
+
 		RegisterUser registerUser = new RegisterUser();
 		dozerBeanMapper.map(userMaster, registerUser);
 		registerUser.setUserStats(UserStatus.ACTIVE.getStatusCode());
@@ -80,14 +85,24 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		}
 		boolean verify = PasswordUtil.verify(userLogin.getPassword(), encryptPassword);
 		// 保存用户登陆日志
-		UserLoginLog log = new UserLoginLog().setId(UUID.randomUUID().toString())
-				.setLoginIp(userLogin.getIpAddr()).setLoginResult(verify ? "1" : "0")
-				.setLoginTime(new Date()).setUserId(baseMapper.findUserIdByLoginName(userLogin.getLoginName()));
-		userLoginLogService.insert(log);
+		CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, verify));
 		if (verify) {
 			return CommonResult.success(null);
 		}
 		return CommonResult.fail("密码不正确", "250");
+	}
+
+	/**
+	 * 保存用户登陆日志
+	 * @param userLogin
+	 * @param verify
+	 */
+	private UserLoginLog saveLoginLog(UserLogin userLogin, boolean verify) {
+		UserLoginLog log = new UserLoginLog().setId(UUID.randomUUID().toString())
+				.setLoginIp(userLogin.getIpAddr()).setLoginResult(verify ? UserConstant.CON_TRUE : UserConstant.CON_FALSE)
+				.setLoginTime(new Date()).setUserId(baseMapper.findUserIdByLoginName(userLogin.getLoginName()));
+		userLoginLogService.insert(log);
+		return log;
 	}
 
 	/**
