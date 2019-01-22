@@ -15,7 +15,7 @@ public interface UserMasterMapper extends BaseMapper<UserMaster> {
 	 * @param loginName
 	 * @return
 	 */
-	String findPasswordByLoginName(@Param("loginName") String loginName);
+	UserMaster findPasswordByLoginName(@Param("loginName") String loginName);
 
 	/**
 	 * 根据登陆名获取用户id

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author wang.js on 2019/1/22.
  * @version 1.0
  */
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RestController
 public class UserRegisterController {
 
@@ -48,4 +48,7 @@ public class UserRegisterController {
 		userLogin.setIpAddr(IPUtil.getIpAddress(request));
 		return userMasterService.login(userLogin);
 	}
+
+	
+
 }

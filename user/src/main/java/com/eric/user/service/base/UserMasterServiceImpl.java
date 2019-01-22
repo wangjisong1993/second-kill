@@ -16,7 +16,6 @@ import com.eric.user.model.RegisterUserRequest;
 import com.eric.user.model.UserLogin;
 import com.eric.user.service.*;
 import com.eric.user.utils.PasswordUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -50,7 +49,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 
 	@Override
 	@ParamCheck
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public CommonResult<RegisterUser> registerUser(RegisterUserRequest registerUserRequest) {
 		// 判断用户是否注册过(loginName和phone)
 		checkRegistered(registerUserRequest);
@@ -79,11 +78,20 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 	@ParamCheck
 	public CommonResult<Void> login(UserLogin userLogin) {
 		// 根据登陆名获取用户的密码, 然后进行比对
-		String encryptPassword = baseMapper.findPasswordByLoginName(userLogin.getLoginName());
-		if (StringUtils.isBlank(encryptPassword)) {
+		UserMaster userMaster = baseMapper.findPasswordByLoginName(userLogin.getLoginName());
+		if (userMaster == null) {
 			return CommonResult.fail("登录名未注册", "250");
 		}
-		boolean verify = PasswordUtil.verify(userLogin.getPassword(), encryptPassword);
+		if (UserStatus.FREEZE.getStatusCode().equals(userMaster.getUserStats())) {
+			// 保存用户登陆日志
+			CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, false));
+			return CommonResult.fail("账户已冻结", "250");
+		} else if (UserStatus.DISACTIVE.getStatusCode().equals(userMaster.getUserStats())) {
+			// 保存用户登陆日志
+			CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, false));
+			return CommonResult.fail("账户已失效", "250");
+		}
+		boolean verify = PasswordUtil.verify(userLogin.getPassword(), userMaster.getPassword());
 		// 保存用户登陆日志
 		CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, verify));
 		if (verify) {
