@@ -1,18 +1,26 @@
 package com.eric.user;
 
+import com.alibaba.fastjson.JSON;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserActionLog;
+import com.eric.user.constant.BalanceSourceEnum;
+import com.eric.user.model.ChargeBalanceRequest;
+import com.eric.user.model.ChargeBalanceResponse;
 import com.eric.user.model.RegisterUserRequest;
 import com.eric.user.model.UserAddressModifyRequest;
+import com.eric.user.service.ChargeBalanceService;
 import com.eric.user.service.UserActionLogService;
 import com.eric.user.service.UserAddressService;
 import com.eric.user.service.UserMasterService;
+import com.eric.user.utils.SignUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +39,26 @@ public class UserTestApplication {
 
 	@Resource
 	private UserAddressService userAddressService;
+
+	@Resource
+	private ChargeBalanceService chargeBalanceService;
+
+	@Value("${user.charge.secret}")
+	private String appSecret;
+
+	@Test
+	public void t4() {
+		ChargeBalanceRequest request = new ChargeBalanceRequest();
+		request.setChargeAmount(1000);
+		request.setChargeUserId("1c2e495f-c7e6-4009-a5a9-332a8219c3f0");
+		request.setCreateTime(new Date());
+		request.setOutTradeNo("12345678912");
+		request.setPayUserId("1c2e495f-c7e6-4009-a5a9-332a8219c3f0");
+		request.setSource(BalanceSourceEnum.USER_CHARGE.getSourceType());
+		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
+		CommonResult<ChargeBalanceResponse> charge = chargeBalanceService.charge(request);
+		System.out.println(JSON.toJSONString(charge));
+	}
 
 	@Test
 	public void t3() {

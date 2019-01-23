@@ -2,6 +2,8 @@ package com.eric.user.service;
 
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserMaster;
+import com.eric.user.model.ChargeBalanceRequest;
+import com.eric.user.model.ChargeBalanceResponse;
 import com.eric.user.model.UserInfoModifyRequest;
 
 /**
@@ -31,4 +33,11 @@ public interface UserInfoService {
 	 * @return
 	 */
 	CommonResult<Void> updateUserInfo(UserInfoModifyRequest userInfo);
+
+	/**
+	 * 更新用户余额
+	 * @param request
+	 * @return
+	 */
+	ChargeBalanceResponse updateUserBalance(ChargeBalanceRequest request);
 }

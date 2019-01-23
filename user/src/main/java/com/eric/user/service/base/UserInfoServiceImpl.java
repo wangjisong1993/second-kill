@@ -10,6 +10,8 @@ import com.eric.user.bean.UserInfo;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.constant.ErrorCodeEnum;
 import com.eric.user.dao.UserInfoMapper;
+import com.eric.user.model.ChargeBalanceRequest;
+import com.eric.user.model.ChargeBalanceResponse;
 import com.eric.user.model.UserInfoModifyRequest;
 import com.eric.user.service.BaseService;
 import com.eric.user.service.UserInfoService;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -45,7 +48,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 	private DozerBeanMapper dozerBeanMapper;
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int insert(UserMaster userMaster, String mobile) {
 		UserInfo t = new UserInfo().setMobilePhone(mobile)
 				.setRegisterTime(new Date()).setUserId(userMaster.getUserId())
@@ -85,8 +88,23 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 			if (effect > 0) {
 				return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
 			}
-			return CommonResult.fail(null, ErrorCodeEnum.UPDATE_FAIL.getErrorMsg());
+			return CommonResult.fail(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg(), ErrorCodeEnum.UPDATE_FAIL.getErrorCode());
 		}
 		return CommonResult.fail(ErrorCodeEnum.UPDATE_FORBIDDEN.getErrorMsg(), ErrorCodeEnum.UPDATE_FORBIDDEN.getErrorCode());
+	}
+
+	@Override
+	public ChargeBalanceResponse updateUserBalance(ChargeBalanceRequest request) {
+		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getChargeUserId());
+		Integer balance = baseMapper.findUserBalanceByUserInfoId(userInfoId);
+		int finalBalance = BigDecimal.valueOf(balance).add(new BigDecimal(request.getChargeAmount())).intValue();
+		if (finalBalance < 0) {
+			throw new CustomException(ErrorCodeEnum.BALANCE_NOT_ENOUGH.getErrorMsg());
+		}
+		int effect = baseMapper.updateUserBalance(userInfoId, finalBalance);
+		if (effect == 0) {
+			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg());
+		}
+		return new ChargeBalanceResponse().setUserBalance(String.valueOf(finalBalance));
 	}
 }

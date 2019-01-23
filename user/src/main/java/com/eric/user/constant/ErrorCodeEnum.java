@@ -20,6 +20,10 @@ public enum ErrorCodeEnum {
 	EMPTY_USER_ID("257", "用户id不能为空"),
 	USER_NOT_FOUND("258", "用户不存在"),
 	UPDATE_FORBIDDEN("259", "当前状态禁止修改"),
+	ERROR_SIGN("260", "签名不合法"),
+	DUPLICATE("261", "重复单号"),
+	ERROR_SAVE("262", "保存失败"),
+	BALANCE_NOT_ENOUGH("263", "余额不足"),
 	;
 
 	/**

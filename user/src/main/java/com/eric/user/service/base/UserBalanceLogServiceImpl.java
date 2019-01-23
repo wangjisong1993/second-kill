@@ -1,5 +1,6 @@
 package com.eric.user.service.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.user.bean.UserBalanceLog;
 import com.eric.user.dao.UserBalanceLogMapper;
@@ -14,4 +15,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserBalanceLogServiceImpl extends ServiceImpl<UserBalanceLogMapper, UserBalanceLog> implements UserBalanceLogService {
+
+	@Override
+	public Integer countBalanceLogBySourceSn(String outTradeNo, String chargeUserId) {
+		return baseMapper.selectCount(new QueryWrapper<UserBalanceLog>().eq("user_id", chargeUserId).eq("source_sn", outTradeNo));
+	}
+
+	@Override
+	public Integer insert(UserBalanceLog log) {
+		return baseMapper.insert(log);
+	}
+
 }
