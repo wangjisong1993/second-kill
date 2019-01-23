@@ -1,8 +1,11 @@
 package com.eric.user;
 
+import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserActionLog;
 import com.eric.user.model.RegisterUserRequest;
+import com.eric.user.model.UserAddressModifyRequest;
 import com.eric.user.service.UserActionLogService;
+import com.eric.user.service.UserAddressService;
 import com.eric.user.service.UserMasterService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +28,20 @@ public class UserTestApplication {
 
 	@Resource
 	private UserMasterService userMasterService;
+
+	@Resource
+	private UserAddressService userAddressService;
+
+	@Test
+	public void t3() {
+		UserAddressModifyRequest request = null;
+//		UserAddressModifyRequest request = new UserAddressModifyRequest();
+//		request.setUserId("d629c855-d147-4701-b0e9-383b27bb5126");
+//		request.setUpdateUserId("admin");
+//		request.setAddress("深圳市");
+		CommonResult<Void> voidCommonResult = userAddressService.updateUserAddress(request);
+		System.out.println(voidCommonResult);
+	}
 
 	@Test
 	public void t2() {

@@ -1,5 +1,6 @@
 package com.eric.user.bean;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ public class UserMaster extends BaseProperty {
 	/**
 	 * 用户id
 	 */
+	@TableId
 	private String userId;
 	/**
 	 * 登录名

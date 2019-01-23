@@ -140,6 +140,11 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		return CommonResult.fail(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg(), ErrorCodeEnum.UPDATE_FAIL.getErrorCode());
 	}
 
+	@Override
+	public UserMaster findUserMasterByUserId(String userId) {
+		return this.baseMapper.selectById(userId);
+	}
+
 	/**
 	 * 保存用户登陆日志
 	 * @param userLogin

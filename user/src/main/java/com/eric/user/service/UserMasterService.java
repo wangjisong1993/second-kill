@@ -1,6 +1,7 @@
 package com.eric.user.service;
 
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.user.bean.UserMaster;
 import com.eric.user.model.*;
 
 /**
@@ -36,4 +37,11 @@ public interface UserMasterService {
 	 * @return
 	 */
 	CommonResult<Void> updatePassword(PasswordModifyRequest request);
+
+	/**
+	 * 根据用户id获取用户主信息
+	 * @param userId
+	 * @return
+	 */
+	UserMaster findUserMasterByUserId(String userId);
 }

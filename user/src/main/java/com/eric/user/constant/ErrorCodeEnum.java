@@ -8,6 +8,7 @@ package com.eric.user.constant;
  */
 public enum ErrorCodeEnum {
 
+	LOGIN_SUCCESS("0", "登陆成功"),
 	UNKNOW_OPERATION_TYPE("250", "未知操作类型"),
 	ERROR_PASSWORD("251", "密码不正确"),
 	USER_REGISTER_FAIL("252", "用户注册失败"),
@@ -16,7 +17,9 @@ public enum ErrorCodeEnum {
 	ACCOUNT_DISACTIVE("255", "账户已失效"),
 	UPDATE_SUCCESS("0", "更新成功"),
 	UPDATE_FAIL("256", "更新失败"),
-	LOGIN_SUCCESS("0", "登陆成功"),
+	EMPTY_USER_ID("257", "用户id不能为空"),
+	USER_NOT_FOUND("258", "用户不存在"),
+	UPDATE_FORBIDDEN("259", "当前状态禁止修改"),
 	;
 
 	/**
