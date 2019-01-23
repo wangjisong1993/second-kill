@@ -40,7 +40,7 @@ public class SkUserController {
 	 */
 	@GetMapping("/findOne/{id}")
 	public CommonResult findOne(@PathVariable("id") String id) {
-		return CommonResult.success(skUserService.findOne(id));
+		return CommonResult.success(skUserService.findOne(id), null);
 	}
 
 	/**

@@ -124,6 +124,6 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 				}
 			}
 		}
-		return CommonResult.success(lotteryItems);
+		return CommonResult.success(lotteryItems, null);
 	}
 }

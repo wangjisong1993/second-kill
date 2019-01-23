@@ -55,7 +55,7 @@ public class SecondKillServiceImpl implements SecondKillService {
 			// 存入订单系统
 			LOGGER.info("用户{}秒杀到商品:{}", userId, skProject.getGoodsId());
 			skOrderService.saveOrder(userId, skProject.getGoodsId());
-			return CommonResult.success(null);
+			return CommonResult.success(null, null);
 		}
 		return CommonResult.fail("秒杀已结束", ErrorCodeEnum.SECKILL_END.getErrCode());
 	}

@@ -47,6 +47,6 @@ public class SecondKillController {
 	@GetMapping("/initStock")
 	public CommonResult<Void> initStock() {
 		initService.initStock();
-		return CommonResult.success(null);
+		return CommonResult.success(null, null);
 	}
 }

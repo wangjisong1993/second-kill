@@ -3,6 +3,7 @@
 <mapper namespace="com.eric.user.dao.UserMasterMapper">
     <select id="findPasswordByLoginName" resultType="com.eric.user.bean.UserMaster">
         SELECT
+            login_name,
             user_id,
             `password`,
             user_stats

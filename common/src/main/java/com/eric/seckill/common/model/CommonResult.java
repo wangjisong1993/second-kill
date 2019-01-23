@@ -2,6 +2,7 @@ package com.eric.seckill.common.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 通用结果返回
@@ -30,9 +31,12 @@ public class CommonResult<T> extends BaseResult {
 	 * @param <T> 返回的数据类型
 	 * @return CommonResult
 	 */
-	public static <T> CommonResult<T> success(T data) {
+	public static <T> CommonResult<T> success(T data, String message) {
 		CommonResult<T> result = new CommonResult<>();
 		result.setData(data);
+		if (StringUtils.isNotBlank(message)) {
+			result.setMessage(message);
+		}
 		return result;
 	}
 
@@ -48,6 +52,7 @@ public class CommonResult<T> extends BaseResult {
 		CommonResult<T> result = new CommonResult<>();
 		result.setMessage(message);
 		result.setCode(code);
+		result.setSuccess(false);
 		return result;
 	}
 }

@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @version 1.0
  */
 @Data
-public class UserLogin {
+public class UserLoginRequest {
 
 	/**
 	 * 登录名

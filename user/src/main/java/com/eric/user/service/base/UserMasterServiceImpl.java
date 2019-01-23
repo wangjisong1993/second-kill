@@ -8,12 +8,11 @@ import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserLoginLog;
 import com.eric.user.bean.UserMaster;
+import com.eric.user.constant.ErrorCodeEnum;
 import com.eric.user.constant.UserConstant;
 import com.eric.user.dao.UserMasterMapper;
 import com.eric.user.exception.ExceptionName;
-import com.eric.user.model.RegisterUser;
-import com.eric.user.model.RegisterUserRequest;
-import com.eric.user.model.UserLogin;
+import com.eric.user.model.*;
 import com.eric.user.service.*;
 import com.eric.user.utils.PasswordUtil;
 import org.dozer.DozerBeanMapper;
@@ -61,7 +60,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		initCreateTime(userMaster);
 		int insert = baseMapper.insert(userMaster);
 		if (insert == 0) {
-			throw new CustomException("用户注册失败");
+			throw new CustomException(ErrorCodeEnum.USER_REGISTER_FAIL.getErrorMsg());
 		}
 		// 保存用户信息
 		userInfoService.insert(userMaster, registerUserRequest.getPhone());
@@ -71,33 +70,74 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		RegisterUser registerUser = new RegisterUser();
 		dozerBeanMapper.map(userMaster, registerUser);
 		registerUser.setUserStats(UserStatus.ACTIVE.getStatusCode());
-		return CommonResult.success(registerUser);
+		return CommonResult.success(registerUser, null);
 	}
 
 	@Override
 	@ParamCheck
-	public CommonResult<Void> login(UserLogin userLogin) {
+	public CommonResult<UserLoginResponse> login(UserLoginRequest userLogin) {
 		// 根据登陆名获取用户的密码, 然后进行比对
 		UserMaster userMaster = baseMapper.findPasswordByLoginName(userLogin.getLoginName());
 		if (userMaster == null) {
-			return CommonResult.fail("登录名未注册", "250");
+			return CommonResult.fail(ErrorCodeEnum.LOGIN_NAME_NOT_REGISTER.getErrorMsg(), ErrorCodeEnum.LOGIN_NAME_NOT_REGISTER.getErrorCode());
 		}
 		if (UserStatus.FREEZE.getStatusCode().equals(userMaster.getUserStats())) {
 			// 保存用户登陆日志
 			CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, false));
-			return CommonResult.fail("账户已冻结", "250");
+			return CommonResult.fail(ErrorCodeEnum.ACCOUNT_FREEZE.getErrorMsg(), ErrorCodeEnum.ACCOUNT_FREEZE.getErrorCode());
 		} else if (UserStatus.DISACTIVE.getStatusCode().equals(userMaster.getUserStats())) {
 			// 保存用户登陆日志
 			CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, false));
-			return CommonResult.fail("账户已失效", "250");
+			return CommonResult.fail(ErrorCodeEnum.ACCOUNT_DISACTIVE.getErrorMsg(), ErrorCodeEnum.ACCOUNT_DISACTIVE.getErrorCode());
 		}
 		boolean verify = PasswordUtil.verify(userLogin.getPassword(), userMaster.getPassword());
 		// 保存用户登陆日志
 		CompletableFuture.supplyAsync(() -> saveLoginLog(userLogin, verify));
 		if (verify) {
-			return CommonResult.success(null);
+			UserLoginResponse response = new UserLoginResponse();
+			dozerBeanMapper.map(userMaster, response);
+			return CommonResult.success(response, ErrorCodeEnum.LOGIN_SUCCESS.getErrorMsg());
 		}
-		return CommonResult.fail("密码不正确", "250");
+		return CommonResult.fail(ErrorCodeEnum.ERROR_PASSWORD.getErrorMsg(), ErrorCodeEnum.ERROR_PASSWORD.getErrorCode());
+	}
+
+	@Override
+	@ParamCheck
+	public CommonResult<Void> updateUserStats(UserModifyRequest userModifyRequest) {
+		// 判断用户是否存在
+		Integer count = baseMapper.selectCount(new QueryWrapper<UserMaster>().eq("login_name", userModifyRequest.getLoginName()));
+		if (count == null || count == 0) {
+			return CommonResult.fail(ErrorCodeEnum.LOGIN_NAME_NOT_REGISTER.getErrorMsg(), ErrorCodeEnum.LOGIN_NAME_NOT_REGISTER.getErrorCode());
+		}
+		UserMaster master = new UserMaster().setUserStats(userModifyRequest.getUserStats());
+		master.setUpdateTime(new Date());
+		master.setUpdateUserId(userModifyRequest.getUpdateUserId());
+		int effect = baseMapper.update(master, new QueryWrapper<UserMaster>().eq("login_name", userModifyRequest.getLoginName()));
+		if (effect > 0) {
+			return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
+		}
+		return CommonResult.fail(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg(), ErrorCodeEnum.UPDATE_FAIL.getErrorCode());
+	}
+
+	@Override
+	@ParamCheck
+	public CommonResult<Void> updatePassword(PasswordModifyRequest request) {
+		UserMaster userMaster = baseMapper.selectOne(new QueryWrapper<UserMaster>().eq("login_name", request.getLoginName()));
+		if (userMaster == null) {
+			return CommonResult.fail(ErrorCodeEnum.LOGIN_NAME_NOT_REGISTER.getErrorMsg(), ErrorCodeEnum.LOGIN_NAME_NOT_REGISTER.getErrorCode());
+		}
+		// 校验密码是否一致
+		boolean verify = PasswordUtil.verify(request.getOriginalPassword(), userMaster.getPassword());
+		if (!verify) {
+			return CommonResult.fail(ErrorCodeEnum.ERROR_PASSWORD.getErrorMsg(), ErrorCodeEnum.ERROR_PASSWORD.getErrorCode());
+		}
+		// 允许修改密码
+		String newPassword = PasswordUtil.generate(request.getNewPassword());
+		int effect = baseMapper.update(new UserMaster().setPassword(newPassword), new QueryWrapper<UserMaster>().eq("login_name", request.getLoginName()));
+		if (effect > 0) {
+			return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
+		}
+		return CommonResult.fail(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg(), ErrorCodeEnum.UPDATE_FAIL.getErrorCode());
 	}
 
 	/**
@@ -105,7 +145,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 	 * @param userLogin
 	 * @param verify
 	 */
-	private UserLoginLog saveLoginLog(UserLogin userLogin, boolean verify) {
+	private UserLoginLog saveLoginLog(UserLoginRequest userLogin, boolean verify) {
 		UserLoginLog log = new UserLoginLog().setId(UUID.randomUUID().toString())
 				.setLoginIp(userLogin.getIpAddr()).setLoginResult(verify ? UserConstant.CON_TRUE : UserConstant.CON_FALSE)
 				.setLoginTime(new Date()).setUserId(baseMapper.findUserIdByLoginName(userLogin.getLoginName()));

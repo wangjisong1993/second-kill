@@ -24,5 +24,12 @@ public class UserConstant {
 	 * 表示false
 	 */
 	public static final String CON_FALSE = "0";
-
+	/**
+	 * 冻结用户
+	 */
+	public static final String MODIFY_OPERATION_FREEZE = "freeze";
+	/**
+	 * 作废用户
+	 */
+	public static final String MODIFY_OPERATION_DISACTIVE = "disactive";
 }

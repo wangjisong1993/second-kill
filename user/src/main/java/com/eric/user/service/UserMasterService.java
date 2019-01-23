@@ -1,9 +1,7 @@
 package com.eric.user.service;
 
 import com.eric.seckill.common.model.CommonResult;
-import com.eric.user.model.RegisterUser;
-import com.eric.user.model.RegisterUserRequest;
-import com.eric.user.model.UserLogin;
+import com.eric.user.model.*;
 
 /**
  * @author wang.js on 2019/1/16.
@@ -23,5 +21,19 @@ public interface UserMasterService {
 	 * @param userLogin
 	 * @return
 	 */
-	CommonResult<Void> login(UserLogin userLogin);
+	CommonResult<UserLoginResponse> login(UserLoginRequest userLogin);
+
+	/**
+	 * 更新用户的状态
+	 * @param userModifyRequest
+	 * @return
+	 */
+	CommonResult<Void> updateUserStats(UserModifyRequest userModifyRequest);
+
+	/**
+	 * 修改用户密码
+	 * @param request
+	 * @return
+	 */
+	CommonResult<Void> updatePassword(PasswordModifyRequest request);
 }

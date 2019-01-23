@@ -29,6 +29,6 @@ public class SkGoodsController {
 	 */
 	@PostMapping("/findSkGoodsById")
 	public CommonResult<SkGoods> findSkGoodsById(@RequestBody SkGoods skGoods) {
-		return CommonResult.success(skGoodsService.findSkGoodsById(skGoods));
+		return CommonResult.success(skGoodsService.findSkGoodsById(skGoods), null);
 	}
 }
