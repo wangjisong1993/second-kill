@@ -24,6 +24,7 @@ public class UserMasterController {
 
 	/**
 	 * 查找用户信息
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -31,4 +32,6 @@ public class UserMasterController {
 	public CommonResult<UserQueryResponse> findUserByUserIdOrLoginName(@RequestBody UserQueryRequest request) {
 		return userMasterService.findUserMaster(request);
 	}
+
+
 }

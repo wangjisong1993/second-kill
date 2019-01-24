@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author wang.js on 2019/1/24.
  * @version 1.0
  */
-@FeignClient(name = "MEMBER")
+@FeignClient(name = "MEMBER", path = "/member", fallback = UserMasterFeignFallback.class)
 public interface UserMasterFeign {
 
 	/**
 	 * 获取用户信息
+	 *
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/userMaster/find", method = RequestMethod.POST)
+	@RequestMapping(value = "/userMaster/find", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	CommonResult<UserQueryResponse> findUserByUserIdOrLoginName(UserQueryRequest request);
 
 }

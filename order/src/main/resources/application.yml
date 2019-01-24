@@ -7,8 +7,11 @@ eureka:
 ribbon:
   eureka:
     enabled: true
-  ReadTimeout: 3000
-  ConnectTimeout: 3000
+
+feign:
+  hystrix:
+   enabled: true
+
 
 server:
   port: 12406
