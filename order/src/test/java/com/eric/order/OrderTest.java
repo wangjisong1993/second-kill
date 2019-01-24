@@ -1,5 +1,6 @@
 package com.eric.order;
 
+import com.alibaba.fastjson.JSON;
 import com.eric.order.model.CreateOrderDetail;
 import com.eric.order.model.CreateOrderRequest;
 import com.eric.order.service.CreateOrderService;
@@ -35,9 +36,10 @@ public class OrderTest {
 		List<CreateOrderDetail> details = new ArrayList<>();
 		details.add(new CreateOrderDetail().setProductCnt(100).setProductId("1"));
 		CreateOrderRequest request = new CreateOrderRequest().setDetails(details)
-				.setShippingUser("大傻逼").setUserId("f2414da0-9b78-4152-955f-049c398d3990")
+				.setShippingUser("大傻逼").setUserId("1c2e495f-c7e6-4009-a5a9-332a8219c3f0")
 				.setShippingMoney(1000);
 		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
+		System.out.println(JSON.toJSONString(request));
 		createOrderService.createOrder(request);
 	}
 

@@ -1,5 +1,6 @@
 package com.eric.user.controller;
 
+import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.UserQueryRequest;
 import com.eric.seckill.common.model.feign.UserQueryResponse;
@@ -29,6 +30,7 @@ public class UserMasterController {
 	 * @return
 	 */
 	@PostMapping("/find")
+	@LogDetail
 	public CommonResult<UserQueryResponse> findUserByUserIdOrLoginName(@RequestBody UserQueryRequest request) {
 		return userMasterService.findUserMaster(request);
 	}

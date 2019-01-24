@@ -48,12 +48,12 @@ public abstract class BaseOrderService {
 		UserQueryRequest request = new UserQueryRequest();
 		request.setUserId(userId);
 		CommonResult<UserQueryResponse> response = userMasterFeign.findUserByUserIdOrLoginName(request);
-		if (response != null && response.isSuccess()) {
+		if (response != null) {
 			UserQueryResponse data = response.getData();
-			if (UserStatus.ACTIVE.getStatusCode().equals(data.getUserStats())) {
+			if (response.isSuccess() && UserStatus.ACTIVE.getStatusCode().equals(data.getUserStats())) {
 				return;
 			} else {
-				throw new CustomException(ErrorCodeEnum.USER_NOT_FOUND.getMessage());
+				throw new CustomException(response.getMessage());
 			}
 		}
 		throw new CustomException(ErrorCodeEnum.SERVER_ERROR.getMessage());

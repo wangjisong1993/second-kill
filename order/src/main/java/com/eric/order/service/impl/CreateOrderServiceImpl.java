@@ -62,11 +62,13 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		// 计算金额
 		for (CreateOrderDetail detail : request.getDetails()) {
 			ProductMaster productMaster = productMasterService.findProductMasterById(detail.getProductId());
-			if (productMaster == null)
+			if (productMaster == null) {
 				throw new CustomException(OrderErrorCodeEnum.PRODUCT_NOT_FOUND.getMessage());
+			}
 			String warehouseId = warehouseProductService.findWarehouseId(request);
-			if (StringUtils.isBlank(warehouseId))
+			if (StringUtils.isBlank(warehouseId)) {
 				throw new CustomException(OrderErrorCodeEnum.STOCK_NOT_ENOUGH.getMessage());
+			}
 			OrderDetail orderDetail = new OrderDetail().setOrderDetailId(UUID.randomUUID().toString())
 					.setOrderId(orderId).setCreateTime(new Date()).setProductCnt(detail.getProductCnt())
 					.setProductId(detail.getProductId()).setProductName(productMaster.getProductName())
