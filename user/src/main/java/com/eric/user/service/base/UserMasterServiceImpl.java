@@ -6,6 +6,8 @@ import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.UserStatus;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.UserQueryRequest;
+import com.eric.seckill.common.model.feign.UserQueryResponse;
 import com.eric.user.bean.UserLoginLog;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.constant.ErrorCodeEnum;
@@ -15,6 +17,7 @@ import com.eric.user.exception.ExceptionName;
 import com.eric.user.model.*;
 import com.eric.user.service.*;
 import com.eric.user.utils.PasswordUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -143,6 +146,22 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 	@Override
 	public UserMaster findUserMasterByUserId(String userId) {
 		return this.baseMapper.selectById(userId);
+	}
+
+	@Override
+	public CommonResult<UserQueryResponse> findUserMaster(UserQueryRequest request) {
+		UserMaster userMaster = null;
+		if (StringUtils.isNotBlank(request.getLoginName())) {
+			userMaster = baseMapper.selectOne(new QueryWrapper<UserMaster>().eq("login_name", request.getLoginName()));
+		} else {
+			userMaster = baseMapper.selectOne(new QueryWrapper<UserMaster>().eq("user_id", request.getUserId()));
+		}
+		if (userMaster == null) {
+			return CommonResult.fail(ErrorCodeEnum.USER_NOT_FOUND.getErrorMsg(), ErrorCodeEnum.USER_NOT_FOUND.getErrorCode());
+		}
+		UserQueryResponse response = new UserQueryResponse();
+		dozerBeanMapper.map(userMaster, response);
+		return CommonResult.success(response, null);
 	}
 
 	/**

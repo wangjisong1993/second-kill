@@ -2,12 +2,12 @@ package com.eric.user;
 
 import com.alibaba.fastjson.JSON;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.utils.SignUtil;
 import com.eric.user.bean.UserActionLog;
 import com.eric.user.constant.BalanceSourceEnum;
 import com.eric.user.constant.UserPointSourceEnum;
 import com.eric.user.model.*;
 import com.eric.user.service.*;
-import com.eric.user.utils.SignUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;

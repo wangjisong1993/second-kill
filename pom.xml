@@ -20,6 +20,8 @@
         <module>coupon</module>
         <module>strategy</module>
         <module>event-center</module>
+        <module>eureka</module>
+        <module>zuul</module>
     </modules>
 
     <parent>

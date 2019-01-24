@@ -1,3 +1,15 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:12370/eureka/
+  instance:
+    preferIpAddress: true
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 3000
+  ConnectTimeout: 3000
+
 server:
   port: 12406
   context-path: /order
@@ -14,12 +26,14 @@ server:
 
 
 spring:
+  application:
+    name: order
   redis:
     host: 127.0.0.1
     port: 6379
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8"
+    url: "jdbc:mysql://localhost:3306/ec?useUnicode=true&characterEncoding=utf8"
     username: root
     password: 123456
     maxActive: 50
@@ -63,3 +77,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+order:
+  createOrder:
+    secret: 123

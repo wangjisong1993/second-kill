@@ -11,7 +11,12 @@ public enum ErrorCodeEnum {
 	SERVER_ERROR("服务器异常", "500"),
 	SECKILL_END("秒杀活动已结束", "250"),
 	GOODS_KILLED("秒杀成功", "502"),
-	SERVER_TIMEOUT("调用超时", "501");
+	ERROR_SIGN("签名不合法", "260"),
+	UPDATE_SUCCESS("更新成功", "0"),
+	UPDATE_FAIL("更新失败", "256"),
+	SAVE_ERROR("保存失败", "262"),
+	SERVER_TIMEOUT("调用超时", "501"),
+	USER_NOT_FOUND("找不到用户", "501");
 
 	/**
 	 * 定义的message

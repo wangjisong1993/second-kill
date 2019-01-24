@@ -1,3 +1,8 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:12370/eureka/
+
 server:
   port: 12402
   context-path: /member
@@ -14,6 +19,8 @@ server:
 
 
 spring:
+  application:
+    name: member
   redis:
     host: 127.0.0.1
     port: 6379
@@ -68,3 +75,8 @@ mybatis-plus:
 user:
   charge:
     secret: 123
+
+
+management:
+  security:
+    enabled: false

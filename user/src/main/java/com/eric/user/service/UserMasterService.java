@@ -1,6 +1,8 @@
 package com.eric.user.service;
 
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.UserQueryRequest;
+import com.eric.seckill.common.model.feign.UserQueryResponse;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.model.*;
 
@@ -44,4 +46,11 @@ public interface UserMasterService {
 	 * @return
 	 */
 	UserMaster findUserMasterByUserId(String userId);
+
+	/**
+	 * 查找用户信息
+	 * @param request
+	 * @return
+	 */
+	CommonResult<UserQueryResponse> findUserMaster(UserQueryRequest request);
 }

@@ -1,4 +1,4 @@
-package com.eric.user.utils;
+package com.eric.seckill.common.utils;
 
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,6 +20,18 @@ public class SignUtil {
 	}
 
 	public static final String[] DEFAULT_EXCLUDE = new String[]{"serialVersionUID", "sign"};
+
+	/**
+	 * 校验签名是否合法
+	 * @param obj
+	 * @param sign
+	 * @param appSecret
+	 * @return
+	 */
+	public static boolean verify(Object obj, String sign, String appSecret) {
+		String md5 = getSignForObject(obj, appSecret, DEFAULT_EXCLUDE);
+		return md5.equals(sign);
+	}
 
 	/**
 	 * 获取签名
