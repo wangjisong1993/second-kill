@@ -27,9 +27,11 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户, 主要提供用户注册, 修改信息, 注销等操作
+ *
  * @author wang.js on 2019/1/16.
  * @version 1.0
  */
@@ -150,7 +152,12 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 
 	@Override
 	public CommonResult<UserQueryResponse> findUserMaster(UserQueryRequest request) {
-		UserMaster userMaster = null;
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		UserMaster userMaster;
 		if (StringUtils.isNotBlank(request.getLoginName())) {
 			userMaster = baseMapper.selectOne(new QueryWrapper<UserMaster>().eq("login_name", request.getLoginName()));
 		} else {
@@ -166,6 +173,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 
 	/**
 	 * 保存用户登陆日志
+	 *
 	 * @param userLogin
 	 * @param verify
 	 */
