@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author wang.js on 2019/1/24.
  * @version 1.0
  */
-@FeignClient(name = "MEMBER", path = "/userMaster")
+@FeignClient(name = "MEMBER")
 public interface UserMasterFeign {
 
 	/**
@@ -21,7 +21,7 @@ public interface UserMasterFeign {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/find", method = RequestMethod.POST)
+	@RequestMapping(value = "/userMaster/find", method = RequestMethod.POST)
 	CommonResult<UserQueryResponse> findUserByUserIdOrLoginName(UserQueryRequest request);
 
 }
