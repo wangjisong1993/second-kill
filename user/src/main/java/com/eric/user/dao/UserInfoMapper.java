@@ -23,7 +23,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 	 * @param finalBalance
 	 * @return
 	 */
-	int updateUserBalance(@Param("userInfoId")String userInfoId, @Param("finalBalance") int finalBalance);
+	int updateUserBalance(@Param("userInfoId") String userInfoId, @Param("finalBalance") int finalBalance);
 
 	/**
 	 * 根据用户id查询用户信息id
@@ -31,4 +31,19 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 	 * @return
 	 */
 	String findUserInfoIdByUserId(@Param("userId")String userId);
+
+	/**
+	 * 根据用户信息id获取用户的积分
+	 * @param userInfoId
+	 * @return
+	 */
+	Integer findUserPointByUserInfoId(@Param("userInfoId") String userInfoId);
+
+	/**
+	 * 修改用户积分
+	 * @param userInfoId
+	 * @param finalPoint
+	 * @return
+	 */
+	int updateUserPoint(@Param("userInfoId") String userInfoId, @Param("finalPoint") int finalPoint);
 }

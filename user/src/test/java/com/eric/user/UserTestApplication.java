@@ -4,14 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserActionLog;
 import com.eric.user.constant.BalanceSourceEnum;
-import com.eric.user.model.ChargeBalanceRequest;
-import com.eric.user.model.ChargeBalanceResponse;
-import com.eric.user.model.RegisterUserRequest;
-import com.eric.user.model.UserAddressModifyRequest;
-import com.eric.user.service.ChargeBalanceService;
-import com.eric.user.service.UserActionLogService;
-import com.eric.user.service.UserAddressService;
-import com.eric.user.service.UserMasterService;
+import com.eric.user.constant.UserPointSourceEnum;
+import com.eric.user.model.*;
+import com.eric.user.service.*;
 import com.eric.user.utils.SignUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,14 +41,29 @@ public class UserTestApplication {
 	@Value("${user.charge.secret}")
 	private String appSecret;
 
+	@Resource
+	private UserPointService userPointService;
+
+	@Test
+	public void t5() {
+		UserPointChangeRequest request = new UserPointChangeRequest();
+		String outTradeNo = "5";
+		request.setChangePoint(-10).setCreateTime(new Date()).setOutTradeNo(outTradeNo)
+				.setPointSource(UserPointSourceEnum.USER_CHARGE.getSourceType())
+				.setUserId("f2414da0-9b78-4152-955f-049c398d3990");
+		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
+		CommonResult<UserPointChangeResponse> response = userPointService.changePoint(request);
+		System.out.println(JSON.toJSONString(response));
+	}
+
 	@Test
 	public void t4() {
 		ChargeBalanceRequest request = new ChargeBalanceRequest();
 		request.setChargeAmount(1000);
-		request.setChargeUserId("1c2e495f-c7e6-4009-a5a9-332a8219c3f0");
+		request.setChargeUserId("f2414da0-9b78-4152-955f-049c398d3990");
 		request.setCreateTime(new Date());
 		request.setOutTradeNo("12345678912");
-		request.setPayUserId("1c2e495f-c7e6-4009-a5a9-332a8219c3f0");
+		request.setPayUserId("f2414da0-9b78-4152-955f-049c398d3990");
 		request.setSource(BalanceSourceEnum.USER_CHARGE.getSourceType());
 		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
 		CommonResult<ChargeBalanceResponse> charge = chargeBalanceService.charge(request);

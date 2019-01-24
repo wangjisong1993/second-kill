@@ -1,11 +1,9 @@
 package com.eric.user.service.impl;
 
 import com.eric.seckill.cache.anno.ParamCheck;
-import com.eric.seckill.common.constant.UserStatus;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserBalanceLog;
-import com.eric.user.bean.UserMaster;
 import com.eric.user.constant.ErrorCodeEnum;
 import com.eric.user.model.ChargeBalanceRequest;
 import com.eric.user.model.ChargeBalanceResponse;
@@ -28,7 +26,7 @@ import java.util.UUID;
  * @version 1.0
  */
 @Service
-public class ChargeBalanceServiceImpl implements ChargeBalanceService {
+public class ChargeBalanceServiceImpl extends BaseUserStatsService implements ChargeBalanceService {
 
 	@Value("${user.charge.secret}")
 	private String appSecret;
@@ -57,7 +55,7 @@ public class ChargeBalanceServiceImpl implements ChargeBalanceService {
 			return CommonResult.fail(ErrorCodeEnum.DUPLICATE.getErrorMsg(), ErrorCodeEnum.DUPLICATE.getErrorCode());
 		}
 		// 判断用户是否是有效状态
-		checkUserActive(request);
+		checkUserActive(request.getChargeUserId());
 		// 保存充值记录
 		UserBalanceLog t = new UserBalanceLog().setChangeAmount(request.getChargeAmount()).setCreateTime(new Date())
 				.setId(UUID.randomUUID().toString()).setSource(request.getSource()).setSourceSn(request.getOutTradeNo())
@@ -71,19 +69,4 @@ public class ChargeBalanceServiceImpl implements ChargeBalanceService {
 		return CommonResult.success(response, "充值成功");
 	}
 
-	/**
-	 * 判断用户是否是有效状态
-	 * @param request
-	 */
-	private void checkUserActive(ChargeBalanceRequest request) {
-		UserMaster user = userMasterService.findUserMasterByUserId(request.getChargeUserId());
-		if (user == null) {
-			throw new CustomException(ErrorCodeEnum.USER_NOT_FOUND.getErrorMsg());
-		}
-		if (UserStatus.DISACTIVE.getStatusCode().equals(user.getUserStats())) {
-			throw new CustomException(ErrorCodeEnum.ACCOUNT_FREEZE.getErrorMsg());
-		} else if (UserStatus.DISACTIVE.getStatusCode().equals(user.getUserStats())) {
-			throw new CustomException(ErrorCodeEnum.ACCOUNT_DISACTIVE.getErrorMsg());
-		}
-	}
 }

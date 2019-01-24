@@ -1,5 +1,6 @@
 package com.eric.user.service.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.user.bean.UserPointLog;
 import com.eric.user.dao.UserPointLogMapper;
@@ -14,4 +15,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserPointLogServiceImpl extends ServiceImpl<UserPointLogMapper, UserPointLog> implements UserPointLogService {
+
+	@Override
+	public Integer checkExistByOutTradeNo(String outTradeNo) {
+		return baseMapper.selectCount(new QueryWrapper<UserPointLog>().eq("refer_number", outTradeNo));
+	}
+
+	@Override
+	public Integer insert(UserPointLog log) {
+		return baseMapper.insert(log);
+	}
+
 }

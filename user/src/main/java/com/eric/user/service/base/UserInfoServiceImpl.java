@@ -10,9 +10,7 @@ import com.eric.user.bean.UserInfo;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.constant.ErrorCodeEnum;
 import com.eric.user.dao.UserInfoMapper;
-import com.eric.user.model.ChargeBalanceRequest;
-import com.eric.user.model.ChargeBalanceResponse;
-import com.eric.user.model.UserInfoModifyRequest;
+import com.eric.user.model.*;
 import com.eric.user.service.BaseService;
 import com.eric.user.service.UserInfoService;
 import com.eric.user.service.UserLevelDetailService;
@@ -97,14 +95,30 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 	public ChargeBalanceResponse updateUserBalance(ChargeBalanceRequest request) {
 		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getChargeUserId());
 		Integer balance = baseMapper.findUserBalanceByUserInfoId(userInfoId);
+		balance = balance == null ? 0 : balance;
 		int finalBalance = BigDecimal.valueOf(balance).add(new BigDecimal(request.getChargeAmount())).intValue();
 		if (finalBalance < 0) {
 			throw new CustomException(ErrorCodeEnum.BALANCE_NOT_ENOUGH.getErrorMsg());
 		}
-		int effect = baseMapper.updateUserBalance(userInfoId, finalBalance);
+		int effect = baseMapper.updateUserBalance(userInfoId, request.getChargeAmount());
 		if (effect == 0) {
 			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg());
 		}
 		return new ChargeBalanceResponse().setUserBalance(String.valueOf(finalBalance));
+	}
+
+	@Override
+	public UserPointChangeResponse updateUserPoint(UserPointChangeRequest request) {
+		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getUserId());
+		Integer point = baseMapper.findUserPointByUserInfoId(userInfoId);
+		int finalPoint = BigDecimal.valueOf(point).add(new BigDecimal(request.getChangePoint())).intValue();
+		if (finalPoint < 0) {
+			throw new CustomException(ErrorCodeEnum.BALANCE_NOT_ENOUGH.getErrorMsg());
+		}
+		int effect = baseMapper.updateUserPoint(userInfoId, request.getChangePoint());
+		if (effect == 0) {
+			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg());
+		}
+		return new UserPointChangeResponse().setFinalPoint(String.valueOf(finalPoint));
 	}
 }

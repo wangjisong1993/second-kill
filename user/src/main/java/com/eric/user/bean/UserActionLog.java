@@ -1,5 +1,6 @@
 package com.eric.user.bean;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class UserActionLog implements Serializable {
 	/**
 	 * 数据库主键
 	 */
+	@TableId
 	private String actionLogId;
 
 	/**

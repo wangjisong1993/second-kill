@@ -2,9 +2,7 @@ package com.eric.user.service;
 
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.user.bean.UserMaster;
-import com.eric.user.model.ChargeBalanceRequest;
-import com.eric.user.model.ChargeBalanceResponse;
-import com.eric.user.model.UserInfoModifyRequest;
+import com.eric.user.model.*;
 
 /**
  * @author wang.js on 2019/1/16.
@@ -40,4 +38,11 @@ public interface UserInfoService {
 	 * @return
 	 */
 	ChargeBalanceResponse updateUserBalance(ChargeBalanceRequest request);
+
+	/**
+	 * 积分变更
+	 * @param request
+	 * @return
+	 */
+	UserPointChangeResponse updateUserPoint(UserPointChangeRequest request);
 }
