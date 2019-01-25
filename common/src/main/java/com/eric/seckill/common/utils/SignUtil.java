@@ -2,6 +2,8 @@ package com.eric.seckill.common.utils;
 
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -21,6 +23,8 @@ public class SignUtil {
 
 	public static final String[] DEFAULT_EXCLUDE = new String[]{"serialVersionUID", "sign"};
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SignUtil.class);
+
 	/**
 	 * 校验签名是否合法
 	 * @param obj
@@ -30,7 +34,13 @@ public class SignUtil {
 	 */
 	public static boolean verify(Object obj, String sign, String appSecret) {
 		String md5 = getSignForObject(obj, appSecret, DEFAULT_EXCLUDE);
-		return md5.equals(sign);
+		boolean equals = md5.equals(sign);
+		if (!equals) {
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("签名不一致, 正确的签名:{}, 传入的签名:{}", md5, sign);
+			}
+		}
+		return equals;
 	}
 
 	/**

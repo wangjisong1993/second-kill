@@ -32,6 +32,9 @@ public class PayingOrderRequest {
 	@NotNull(message = "支付金额不能为空")
 	private Integer paymentMoney;
 
+	@NotBlank(message = "支付方式")
+	private String payMethod;
+
 	/**
 	 * 签名
 	 */

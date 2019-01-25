@@ -56,7 +56,7 @@ public class UseCouponServiceImpl extends BaseOrderService implements UseCouponS
 			return CommonResult.fail(ErrorCodeEnum.SERVER_ERROR.getMessage(), ErrorCodeEnum.SERVER_ERROR.getErrCode());
 		}
 		Integer paymentMoney = orderMasterService.findPaymentMoneyByOrderId(request.getOrderId());
-		UseCouponResponse response = new UseCouponResponse().setOrderSn(request.getOrderSn())
+		UseCouponResponse response = new UseCouponResponse().setOrderId(request.getOrderId())
 				.setUserId(request.getUserId());
 		BigDecimal shouldPay = new BigDecimal(paymentMoney);
 		List<String> failList = new ArrayList<>();

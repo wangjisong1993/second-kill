@@ -18,12 +18,6 @@ import java.util.List;
 public class UseCouponRequest {
 
 	/**
-	 * 订单号
-	 */
-	@NotBlank(message = "订单号不能为空")
-	private String orderSn;
-
-	/**
 	 * 订单id
 	 */
 	@NotBlank(message = "订单id不能为空")

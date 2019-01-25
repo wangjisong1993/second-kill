@@ -39,6 +39,14 @@
             <artifactId>org.apache.commons.codec</artifactId>
             <version>1.8</version>
         </dependency>
+
+        <!-- 日志包...开始 -->
+        <!-- log配置：Log4j2 + Slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- 日志包...结束 -->
     </dependencies>
 
     <build>

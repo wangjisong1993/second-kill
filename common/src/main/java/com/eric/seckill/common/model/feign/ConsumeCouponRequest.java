@@ -20,9 +20,6 @@ public class ConsumeCouponRequest {
 	@NotBlank(message = "订单id不能为空")
 	private String orderId;
 
-	@NotBlank(message = "订单号不能为空")
-	private String orderSn;
-
 	@NotBlank(message = "签名不能为空")
 	private String sign;
 }

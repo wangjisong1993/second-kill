@@ -60,27 +60,28 @@ public class OrderSuccessServiceImpl extends BaseOrderService implements OrderSu
 		}
 		// 修改订单状态
 		OrderMaster t = new OrderMaster().setOrderId(request.getOrderId()).setOrderStatus(OrderStatusEnum.PAY_SUCCESS.getOrderStatusCode())
-				.setUpdateTime(new Date()).setOrderPoint(request.getPaymentMoney());
+				.setUpdateTime(new Date()).setOrderPoint(request.getPaymentMoney()).setPayTime(new Date());
 		orderMasterService.updateOrderSuccess(t);
 		// 赠送积分和消费优惠券
-		changePointAndConsumeCoupon(t);
+		changePointAndConsumeCoupon(t, request);
 		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 	}
 
 	/**
 	 * 赠送积分和消费优惠券
 	 * @param t
+	 * @param request
 	 */
-	private void changePointAndConsumeCoupon(OrderMaster t) {
+	private void changePointAndConsumeCoupon(OrderMaster t, OrderSuccessRequest request) {
 		// 保存积分变动记录
 		ChangePointRequest changePointRequest = new ChangePointRequest().setChangePoint(t.getOrderPoint())
 				.setPointSource(UserPointSourceEnum.ORDER_PRESENT.getSourceType())
-				.setReferNumber(t.getOrderId()).setUserId(t.getUserId());
+				.setReferNumber(request.getOrderId()).setUserId(request.getUserId());
 		changePointRequest.setSign(getSign(changePointRequest));
 		userInfoFeign.changePoint(changePointRequest);
 		// 核销优惠券
-		ConsumeCouponRequest consumeCouponRequest = new ConsumeCouponRequest().setOrderId(t.getOrderId())
-				.setOrderSn(t.getOrderSn()).setUserId(t.getUserId());
+		ConsumeCouponRequest consumeCouponRequest = new ConsumeCouponRequest().setOrderId(request.getOrderId())
+				.setUserId(request.getUserId());
 		consumeCouponRequest.setSign(getSign(consumeCouponRequest));
 		couponMasterFeign.consume(consumeCouponRequest);
 	}

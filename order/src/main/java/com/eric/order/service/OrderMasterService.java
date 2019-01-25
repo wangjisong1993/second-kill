@@ -48,9 +48,10 @@ public interface OrderMasterService {
 	/**
 	 * 标记订单状态为正在支付
 	 * @param orderId
+	 * @param payMethod
 	 * @return
 	 */
-	int updateOrderPaying(String orderId);
+	int updateOrderPaying(String orderId, String payMethod);
 
 	/**
 	 * 修改订单状态为支付完成

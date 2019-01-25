@@ -48,7 +48,7 @@ public class PayingOrderServiceImpl extends BaseOrderService implements PayingOr
 			return CommonResult.fail(OrderErrorCodeEnum.PAYMENT_MONEY_ERROR.getMessage(), OrderErrorCodeEnum.PAYMENT_MONEY_ERROR.getErrCode());
 		}
 		// 允许支付, 修改订单状态
-		orderMasterService.updateOrderPaying(request.getOrderId());
+		orderMasterService.updateOrderPaying(request.getOrderId(), request.getPayMethod());
 		PayingOrderResponse response = new PayingOrderResponse().setOutTradeNo(UUID.randomUUID().toString());
 		return CommonResult.success(response, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 	}

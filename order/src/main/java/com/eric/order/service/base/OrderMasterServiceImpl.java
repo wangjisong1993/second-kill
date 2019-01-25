@@ -51,9 +51,9 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 	}
 
 	@Override
-	public int updateOrderPaying(String orderId) {
+	public int updateOrderPaying(String orderId, String payMethod) {
 		OrderMaster t = new OrderMaster().setOrderId(orderId).setOrderStatus(OrderStatusEnum.PAYING.getOrderStatusCode())
-				.setUpdateTime(new Date());
+				.setUpdateTime(new Date()).setPaymentMethod(payMethod);
 		return baseMapper.updateById(t);
 	}
 

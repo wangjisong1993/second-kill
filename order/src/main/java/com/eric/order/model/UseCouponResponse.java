@@ -26,9 +26,9 @@ public class UseCouponResponse {
 	 */
 	private List<String> useFail;
 	/**
-	 * 订单号
+	 * 订单id
 	 */
-	private String orderSn;
+	private String orderId;
 	/**
 	 * 最后实付金额
 	 */
