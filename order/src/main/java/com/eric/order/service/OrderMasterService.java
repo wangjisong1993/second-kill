@@ -37,4 +37,18 @@ public interface OrderMasterService {
 	 * @param orderId
 	 */
 	void updatePaymentMoney(int shouldPay, int couponMoney, String orderId);
+
+	/**
+	 * 根据订单id获取订单详情
+	 * @param orderId
+	 * @return
+	 */
+	OrderMaster findOrderMasterByOrderId(String orderId);
+
+	/**
+	 * 标记订单状态为正在支付
+	 * @param orderId
+	 * @return
+	 */
+	int updateOrderPaying(String orderId);
 }

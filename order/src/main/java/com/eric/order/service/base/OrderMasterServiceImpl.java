@@ -3,6 +3,7 @@ package com.eric.order.service.base;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.order.bean.OrderMaster;
+import com.eric.order.constant.OrderStatusEnum;
 import com.eric.order.dao.OrderMasterMapper;
 import com.eric.order.service.OrderMasterService;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
@@ -42,6 +43,18 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 		if (!effect) {
 			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getMessage());
 		}
+	}
+
+	@Override
+	public OrderMaster findOrderMasterByOrderId(String orderId) {
+		return baseMapper.findOrderMasterByOrderId(orderId);
+	}
+
+	@Override
+	public int updateOrderPaying(String orderId) {
+		OrderMaster t = new OrderMaster().setOrderId(orderId).setOrderStatus(OrderStatusEnum.PAYING.getOrderStatusCode())
+				.setUpdateTime(new Date());
+		return baseMapper.updateById(t);
 	}
 
 }

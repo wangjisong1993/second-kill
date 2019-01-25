@@ -23,4 +23,11 @@ public interface OrderMasterMapper extends BaseMapper<OrderMaster> {
 	 * @return
 	 */
 	Integer findPaymentMoneyByOrderId(@Param("orderId") String orderId);
+
+	/**
+	 * 根据订单id获取订单详情
+	 * @param orderId
+	 * @return
+	 */
+	OrderMaster findOrderMasterByOrderId(@Param("orderId") String orderId);
 }

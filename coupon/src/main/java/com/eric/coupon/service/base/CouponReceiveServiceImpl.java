@@ -7,6 +7,7 @@ import com.eric.coupon.bean.CouponTemplate;
 import com.eric.coupon.constant.CouponErrorCodeEnum;
 import com.eric.coupon.constant.CouponStatusEnum;
 import com.eric.coupon.dao.CouponReceiveMapper;
+import com.eric.coupon.service.CouponLogsService;
 import com.eric.coupon.service.CouponReceiveService;
 import com.eric.coupon.service.CouponTemplateService;
 import com.eric.seckill.cache.anno.ParamCheck;
@@ -42,6 +43,9 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 
 	@Resource
 	private CouponTemplateService couponTemplateService;
+
+	@Resource
+	private CouponLogsService couponLogsService;
 
 	@Value("${coupon.receive.secret}")
 	private String appSecret;
@@ -106,6 +110,8 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 		}
 		boolean b = updateBatchById(updateList);
 		if (b) {
+			// 保存优惠券消费记录
+			couponLogsService.insertBatch(updateList, request);
 			return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 		}
 		throw new CustomException(CouponErrorCodeEnum.UPDATE_FAIL.getMessage());

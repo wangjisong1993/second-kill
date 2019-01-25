@@ -17,4 +17,12 @@
         WHERE
             order_id = #{orderId} FOR UPDATE
     </select>
+    <select id="findOrderMasterByOrderId" resultType="com.eric.order.bean.OrderMaster">
+        SELECT
+            payment_money, order_status
+        FROM
+            order_master
+        WHERE
+            order_id = #{orderId} FOR UPDATE
+    </select>
 </mapper>

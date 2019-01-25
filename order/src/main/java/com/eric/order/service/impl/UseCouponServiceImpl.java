@@ -90,7 +90,7 @@ public class UseCouponServiceImpl extends BaseOrderService implements UseCouponS
 			return;
 		}
 		UsingCouponRequest usingCouponRequest = new UsingCouponRequest().setCouponSns(successList)
-				.setUserId(request.getUserId());
+				.setUserId(request.getUserId()).setOrderId(request.getOrderId());
 		usingCouponRequest.setSign(getSign(usingCouponRequest));
 		CommonResult<Void> commonResult = couponMasterFeign.markAsUsing(usingCouponRequest);
 		if (commonResult == null || !commonResult.isSuccess()) {

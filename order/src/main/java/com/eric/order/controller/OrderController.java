@@ -1,11 +1,9 @@
 package com.eric.order.controller;
 
 import com.eric.order.feign.UserMasterFeign;
-import com.eric.order.model.CreateOrderRequest;
-import com.eric.order.model.CreateOrderResponse;
-import com.eric.order.model.UseCouponRequest;
-import com.eric.order.model.UseCouponResponse;
+import com.eric.order.model.*;
 import com.eric.order.service.CreateOrderService;
+import com.eric.order.service.PayingOrderService;
 import com.eric.order.service.UseCouponService;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
@@ -34,6 +32,9 @@ public class OrderController {
 	@Resource
 	private UseCouponService useCouponService;
 
+	@Resource
+	private PayingOrderService payingOrderService;
+
 	/**
 	 * 创建订单
 	 * @param request
@@ -54,6 +55,17 @@ public class OrderController {
 	@LogDetail
 	public CommonResult<UseCouponResponse> useCoupon(@RequestBody UseCouponRequest request) {
 		return useCouponService.useCoupon(request);
+	}
+
+	/**
+	 * 订单支付中
+	 * @param request
+	 * @return
+	 */
+	@LogDetail
+	@PostMapping("/payingOrder")
+	public CommonResult<PayingOrderResponse> payingOrder(@RequestBody PayingOrderRequest request) {
+		return payingOrderService.payingOrder(request);
 	}
 
 	/**
