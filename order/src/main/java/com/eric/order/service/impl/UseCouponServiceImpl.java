@@ -2,19 +2,25 @@ package com.eric.order.service.impl;
 
 import com.eric.order.constant.OrderErrorCodeEnum;
 import com.eric.order.constant.OrderStatusEnum;
+import com.eric.order.feign.CouponMasterFeign;
 import com.eric.order.model.UseCouponRequest;
 import com.eric.order.model.UseCouponResponse;
 import com.eric.order.service.OrderMasterService;
 import com.eric.order.service.UseCouponService;
 import com.eric.seckill.cache.anno.ParamCheck;
+import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 顾客用券
@@ -28,6 +34,9 @@ public class UseCouponServiceImpl extends BaseOrderService implements UseCouponS
 	@Resource
 	private OrderMasterService orderMasterService;
 
+	@Resource
+	private CouponMasterFeign couponMasterFeign;
+
 	@Override
 	@ParamCheck
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -39,10 +48,30 @@ public class UseCouponServiceImpl extends BaseOrderService implements UseCouponS
 		// 校验订单状态是否是新建状态
 		checkOrderStatus(request);
 		// 校验优惠券是否正常
-		for (String couponNumber : request.getCouponNumbers()) {
-			
+		CommonResult<List<CouponQueryResponse>> result = couponMasterFeign.findCoupon(request.getCouponNumbers());
+		if (result == null || !result.isSuccess()) {
+			return CommonResult.fail(ErrorCodeEnum.SERVER_ERROR.getMessage(), ErrorCodeEnum.SERVER_ERROR.getErrCode());
 		}
-		return null;
+		Integer paymentMoney = orderMasterService.findPaymentMoneyByOrderId(request.getOrderId());
+		UseCouponResponse response = new UseCouponResponse().setOrderSn(request.getOrderSn())
+				.setUserId(request.getUserId());
+		BigDecimal shouldPay = new BigDecimal(paymentMoney);
+		List<String> failList = new ArrayList<>();
+		List<String> successList = new ArrayList<>();
+		BigDecimal couponMoney = new BigDecimal(0);
+		for (CouponQueryResponse coupon : result.getData()) {
+			if (paymentMoney < coupon.getFullMoney() || !coupon.isCanUse()) {
+				failList.add(coupon.getCouponSn());
+				continue;
+			}
+			successList.add(coupon.getCouponSn());
+			shouldPay = shouldPay.subtract(new BigDecimal(coupon.getMoney()));
+			couponMoney = couponMoney.add(new BigDecimal(coupon.getMoney()));
+		}
+		// 更新订单应付金额
+		orderMasterService.updatePaymentMoney(shouldPay.intValue(), couponMoney.intValue(), request.getOrderId());
+		response.setShouldPay(shouldPay.intValue()).setUseFail(failList).setUseSuccess(successList);
+		return CommonResult.success(response, OrderErrorCodeEnum.USE_COUPON_SUCCESS.getMessage());
 	}
 
 	/**

@@ -22,4 +22,19 @@ public interface OrderMasterService {
 	 * @return
 	 */
 	String findOrderStatusByOrderId(String orderSn);
+
+	/**
+	 * 根据订单id获取订单的应付金额
+	 * @param orderId
+	 * @return
+	 */
+	Integer findPaymentMoneyByOrderId(String orderId);
+
+	/**
+	 * 更新订单用券情况
+	 * @param shouldPay
+	 * @param couponMoney
+	 * @param orderId
+	 */
+	void updatePaymentMoney(int shouldPay, int couponMoney, String orderId);
 }

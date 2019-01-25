@@ -9,4 +9,12 @@
         WHERE
             order_id = #{orderId} FOR UPDATE
     </select>
+    <select id="findPaymentMoneyByOrderId" resultType="java.lang.Integer">
+        SELECT
+            payment_money
+        FROM
+            order_master
+        WHERE
+            order_id = #{orderId} FOR UPDATE
+    </select>
 </mapper>
