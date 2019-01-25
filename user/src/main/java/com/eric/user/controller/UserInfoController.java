@@ -1,6 +1,7 @@
 package com.eric.user.controller;
 
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ChangePointRequest;
 import com.eric.user.model.UserInfoModifyRequest;
 import com.eric.user.service.UserInfoService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,5 +30,14 @@ public class UserInfoController {
 	@PostMapping("/update")
 	public CommonResult<Void> updateUserInfo(@RequestBody UserInfoModifyRequest userInfo) {
 		return userInfoService.updateUserInfo(userInfo);
+	}
+
+	/**
+	 * 积分变动
+	 * @return
+	 */
+	@PostMapping("/changePoint")
+	public CommonResult<Void> changePoint(@RequestBody ChangePointRequest request) {
+		return userInfoService.changePoint(request);
 	}
 }

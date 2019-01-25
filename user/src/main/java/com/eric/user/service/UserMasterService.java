@@ -53,4 +53,11 @@ public interface UserMasterService {
 	 * @return
 	 */
 	CommonResult<UserQueryResponse> findUserMaster(UserQueryRequest request);
+
+	/**
+	 * 根据用户id获取用户状态
+	 * @param userId
+	 * @return
+	 */
+	String findUserStatsByUserId(String userId);
 }

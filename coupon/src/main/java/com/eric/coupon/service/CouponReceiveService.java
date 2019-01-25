@@ -2,6 +2,7 @@ package com.eric.coupon.service;
 
 import com.eric.coupon.bean.CouponReceive;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 
@@ -23,6 +24,7 @@ public interface CouponReceiveService {
 
 	/**
 	 * 批量保存
+	 *
 	 * @param couponReceives
 	 * @param couponNum
 	 */
@@ -30,8 +32,16 @@ public interface CouponReceiveService {
 
 	/**
 	 * 标记优惠券状态为正在使用中
+	 *
 	 * @param request
 	 * @return
 	 */
-	CommonResult<List<Void>> markAsUsing(UsingCouponRequest request);
+	CommonResult<Void> markAsUsing(UsingCouponRequest request);
+
+	/**
+	 * 消费优惠券
+	 * @param request
+	 * @return
+	 */
+	CommonResult<Void> consume(ConsumeCouponRequest request);
 }

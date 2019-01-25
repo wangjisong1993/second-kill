@@ -15,6 +15,7 @@ public enum OrderErrorCodeEnum {
 	USE_COUPON_FAIL("用券失败", "255"),
 	ORDER_NOT_FOUND("订单不存在", "256"),
 	PAYMENT_MONEY_ERROR("支付金额不正确", "257"),
+	ORDER_NOT_PAYING("订单状态不是支付中", "258"),
 	;
 	/**
 	 * 定义的message

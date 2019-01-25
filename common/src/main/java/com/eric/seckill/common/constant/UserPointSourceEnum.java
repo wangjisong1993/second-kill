@@ -1,11 +1,13 @@
-package com.eric.user.constant;
+package com.eric.seckill.common.constant;
 
 /**
  * @author wang.js on 2019/1/24.
  * @version 1.0
  */
 public enum UserPointSourceEnum {
-	USER_CHARGE("用户充值赠送积分", "1");
+	USER_CHARGE("用户充值赠送积分", "1"),
+	ORDER_PRESENT("用户下单赠送", "2"),
+	;
 
 	/**
 	 * 来源描述

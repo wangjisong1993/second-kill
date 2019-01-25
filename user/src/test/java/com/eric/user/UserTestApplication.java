@@ -1,11 +1,11 @@
 package com.eric.user;
 
 import com.alibaba.fastjson.JSON;
+import com.eric.seckill.common.constant.UserPointSourceEnum;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.utils.SignUtil;
 import com.eric.user.bean.UserActionLog;
 import com.eric.user.constant.BalanceSourceEnum;
-import com.eric.user.constant.UserPointSourceEnum;
 import com.eric.user.model.*;
 import com.eric.user.service.*;
 import org.junit.Test;

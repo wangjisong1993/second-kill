@@ -1,6 +1,7 @@
 package com.eric.user.service;
 
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ChangePointRequest;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.model.*;
 
@@ -45,4 +46,11 @@ public interface UserInfoService {
 	 * @return
 	 */
 	UserPointChangeResponse updateUserPoint(UserPointChangeRequest request);
+
+	/**
+	 * 积分变动
+	 * @param request
+	 * @return
+	 */
+	CommonResult<Void> changePoint(ChangePointRequest request);
 }

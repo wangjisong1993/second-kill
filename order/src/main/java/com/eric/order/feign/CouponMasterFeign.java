@@ -1,6 +1,7 @@
 package com.eric.order.feign;
 
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -19,6 +20,7 @@ public interface CouponMasterFeign {
 
 	/**
 	 * 获取优惠券信息
+	 *
 	 * @param couponSns
 	 * @return
 	 */
@@ -27,9 +29,19 @@ public interface CouponMasterFeign {
 
 	/**
 	 * 标记优惠券状态为正在使用中
+	 *
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/couponMaster/markAsUsing", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	CommonResult<Void> markAsUsing(@RequestBody UsingCouponRequest request);
+
+	/**
+	 * 标记优惠券为已使用
+	 *
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/couponMaster/consume", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	CommonResult<Void> consume(@RequestBody ConsumeCouponRequest request);
 }

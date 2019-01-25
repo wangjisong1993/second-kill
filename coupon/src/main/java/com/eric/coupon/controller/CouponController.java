@@ -5,6 +5,7 @@ import com.eric.coupon.service.CouponReceiveService;
 import com.eric.coupon.service.UserReceiveCouponService;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,8 +52,20 @@ public class CouponController {
 	 */
 	@PostMapping("/markAsUsing")
 	@LogDetail
-	public CommonResult<List<Void>> markAsUsing(@RequestBody UsingCouponRequest request) {
+	public CommonResult<Void> markAsUsing(@RequestBody UsingCouponRequest request) {
 		return couponReceiveService.markAsUsing(request);
+	}
+
+	/**
+	 * 标记优惠券为已使用
+	 *
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/consume")
+	@LogDetail
+	public CommonResult<Void> consume(@RequestBody ConsumeCouponRequest request) {
+		return couponReceiveService.consume(request);
 	}
 
 	/**

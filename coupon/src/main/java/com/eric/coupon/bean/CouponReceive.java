@@ -59,6 +59,10 @@ public class CouponReceive implements Serializable {
 	 * 状态，1为已使用，0为已领取未使用，-1为已过期
 	 */
 	private String status;
+	/**
+	 * 订单id
+	 */
+	private String orderId;
 
 	private static final long serialVersionUID = 1L;
 

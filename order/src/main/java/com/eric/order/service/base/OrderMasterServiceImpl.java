@@ -57,4 +57,9 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 		return baseMapper.updateById(t);
 	}
 
+	@Override
+	public boolean updateOrderSuccess(OrderMaster t) {
+		return updateById(t);
+	}
+
 }

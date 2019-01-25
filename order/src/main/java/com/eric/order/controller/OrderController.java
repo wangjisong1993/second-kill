@@ -3,6 +3,7 @@ package com.eric.order.controller;
 import com.eric.order.feign.UserMasterFeign;
 import com.eric.order.model.*;
 import com.eric.order.service.CreateOrderService;
+import com.eric.order.service.OrderSuccessService;
 import com.eric.order.service.PayingOrderService;
 import com.eric.order.service.UseCouponService;
 import com.eric.seckill.cache.anno.LogDetail;
@@ -35,8 +36,12 @@ public class OrderController {
 	@Resource
 	private PayingOrderService payingOrderService;
 
+	@Resource
+	private OrderSuccessService orderSuccessService;
+
 	/**
 	 * 创建订单
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -48,6 +53,7 @@ public class OrderController {
 
 	/**
 	 * 顾客用券
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -59,6 +65,7 @@ public class OrderController {
 
 	/**
 	 * 订单支付中
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -66,6 +73,18 @@ public class OrderController {
 	@PostMapping("/payingOrder")
 	public CommonResult<PayingOrderResponse> payingOrder(@RequestBody PayingOrderRequest request) {
 		return payingOrderService.payingOrder(request);
+	}
+
+	/**
+	 * 订单支付完成
+	 *
+	 * @param request
+	 * @return
+	 */
+	@LogDetail
+	@PostMapping("/orderSuccess")
+	public CommonResult<Void> orderSuccess(@RequestBody OrderSuccessRequest request) {
+		return orderSuccessService.orderSuccess(request);
 	}
 
 	/**

@@ -51,4 +51,11 @@ public interface OrderMasterService {
 	 * @return
 	 */
 	int updateOrderPaying(String orderId);
+
+	/**
+	 * 修改订单状态为支付完成
+	 * @param t
+	 * @return
+	 */
+	boolean updateOrderSuccess(OrderMaster t);
 }

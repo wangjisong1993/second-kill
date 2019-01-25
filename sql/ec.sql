@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-01-25 16:29:33
+Date: 2019-01-25 18:09:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,13 +42,10 @@ CREATE TABLE `brand_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `coupon_logs`;
 CREATE TABLE `coupon_logs` (
-  `id` varchar(20) NOT NULL COMMENT '自动增加ID',
-  `user_id` varchar(20) DEFAULT NULL COMMENT '买家ID',
-  `coupon_receive_id` varchar(20) DEFAULT NULL COMMENT '优惠券id',
-  `order_number` varchar(64) DEFAULT NULL COMMENT '订单号',
-  `order_original_amount` int(12) DEFAULT NULL COMMENT '原订单金额',
-  `coupon_amount` int(11) DEFAULT NULL COMMENT '优惠券的金额',
-  `order_final_amount` int(12) DEFAULT NULL COMMENT '抵扣优惠券之后的订单金额',
+  `id` varchar(40) NOT NULL COMMENT '自动增加ID',
+  `user_id` varchar(40) DEFAULT NULL COMMENT '买家ID',
+  `coupon_receive_id` varchar(40) DEFAULT NULL COMMENT '优惠券id',
+  `order_id` varchar(64) DEFAULT NULL COMMENT '订单号',
   `create_time` datetime DEFAULT NULL COMMENT '领取时间',
   `status` varchar(2) DEFAULT '0' COMMENT '日志状态: 默认为0，支付回调成功后为1',
   PRIMARY KEY (`id`)
@@ -57,6 +54,7 @@ CREATE TABLE `coupon_logs` (
 -- ----------------------------
 -- Records of coupon_logs
 -- ----------------------------
+INSERT INTO `coupon_logs` VALUES ('9b9f8ec2-c4b2-45cc-8636-48b8e1f38fc0', 'd629c855-d147-4701-b0e9-383b27bb5126', '0252c706-2d4e-4512-90cc-a790454eb0ea', null, '2019-01-25 17:09:45', '2');
 
 -- ----------------------------
 -- Table structure for coupon_receive
@@ -72,22 +70,23 @@ CREATE TABLE `coupon_receive` (
   `status` varchar(2) DEFAULT NULL COMMENT '状态，1为已使用，0为已领取未使用，-1为已过期',
   `coupon_sn` varchar(40) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `order_id` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券领取记录表';
 
 -- ----------------------------
 -- Records of coupon_receive
 -- ----------------------------
-INSERT INTO `coupon_receive` VALUES ('0252c706-2d4e-4512-90cc-a790454eb0ea', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '2', 'c7b4b870-8a1b-4a9d-9666-d3d1246ab8d9', '2019-01-25 16:22:45');
-INSERT INTO `coupon_receive` VALUES ('20204bc5-7528-4ee1-965c-f8cb91ca9e0d', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '4434b989-64ea-4f57-9a08-69dede4027a8', null);
-INSERT INTO `coupon_receive` VALUES ('2a5a596a-2706-4210-87b3-4c3baac7926e', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '34ff07d5-0606-4fbc-8c5a-1ac92802aa22', null);
-INSERT INTO `coupon_receive` VALUES ('6c6ccb45-d589-47c3-b28e-bd464bfed05f', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '1d725315-328a-4e34-9c37-afa02f86822a', null);
-INSERT INTO `coupon_receive` VALUES ('6f34dec5-391b-45e0-9c85-cbb2cecf40ea', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '530eed32-1719-49de-995d-30c68d8410a3', null);
-INSERT INTO `coupon_receive` VALUES ('81cec946-6e89-42f5-9da0-3a76e6a6bd42', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '444311ec-7f73-446c-a74b-917dd0c3d002', null);
-INSERT INTO `coupon_receive` VALUES ('885d9c7a-4f32-48f9-9640-b98aaf866c02', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', 'd683d8d6-a9a1-4b31-b415-8e968803d9b1', null);
-INSERT INTO `coupon_receive` VALUES ('8ed30f05-cffe-4b76-90f0-1f9e76673052', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '191e5732-76f0-4cba-b5cb-a4a42d40a7d4', null);
-INSERT INTO `coupon_receive` VALUES ('99acd376-536f-47e0-9142-b50d703281e8', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', 'cb1e0405-54d2-41e3-a8d6-2a0a69a4abb7', null);
-INSERT INTO `coupon_receive` VALUES ('a1f9fce4-4882-4d63-a32b-800ad46640c6', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '5c2a3649-a0a9-405a-9853-b5cc517dbfc0', null);
+INSERT INTO `coupon_receive` VALUES ('0252c706-2d4e-4512-90cc-a790454eb0ea', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '2', 'c7b4b870-8a1b-4a9d-9666-d3d1246ab8d9', '2019-01-25 17:09:45', null);
+INSERT INTO `coupon_receive` VALUES ('20204bc5-7528-4ee1-965c-f8cb91ca9e0d', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '2', '4434b989-64ea-4f57-9a08-69dede4027a8', '2019-01-25 17:56:15', '47cc6438-1c4b-45e7-ad99-4abdb1ff0f0f');
+INSERT INTO `coupon_receive` VALUES ('2a5a596a-2706-4210-87b3-4c3baac7926e', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '34ff07d5-0606-4fbc-8c5a-1ac92802aa22', null, null);
+INSERT INTO `coupon_receive` VALUES ('6c6ccb45-d589-47c3-b28e-bd464bfed05f', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '1d725315-328a-4e34-9c37-afa02f86822a', null, null);
+INSERT INTO `coupon_receive` VALUES ('6f34dec5-391b-45e0-9c85-cbb2cecf40ea', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '530eed32-1719-49de-995d-30c68d8410a3', null, null);
+INSERT INTO `coupon_receive` VALUES ('81cec946-6e89-42f5-9da0-3a76e6a6bd42', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '444311ec-7f73-446c-a74b-917dd0c3d002', null, null);
+INSERT INTO `coupon_receive` VALUES ('885d9c7a-4f32-48f9-9640-b98aaf866c02', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', 'd683d8d6-a9a1-4b31-b415-8e968803d9b1', null, null);
+INSERT INTO `coupon_receive` VALUES ('8ed30f05-cffe-4b76-90f0-1f9e76673052', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '191e5732-76f0-4cba-b5cb-a4a42d40a7d4', null, null);
+INSERT INTO `coupon_receive` VALUES ('99acd376-536f-47e0-9142-b50d703281e8', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', 'cb1e0405-54d2-41e3-a8d6-2a0a69a4abb7', null, null);
+INSERT INTO `coupon_receive` VALUES ('a1f9fce4-4882-4d63-a32b-800ad46640c6', 'd629c855-d147-4701-b0e9-383b27bb5126', '1', '1000', '2019-01-25 15:07:49', '0', '1', '5c2a3649-a0a9-405a-9853-b5cc517dbfc0', null, null);
 
 -- ----------------------------
 -- Table structure for coupon_template
@@ -139,6 +138,7 @@ INSERT INTO `order_detail` VALUES ('d925c7c0-f388-4947-9f27-9860282ad25e', '6291
 INSERT INTO `order_detail` VALUES ('4c9c47c4-c531-47b6-a14e-ef956214f15e', 'ff288e0b-214c-4996-bbba-f77c3da36317', '1', '1', '100', '100', '0', '1', '2019-01-25 10:55:29', '2019-01-25 10:55:29');
 INSERT INTO `order_detail` VALUES ('5e663354-bd69-4a39-b1f7-cdaa1bdee718', '62884682-41aa-49d8-898a-bf66a6a75c22', '1', '1', '100', '100', '0', '1', '2019-01-25 10:58:43', '2019-01-25 10:58:43');
 INSERT INTO `order_detail` VALUES ('ba21bef0-ab6e-4163-ad71-8c388635fc49', 'e9cb5869-5ae4-492b-bffe-4be87c84338a', '1', '1', '100', '100', '0', '1', '2019-01-25 11:03:34', '2019-01-25 11:03:34');
+INSERT INTO `order_detail` VALUES ('bb6c8a3b-ea23-45d4-aafe-21781f1242be', '47cc6438-1c4b-45e7-ad99-4abdb1ff0f0f', '1', '1', '100', '100', '0', '1', '2019-01-25 17:51:28', '2019-01-25 17:51:28');
 
 -- ----------------------------
 -- Table structure for order_master
@@ -172,7 +172,8 @@ INSERT INTO `order_master` VALUES ('cc99829f-69d4-403a-abc2-829826bf059d', '85f8
 INSERT INTO `order_master` VALUES ('62915815-ca50-400a-b30a-6900885c8c7a', 'c21247e0-f2d2-4b02-bb42-79208816e210', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '1000', '0', '1000', '1000', null, '2019-01-25 09:39:38', null, null, null, '1', '0', '2019-01-25 09:39:38', null);
 INSERT INTO `order_master` VALUES ('ff288e0b-214c-4996-bbba-f77c3da36317', '55245754-b49b-4908-aa16-d9df6731c9f6', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '10000', null, '2019-01-25 10:55:29', null, null, null, '1', '0', '2019-01-25 10:55:29', null);
 INSERT INTO `order_master` VALUES ('62884682-41aa-49d8-898a-bf66a6a75c22', '12eed588-752a-478f-8a0d-6da87bf3230c', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '10000', null, '2019-01-25 10:58:43', null, null, null, '1', '0', '2019-01-25 10:58:43', null);
-INSERT INTO `order_master` VALUES ('e9cb5869-5ae4-492b-bffe-4be87c84338a', 'bd633559-7aa1-47b4-95be-c818fd98bb65', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '8000', null, '2019-01-25 11:03:34', null, null, null, '1', '0', '2019-01-25 16:28:45', '0');
+INSERT INTO `order_master` VALUES ('e9cb5869-5ae4-492b-bffe-4be87c84338a', 'bd633559-7aa1-47b4-95be-c818fd98bb65', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '8000', null, '2019-01-25 11:03:34', null, null, null, '3', '8000', '2019-01-25 17:29:13', '1000');
+INSERT INTO `order_master` VALUES ('47cc6438-1c4b-45e7-ad99-4abdb1ff0f0f', 'af83e89f-1d82-4052-9605-874214e85295', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '9000', null, '2019-01-25 17:51:28', null, null, null, '3', '9000', '2019-01-25 17:59:06', '1000');
 
 -- ----------------------------
 -- Table structure for product_category

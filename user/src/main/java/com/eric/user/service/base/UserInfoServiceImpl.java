@@ -6,17 +6,18 @@ import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.UserStatus;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ChangePointRequest;
+import com.eric.seckill.common.utils.SignUtil;
 import com.eric.user.bean.UserInfo;
 import com.eric.user.bean.UserMaster;
+import com.eric.user.bean.UserPointLog;
 import com.eric.user.constant.ErrorCodeEnum;
 import com.eric.user.dao.UserInfoMapper;
 import com.eric.user.model.*;
-import com.eric.user.service.BaseService;
-import com.eric.user.service.UserInfoService;
-import com.eric.user.service.UserLevelDetailService;
-import com.eric.user.service.UserMasterService;
+import com.eric.user.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 
 	@Resource
 	private DozerBeanMapper dozerBeanMapper;
+
+	@Resource
+	private UserPointLogService userPointLogService;
+
+	@Value("${user.charge.secret}")
+	private String appSecret;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -120,5 +127,34 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg());
 		}
 		return new UserPointChangeResponse().setFinalPoint(String.valueOf(finalPoint));
+	}
+
+	@Override
+	@ParamCheck
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public CommonResult<Void> changePoint(ChangePointRequest request) {
+		// 校验签名
+		boolean verify = SignUtil.verify(request, request.getSign(), appSecret);
+		if (!verify) {
+			return CommonResult.fail(ErrorCodeEnum.ERROR_SIGN.getErrorMsg(), ErrorCodeEnum.ERROR_SIGN.getErrorCode());
+		}
+		String userStats = userMasterService.findUserStatsByUserId(request.getUserId());
+		if (!UserStatus.ACTIVE.getStatusCode().equals(userStats)) {
+			return CommonResult.fail(ErrorCodeEnum.USER_ABNORMAL.getErrorMsg(), ErrorCodeEnum.USER_ABNORMAL.getErrorCode());
+		}
+		// 判断积分变动是否已经处理过
+		Integer integer = userPointLogService.checkExistByOutTradeNo(request.getReferNumber());
+		if (integer != null && integer > 0) {
+			return CommonResult.fail(ErrorCodeEnum.DUPLICATE.getErrorMsg(), ErrorCodeEnum.DUPLICATE.getErrorCode());
+		}
+		// 保存积分变动记录, 修改最终积分
+		UserPointLog log = new UserPointLog().setUserId(request.getUserId()).setReferNumber(request.getReferNumber())
+				.setPointSource(request.getPointSource()).setId(UUID.randomUUID().toString()).setCreateTime(new Date())
+				.setChangePoint(request.getChangePoint());
+		userPointLogService.insert(log);
+		// 修改最终积分
+		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getUserId());
+		baseMapper.updateUserPoint(userInfoId, request.getChangePoint());
+		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
 	}
 }

@@ -27,7 +27,6 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 用户, 主要提供用户注册, 修改信息, 注销等操作
@@ -152,11 +151,6 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 
 	@Override
 	public CommonResult<UserQueryResponse> findUserMaster(UserQueryRequest request) {
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		UserMaster userMaster;
 		if (StringUtils.isNotBlank(request.getLoginName())) {
 			userMaster = baseMapper.selectOne(new QueryWrapper<UserMaster>().eq("login_name", request.getLoginName()));
@@ -169,6 +163,11 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		UserQueryResponse response = new UserQueryResponse();
 		dozerBeanMapper.map(userMaster, response);
 		return CommonResult.success(response, null);
+	}
+
+	@Override
+	public String findUserStatsByUserId(String userId) {
+		return baseMapper.findUserStatsByUserId(userId);
 	}
 
 	/**

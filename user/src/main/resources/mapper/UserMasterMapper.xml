@@ -20,4 +20,12 @@
         WHERE
             login_name = #{loginName}
     </select>
+    <select id="findUserStatsByUserId" resultType="java.lang.String">
+        SELECT
+            user_stats
+        FROM
+            user_master
+        WHERE
+            user_id = #{userId} FOR UPDATE
+    </select>
 </mapper>

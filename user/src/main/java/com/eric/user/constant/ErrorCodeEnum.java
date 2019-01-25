@@ -24,6 +24,7 @@ public enum ErrorCodeEnum {
 	DUPLICATE("261", "重复单号"),
 	BALANCE_NOT_ENOUGH("263", "余额不足"),
 	ERROR_SIGN("260", "签名不合法"),
+	USER_ABNORMAL("261", "用户状态不正常"),
 	;
 
 	/**

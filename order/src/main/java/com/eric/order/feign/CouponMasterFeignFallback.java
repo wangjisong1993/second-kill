@@ -2,6 +2,7 @@ package com.eric.order.feign;
 
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,11 @@ public class CouponMasterFeignFallback extends BaseFeignFallback implements Coup
 
 	@Override
 	public CommonResult<Void> markAsUsing(UsingCouponRequest request) {
+		return CommonResult.fail(ErrorCodeEnum.SERVER_ERROR.getMessage(), ErrorCodeEnum.SERVER_ERROR.getErrCode());
+	}
+
+	@Override
+	public CommonResult<Void> consume(ConsumeCouponRequest request) {
 		return CommonResult.fail(ErrorCodeEnum.SERVER_ERROR.getMessage(), ErrorCodeEnum.SERVER_ERROR.getErrCode());
 	}
 }

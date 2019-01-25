@@ -7,13 +7,13 @@ import com.eric.coupon.bean.CouponTemplate;
 import com.eric.coupon.constant.CouponErrorCodeEnum;
 import com.eric.coupon.constant.CouponStatusEnum;
 import com.eric.coupon.dao.CouponReceiveMapper;
-import com.eric.coupon.service.CouponLogsService;
 import com.eric.coupon.service.CouponReceiveService;
 import com.eric.coupon.service.CouponTemplateService;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import com.eric.seckill.common.utils.SignUtil;
@@ -43,9 +43,6 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 
 	@Resource
 	private CouponTemplateService couponTemplateService;
-
-	@Resource
-	private CouponLogsService couponLogsService;
 
 	@Value("${coupon.receive.secret}")
 	private String appSecret;
@@ -82,7 +79,7 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 	@Override
 	@ParamCheck
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public CommonResult<List<Void>> markAsUsing(UsingCouponRequest request) {
+	public CommonResult<Void> markAsUsing(UsingCouponRequest request) {
 		// 校验签名
 		boolean verify = SignUtil.verify(request, request.getSign(), appSecret);
 		if (!verify) {
@@ -103,18 +100,33 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 			for (CouponReceive couponReceive : couponReceives) {
 				if (couponSn.equals(couponReceive.getCouponSn())) {
 					updateList.add(new CouponReceive().setId(couponReceive.getId())
-					.setStatus(CouponStatusEnum.USING.getStatusCode()).setUpdateTime(new Date()));
+							.setOrderId(request.getOrderId()).setStatus(CouponStatusEnum.USING.getStatusCode()).setUpdateTime(new Date()));
 					break;
 				}
 			}
 		}
 		boolean b = updateBatchById(updateList);
 		if (b) {
-			// 保存优惠券消费记录
-			couponLogsService.insertBatch(updateList, request);
 			return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 		}
 		throw new CustomException(CouponErrorCodeEnum.UPDATE_FAIL.getMessage());
+	}
+
+	@Override
+	@ParamCheck
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public CommonResult<Void> consume(ConsumeCouponRequest request) {
+		// 校验签名
+		boolean verify = SignUtil.verify(request, request.getSign(), appSecret);
+		if (!verify) {
+			throw new CustomException(ErrorCodeEnum.ERROR_SIGN.getMessage());
+		}
+		// 修改优惠券变更记录
+		// 核销现金券
+		CouponReceive t = new CouponReceive().setStatus(CouponStatusEnum.USED.getStatusCode())
+				.setUpdateTime(new Date());
+		baseMapper.update(t, new QueryWrapper<CouponReceive>().eq("order_id", request.getOrderId()));
+		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 	}
 
 	/**

@@ -23,4 +23,11 @@ public interface UserMasterMapper extends BaseMapper<UserMaster> {
 	 * @return
 	 */
 	String findUserIdByLoginName(@Param("loginName") String loginName);
+
+	/**
+	 * 根据用户id获取用户状态
+	 * @param userId
+	 * @return
+	 */
+	String findUserStatsByUserId(@Param("userId") String userId);
 }

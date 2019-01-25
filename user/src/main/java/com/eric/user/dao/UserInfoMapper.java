@@ -20,10 +20,10 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 	/**
 	 * 更新用户余额
 	 * @param userInfoId
-	 * @param finalBalance
+	 * @param balance
 	 * @return
 	 */
-	int updateUserBalance(@Param("userInfoId") String userInfoId, @Param("finalBalance") int finalBalance);
+	int updateUserBalance(@Param("userInfoId") String userInfoId, @Param("balance") int balance);
 
 	/**
 	 * 根据用户id查询用户信息id
@@ -42,8 +42,8 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 	/**
 	 * 修改用户积分
 	 * @param userInfoId
-	 * @param finalPoint
+	 * @param point
 	 * @return
 	 */
-	int updateUserPoint(@Param("userInfoId") String userInfoId, @Param("finalPoint") int finalPoint);
+	int updateUserPoint(@Param("userInfoId") String userInfoId, @Param("point") int point);
 }
