@@ -2,7 +2,6 @@ package com.eric.order.service.impl;
 
 import com.eric.order.bean.OrderDetail;
 import com.eric.order.bean.OrderMaster;
-import com.eric.order.bean.ProductMaster;
 import com.eric.order.constant.OrderErrorCodeEnum;
 import com.eric.order.constant.OrderStatusEnum;
 import com.eric.order.model.CreateOrderDetail;
@@ -13,7 +12,9 @@ import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ProductQueryResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	@Resource
 	private WarehouseProductService warehouseProductService;
 
+	@Resource
+	private DozerBeanMapper dozerBeanMapper;
+
 	private static final int SCALE = 8;
 
 	@Override
@@ -61,7 +65,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		BigDecimal districtMoney = new BigDecimal(0);
 		// 计算金额
 		for (CreateOrderDetail detail : request.getDetails()) {
-			ProductMaster productMaster = productMasterService.findProductMasterById(detail.getProductId());
+			ProductQueryResponse productMaster = productMasterService.findProductMasterById(detail.getProductId());
 			if (productMaster == null) {
 				throw new CustomException(OrderErrorCodeEnum.PRODUCT_NOT_FOUND.getMessage());
 			}
@@ -72,7 +76,8 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 			OrderDetail orderDetail = new OrderDetail().setOrderDetailId(UUID.randomUUID().toString())
 					.setOrderId(orderId).setCreateTime(new Date()).setProductCnt(detail.getProductCnt())
 					.setProductId(detail.getProductId()).setProductName(productMaster.getProductName())
-					.setProductPrice(productMaster.getPrice()).setUpdateTime(new Date()).setWId(warehouseId);
+					.setProductPrice(productMaster.getPrice()).setUpdateTime(new Date()).setWId(warehouseId)
+					.setFeeMoney(0);
 			details.add(orderDetail);
 			orderMoney = orderMoney.add(new BigDecimal(productMaster.getPrice()).multiply(new BigDecimal(detail.getProductCnt())).setScale(SCALE, BigDecimal.ROUND_HALF_UP));
 		}
@@ -95,9 +100,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		if (!result) {
 			throw new CustomException(ErrorCodeEnum.SAVE_ERROR.getMessage());
 		}
-		CreateOrderResponse response = new CreateOrderResponse().setOrderSn(orderMaster.getOrderSn())
-				.setPaymentMoney(orderMaster.getPaymentMoney());
-		return CommonResult.success(response, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
+		CreateOrderResponse response = new CreateOrderResponse();
+		dozerBeanMapper.map(orderMaster, response);
+		return CommonResult.success(response, OrderStatusEnum.PLACE_ORDER_SUCCESS.getOrderStatusDesc());
 	}
 
 }

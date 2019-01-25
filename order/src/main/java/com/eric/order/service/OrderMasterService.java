@@ -15,4 +15,11 @@ public interface OrderMasterService {
 	 * @return
 	 */
 	int insert(OrderMaster orderMaster);
+
+	/**
+	 * 根据订单号获取订单的状态
+	 * @param orderSn
+	 * @return
+	 */
+	String findOrderStatusByOrderId(String orderSn);
 }

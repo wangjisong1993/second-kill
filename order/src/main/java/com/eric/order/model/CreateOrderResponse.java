@@ -22,5 +22,13 @@ public class CreateOrderResponse {
 	 * 支付金额
 	 */
 	private Integer paymentMoney;
+	/**
+	 * 订单id
+	 */
+	private String orderId;
+	/**
+	 * 用户id
+	 */
+	private String userId;
 
 }

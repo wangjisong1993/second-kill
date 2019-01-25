@@ -1,14 +1,14 @@
 package com.eric.order.service.base;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.eric.order.bean.ProductMaster;
-import com.eric.order.constant.AuditStatusEnum;
-import com.eric.order.constant.OrderErrorCodeEnum;
-import com.eric.order.constant.PublishStatusEnum;
-import com.eric.order.dao.ProductMasterMapper;
+import com.eric.order.feign.ProductMasterFeign;
 import com.eric.order.service.ProductMasterService;
+import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
+import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ProductQueryResponse;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * 商品
@@ -17,20 +17,21 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service
-public class ProductMasterServiceImpl extends ServiceImpl<ProductMasterMapper, ProductMaster> implements ProductMasterService {
+public class ProductMasterServiceImpl implements ProductMasterService {
+
+	@Resource
+	private ProductMasterFeign productMasterFeign;
 
 	@Override
-	public ProductMaster findProductMasterById(String productId) {
-		ProductMaster productMaster = baseMapper.selectById(productId);
-		if (productMaster != null) {
-			if (PublishStatusEnum.DOWN.getStatus().equals(productMaster.getPublishStatus())) {
-				throw new CustomException(OrderErrorCodeEnum.PRODUCT_DOWN.getMessage());
+	public ProductQueryResponse findProductMasterById(String productId) {
+		CommonResult<ProductQueryResponse> result = productMasterFeign.findProductMasterById(productId);
+		if (result != null) {
+			if (result.isSuccess()) {
+				return result.getData();
 			}
-			if (!AuditStatusEnum.AUDITE_SUCCESS.getAuditStatus().equals(productMaster.getAuditStatus())) {
-				throw new CustomException(OrderErrorCodeEnum.PRODUCT_NOT_AUDIT.getMessage());
-			}
+			throw new CustomException(result.getMessage());
 		}
-		return productMaster;
+		throw new CustomException(ErrorCodeEnum.SERVER_ERROR.getMessage());
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.eric.order.service;
 
-import com.eric.order.bean.ProductMaster;
+import com.eric.seckill.common.model.feign.ProductQueryResponse;
 
 /**
  * @author wang.js on 2019/1/24.
@@ -13,5 +13,5 @@ public interface ProductMasterService {
 	 * @param productId
 	 * @return
 	 */
-	ProductMaster findProductMasterById(String productId);
+	ProductQueryResponse findProductMasterById(String productId);
 }

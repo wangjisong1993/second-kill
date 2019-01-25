@@ -1,24 +1,21 @@
-package com.eric.order.bean;
+package com.eric.seckill.common.model.feign;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * product_master
- *
- * @author
+ * @author wang.js on 2019/1/25.
+ * @version 1.0
  */
 @Data
 @Accessors(chain = true)
-public class ProductMaster implements Serializable {
+public class ProductQueryResponse {
+
 	/**
 	 * 商品ID
 	 */
-	@TableId
 	private String productId;
 
 	/**
@@ -80,27 +77,5 @@ public class ProductMaster implements Serializable {
 	 * 商品有效期
 	 */
 	private Integer shelfLife;
-
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
-
-	/**
-	 * 创建人
-	 */
-	private String createUserId;
-
-	/**
-	 * 更新时间
-	 */
-	private Date updateTime;
-
-	/**
-	 * 更新人
-	 */
-	private String updateUserId;
-
-	private static final long serialVersionUID = 1L;
 
 }

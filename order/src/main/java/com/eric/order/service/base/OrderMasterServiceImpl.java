@@ -19,4 +19,9 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 		return baseMapper.insert(orderMaster);
 	}
 
+	@Override
+	public String findOrderStatusByOrderId(String orderSn) {
+		return baseMapper.findOrderStatusByOrderId(orderSn);
+	}
+
 }

@@ -1,10 +1,10 @@
-package com.eric.order.dao;
+package com.eric.product.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.eric.order.bean.ProductMaster;
+import com.eric.product.bean.ProductMaster;
 
 /**
- * @author wang.js on 2019/1/24.
+ * @author wang.js on 2019/1/25.
  * @version 1.0
  */
 public interface ProductMasterMapper extends BaseMapper<ProductMaster> {

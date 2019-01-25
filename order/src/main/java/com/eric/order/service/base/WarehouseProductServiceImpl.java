@@ -16,6 +16,7 @@ public class WarehouseProductServiceImpl extends ServiceImpl<WarehouseProductMap
 
 	@Override
 	public String findWarehouseId(CreateOrderRequest request) {
-		return null;
+		// TODO
+		return "1";
 	}
 }

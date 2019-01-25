@@ -1,16 +1,15 @@
-package com.eric.order.constant;
+package com.eric.product.constant;
 
 /**
- * @author wang.js on 2019/1/24.
+ * @author wang.js on 2019/1/25.
  * @version 1.0
  */
-public enum OrderErrorCodeEnum {
+public enum  ProductErrorCodeEnum {
 
 	PRODUCT_NOT_FOUND("商品不存在", "250"),
 	STOCK_NOT_ENOUGH("商品库存不足", "251"),
 	PRODUCT_DOWN("商品已下架", "252"),
 	PRODUCT_NOT_AUDIT("商品未审核", "253"),
-	ORDER_NOT_CREATED("订单不是新建状态", "254"),
 	;
 	/**
 	 * 定义的message
@@ -21,7 +20,7 @@ public enum OrderErrorCodeEnum {
 	 */
 	private String errCode;
 
-	OrderErrorCodeEnum(String message, String errCode) {
+	ProductErrorCodeEnum(String message, String errCode) {
 		this.message = message;
 		this.errCode = errCode;
 	}
@@ -41,4 +40,5 @@ public enum OrderErrorCodeEnum {
 	protected void setErrCode(String errCode) {
 		this.errCode = errCode;
 	}
+
 }

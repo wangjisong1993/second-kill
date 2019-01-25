@@ -36,7 +36,7 @@ public class OrderTest {
 		List<CreateOrderDetail> details = new ArrayList<>();
 		details.add(new CreateOrderDetail().setProductCnt(100).setProductId("1"));
 		CreateOrderRequest request = new CreateOrderRequest().setDetails(details)
-				.setShippingUser("大傻逼").setUserId("1c2e495f-c7e6-4009-a5a9-332a8219c3f0")
+				.setShippingUser("大傻逼").setUserId("d629c855-d147-4701-b0e9-383b27bb5126")
 				.setShippingMoney(1000);
 		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
 		System.out.println(JSON.toJSONString(request));
