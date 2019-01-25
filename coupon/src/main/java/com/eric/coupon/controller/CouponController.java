@@ -6,6 +6,7 @@ import com.eric.coupon.service.UserReceiveCouponService;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
+import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,18 @@ public class CouponController {
 	@LogDetail
 	public CommonResult<List<CouponQueryResponse>> findCoupon(@RequestBody List<String> couponSns) {
 		return couponReceiveService.findCoupons(couponSns);
+	}
+
+	/**
+	 * 标记优惠券为正在使用中
+	 *
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/markAsUsing")
+	@LogDetail
+	public CommonResult<List<Void>> markAsUsing(@RequestBody UsingCouponRequest request) {
+		return couponReceiveService.markAsUsing(request);
 	}
 
 	/**

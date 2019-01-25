@@ -9,7 +9,9 @@ public enum CouponErrorCodeEnum {
 	TEMPLATE_NOT_FOUND("送券模板不存在", "250"),
 	USER_NOT_FOUND("用户不存在", "251"),
 	SAVE_FAIL("保存失败", "252"),
+	UPDATE_FAIL("保存失败", "254"),
 	PRESENT_COUPON_SUCCESS("送券成功", "0"),
+	INVALID_COUPON("存在非法的优惠券", "253"),
 	;
 	/**
 	 * 定义的message

@@ -45,6 +45,15 @@ public abstract class BaseOrderService {
 	}
 
 	/**
+	 * 获取签名
+	 * @param obj
+	 * @return
+	 */
+	String getSign(Object obj) {
+		return SignUtil.getSignForObject(obj, appSecret, SignUtil.DEFAULT_EXCLUDE);
+	}
+
+	/**
 	 * 判断用户是否属于正常状态
 	 *
 	 * @param userId

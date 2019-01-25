@@ -45,6 +45,10 @@ public class CouponReceive implements Serializable {
 	 * 领取时间
 	 */
 	private Date createTime;
+	/**
+	 * 更新时间
+	 */
+	private Date updateTime;
 
 	/**
 	 * 金额满

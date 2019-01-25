@@ -12,6 +12,7 @@ public enum OrderErrorCodeEnum {
 	PRODUCT_NOT_AUDIT("商品未审核", "253"),
 	ORDER_NOT_CREATED("订单不是新建状态", "254"),
 	USE_COUPON_SUCCESS("用券成功", "0"),
+	USE_COUPON_FAIL("用券成功", "255"),
 	;
 	/**
 	 * 定义的message

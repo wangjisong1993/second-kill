@@ -28,7 +28,7 @@ public class CouponQueryResponse {
 	/**
 	 * 优惠券金额
 	 */
-	private Integer money;
+	private Integer couponMoney;
 	/**
 	 * 满减金额
 	 */

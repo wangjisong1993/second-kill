@@ -12,6 +12,9 @@ import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
+import com.eric.seckill.common.model.feign.UsingCouponRequest;
+import com.eric.seckill.common.utils.SignUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -65,17 +68,39 @@ public class UseCouponServiceImpl extends BaseOrderService implements UseCouponS
 				continue;
 			}
 			successList.add(coupon.getCouponSn());
-			shouldPay = shouldPay.subtract(new BigDecimal(coupon.getMoney()));
-			couponMoney = couponMoney.add(new BigDecimal(coupon.getMoney()));
+			shouldPay = shouldPay.subtract(new BigDecimal(coupon.getCouponMoney()));
+			couponMoney = couponMoney.add(new BigDecimal(coupon.getCouponMoney()));
 		}
 		// 更新订单应付金额
 		orderMasterService.updatePaymentMoney(shouldPay.intValue(), couponMoney.intValue(), request.getOrderId());
+		// 标记优惠券状态为正在使用中
+		markCouponUsing(request, successList);
 		response.setShouldPay(shouldPay.intValue()).setUseFail(failList).setUseSuccess(successList);
 		return CommonResult.success(response, OrderErrorCodeEnum.USE_COUPON_SUCCESS.getMessage());
 	}
 
 	/**
+	 * 标记优惠券状态为正在使用中
+	 *
+	 * @param request
+	 * @param successList
+	 */
+	private void markCouponUsing(UseCouponRequest request, List<String> successList) {
+		if (CollectionUtils.isEmpty(successList)) {
+			return;
+		}
+		UsingCouponRequest usingCouponRequest = new UsingCouponRequest().setCouponSns(successList)
+				.setUserId(request.getUserId());
+		usingCouponRequest.setSign(getSign(usingCouponRequest));
+		CommonResult<Void> commonResult = couponMasterFeign.markAsUsing(usingCouponRequest);
+		if (commonResult == null || !commonResult.isSuccess()) {
+			throw new CustomException(OrderErrorCodeEnum.USE_COUPON_FAIL.getMessage());
+		}
+	}
+
+	/**
 	 * 校验订单状态是否是新建状态
+	 *
 	 * @param request
 	 */
 	private void checkOrderStatus(UseCouponRequest request) {

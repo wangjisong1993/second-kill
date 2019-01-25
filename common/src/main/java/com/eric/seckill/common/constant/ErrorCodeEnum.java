@@ -18,6 +18,7 @@ public enum ErrorCodeEnum {
 	SAVE_ERROR("保存失败", "262"),
 	SERVER_TIMEOUT("调用超时", "501"),
 	USER_NOT_FOUND("找不到用户", "502"),
+	COUPON_NOT_FOUND("找不到优惠券", "503"),
 	;
 
 	/**
