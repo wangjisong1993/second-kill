@@ -5,6 +5,8 @@ import com.eric.order.model.*;
 import com.eric.order.service.*;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ReceiveOrderRequest;
+import com.eric.seckill.common.model.feign.ShippingRequest;
 import com.eric.seckill.common.model.feign.UserQueryRequest;
 import com.eric.seckill.common.model.feign.UserQueryResponse;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,12 @@ public class OrderController {
 
 	@Resource
 	private OrderQueryService orderQueryService;
+
+	@Resource
+	private ShippingOrderService shippingOrderService;
+
+	@Resource
+	private ReceiveOrderService receiveOrderService;
 
 	/**
 	 * 创建订单
@@ -86,6 +94,28 @@ public class OrderController {
 	@PostMapping("/orderSuccess")
 	public CommonResult<Void> orderSuccess(@RequestBody OrderSuccessRequest request) {
 		return orderSuccessService.orderSuccess(request);
+	}
+
+	/**
+	 * 订单发货
+	 *
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/shipping")
+	public CommonResult<Void> shipping(@RequestBody ShippingRequest request) {
+		return shippingOrderService.orderShipping(request);
+	}
+
+	/**
+	 * 确认收货
+	 *
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/receive")
+	public CommonResult<Void> receive(@RequestBody ReceiveOrderRequest request) {
+		return receiveOrderService.orderReceive(request);
 	}
 
 	/**

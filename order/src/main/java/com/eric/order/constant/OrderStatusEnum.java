@@ -11,10 +11,12 @@ public enum OrderStatusEnum {
 	CREATED("新建", "1"),
 	PAYING("支付中", "2"),
 	PAY_SUCCESS("支付成功", "3"),
-	APPLY_REFUND("申请退款", "4"),
-	PERMIT_REFUND("同意退款", "5"),
-	REFUNDED("已退款", "6"),
-	CLOSED("交易已关闭", "7"),
+	SHIPPING("已发货", "4"),
+	RECEIVE("已收货", "5"),
+	CLOSED("交易已关闭", "6"),
+	APPLY_REFUND("申请退款", "7"),
+	PERMIT_REFUND("同意退款", "8"),
+	REFUNDED("已退款", "9"),
 	;
 
 	/**

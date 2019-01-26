@@ -2,6 +2,8 @@ package com.eric.order.service;
 
 import com.eric.order.bean.OrderMaster;
 import com.eric.order.model.OrderQueryRequest;
+import com.eric.seckill.common.model.feign.ReceiveOrderRequest;
+import com.eric.seckill.common.model.feign.ShippingRequest;
 
 import java.util.List;
 
@@ -22,10 +24,10 @@ public interface OrderMasterService {
 	/**
 	 * 根据订单号获取订单的状态
 	 *
-	 * @param orderSn
+	 * @param orderId
 	 * @return
 	 */
-	String findOrderStatusByOrderId(String orderSn);
+	String findOrderStatusByOrderId(String orderId);
 
 	/**
 	 * 根据订单id获取订单的应付金额
@@ -76,4 +78,16 @@ public interface OrderMasterService {
 	 * @return
 	 */
 	List<OrderMaster> listOrderMastersByUserId(OrderQueryRequest request);
+
+	/**
+	 * 订单发货
+	 * @param request
+	 */
+	void orderShipping(ShippingRequest request);
+
+	/**
+	 * 确认收货
+	 * @param request
+	 */
+	void orderReceive(ReceiveOrderRequest request);
 }

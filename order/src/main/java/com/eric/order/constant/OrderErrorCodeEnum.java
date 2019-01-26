@@ -17,6 +17,10 @@ public enum OrderErrorCodeEnum {
 	PAYMENT_MONEY_ERROR("支付金额不正确", "257"),
 	ORDER_NOT_PAYING("订单状态不是支付中", "258"),
 	PLACE_ORDER_SUCCESS("下单成功", "0"),
+	ORDER_STATUS_ERROR("订单状态异常", "259"),
+	ERROR_STATUS_FOR_RECEIVE("当前状态不可收货", "260"),
+	ERROR_STATUS_FOR_SHIPPING("当前状态不可发货", "261"),
+	RECEIVE_SUCCESS("收货成功", "0"),
 	;
 	/**
 	 * 定义的message
