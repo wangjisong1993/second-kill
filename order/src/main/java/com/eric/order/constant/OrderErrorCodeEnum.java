@@ -16,6 +16,7 @@ public enum OrderErrorCodeEnum {
 	ORDER_NOT_FOUND("订单不存在", "256"),
 	PAYMENT_MONEY_ERROR("支付金额不正确", "257"),
 	ORDER_NOT_PAYING("订单状态不是支付中", "258"),
+	PLACE_ORDER_SUCCESS("下单成功", "0"),
 	;
 	/**
 	 * 定义的message

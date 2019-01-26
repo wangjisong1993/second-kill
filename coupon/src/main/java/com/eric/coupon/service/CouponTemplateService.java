@@ -1,6 +1,8 @@
 package com.eric.coupon.service;
 
 import com.eric.coupon.bean.CouponTemplate;
+import com.eric.coupon.model.TemplateAddRequest;
+import com.eric.seckill.common.model.CommonResult;
 
 /**
  * @author wang.js on 2019/1/25.
@@ -14,4 +16,11 @@ public interface CouponTemplateService {
 	 * @return
 	 */
 	CouponTemplate findCouponTemplateById(String couponTemplateId);
+
+	/**
+	 * 添加优惠券模板
+	 * @param request
+	 * @return
+	 */
+	CommonResult<Void> add(TemplateAddRequest request);
 }

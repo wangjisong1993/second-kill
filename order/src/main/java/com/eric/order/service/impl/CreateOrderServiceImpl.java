@@ -60,7 +60,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		checkUserActive(request.getUserId());
 		String orderId = UUID.randomUUID().toString();
 		List<OrderDetail> details = new ArrayList<>();
-		BigDecimal orderMoney = new BigDecimal(0);
+		BigDecimal orderMoney = new BigDecimal(request.getShippingMoney());
 		// TODO
 		BigDecimal districtMoney = new BigDecimal(0);
 		// 计算金额
@@ -102,7 +102,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		}
 		CreateOrderResponse response = new CreateOrderResponse();
 		dozerBeanMapper.map(orderMaster, response);
-		return CommonResult.success(response, OrderStatusEnum.PLACE_ORDER_SUCCESS.getOrderStatusDesc());
+		return CommonResult.success(response, OrderErrorCodeEnum.PLACE_ORDER_SUCCESS.getMessage());
 	}
 
 }

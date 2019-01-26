@@ -2,10 +2,7 @@ package com.eric.order.controller;
 
 import com.eric.order.feign.UserMasterFeign;
 import com.eric.order.model.*;
-import com.eric.order.service.CreateOrderService;
-import com.eric.order.service.OrderSuccessService;
-import com.eric.order.service.PayingOrderService;
-import com.eric.order.service.UseCouponService;
+import com.eric.order.service.*;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.UserQueryRequest;
@@ -13,6 +10,7 @@ import com.eric.seckill.common.model.feign.UserQueryResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 订单相关的接口
@@ -38,6 +36,9 @@ public class OrderController {
 
 	@Resource
 	private OrderSuccessService orderSuccessService;
+
+	@Resource
+	private OrderQueryService orderQueryService;
 
 	/**
 	 * 创建订单
@@ -98,5 +99,15 @@ public class OrderController {
 		return feign.findUserByUserIdOrLoginName(new UserQueryRequest().setUserId(userId));
 	}
 
+	/**
+	 * 查询用户的订单
+	 *
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/findOrder")
+	public CommonResult<List<OrderQueryResponse>> findOrder(@RequestBody OrderQueryRequest request) {
+		return orderQueryService.findOrder(request);
+	}
 
 }

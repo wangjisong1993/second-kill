@@ -1,6 +1,9 @@
 package com.eric.order.service;
 
 import com.eric.order.bean.OrderMaster;
+import com.eric.order.model.OrderQueryRequest;
+
+import java.util.List;
 
 /**
  * @author wang.js on 2019/1/24.
@@ -18,6 +21,7 @@ public interface OrderMasterService {
 
 	/**
 	 * 根据订单号获取订单的状态
+	 *
 	 * @param orderSn
 	 * @return
 	 */
@@ -25,6 +29,7 @@ public interface OrderMasterService {
 
 	/**
 	 * 根据订单id获取订单的应付金额
+	 *
 	 * @param orderId
 	 * @return
 	 */
@@ -32,6 +37,7 @@ public interface OrderMasterService {
 
 	/**
 	 * 更新订单用券情况
+	 *
 	 * @param shouldPay
 	 * @param couponMoney
 	 * @param orderId
@@ -40,6 +46,7 @@ public interface OrderMasterService {
 
 	/**
 	 * 根据订单id获取订单详情
+	 *
 	 * @param orderId
 	 * @return
 	 */
@@ -47,6 +54,7 @@ public interface OrderMasterService {
 
 	/**
 	 * 标记订单状态为正在支付
+	 *
 	 * @param orderId
 	 * @param payMethod
 	 * @return
@@ -55,8 +63,17 @@ public interface OrderMasterService {
 
 	/**
 	 * 修改订单状态为支付完成
+	 *
 	 * @param t
 	 * @return
 	 */
 	boolean updateOrderSuccess(OrderMaster t);
+
+	/**
+	 * 根据用户id列出所有的订单
+	 *
+	 * @param request
+	 * @return
+	 */
+	List<OrderMaster> listOrderMastersByUserId(OrderQueryRequest request);
 }

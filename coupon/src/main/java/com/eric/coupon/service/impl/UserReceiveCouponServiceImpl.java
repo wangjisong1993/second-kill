@@ -10,6 +10,7 @@ import com.eric.coupon.service.CouponReceiveService;
 import com.eric.coupon.service.CouponTemplateService;
 import com.eric.coupon.service.UserReceiveCouponService;
 import com.eric.seckill.cache.anno.ParamCheck;
+import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.UserQueryRequest;
@@ -56,8 +57,11 @@ public class UserReceiveCouponServiceImpl extends BaseCouponService implements U
 		for (String userId : request.getUserIds()) {
 			// 判断用户是否存在
 			CommonResult<UserQueryResponse> response = userMasterFeign.findUserByUserIdOrLoginName(new UserQueryRequest().setUserId(userId));
-			if (response == null || !response.isSuccess()) {
-				throw new CustomException(CouponErrorCodeEnum.USER_NOT_FOUND.getMessage());
+			if (response == null) {
+				throw new CustomException(ErrorCodeEnum.SERVER_ERROR.getMessage());
+			}
+			if (!response.isSuccess()) {
+				throw new CustomException(response.getMessage());
 			}
 			for (int i = 0; i < request.getCouponNum(); i++) {
 				couponReceives.add(new CouponReceive().setCouponMoney(template.getMoney())

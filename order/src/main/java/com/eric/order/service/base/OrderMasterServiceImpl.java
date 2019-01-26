@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.order.bean.OrderMaster;
 import com.eric.order.constant.OrderStatusEnum;
 import com.eric.order.dao.OrderMasterMapper;
+import com.eric.order.model.OrderQueryRequest;
 import com.eric.order.service.OrderMasterService;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wang.js on 2019/1/24.
@@ -60,6 +63,13 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 	@Override
 	public boolean updateOrderSuccess(OrderMaster t) {
 		return updateById(t);
+	}
+
+	@Override
+	public List<OrderMaster> listOrderMastersByUserId(OrderQueryRequest request) {
+		// 允许分页查询用户的订单
+		PageHelper.startPage(request.getPageNum(), request.getPageSize());
+		return baseMapper.selectList(new QueryWrapper<OrderMaster>().eq("user_id", request.getUserId()));
 	}
 
 }

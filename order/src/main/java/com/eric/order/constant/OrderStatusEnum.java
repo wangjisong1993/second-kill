@@ -15,7 +15,6 @@ public enum OrderStatusEnum {
 	PERMIT_REFUND("同意退款", "5"),
 	REFUNDED("已退款", "6"),
 	CLOSED("交易已关闭", "7"),
-	PLACE_ORDER_SUCCESS("下单成功", "0"),
 	;
 
 	/**

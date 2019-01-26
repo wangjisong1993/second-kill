@@ -1,6 +1,7 @@
 package com.eric.order.service;
 
 import com.eric.order.bean.OrderDetail;
+import com.eric.order.model.OrderDetailQueryResponse;
 
 import java.util.List;
 
@@ -17,4 +18,11 @@ public interface OrderDetailService {
 	 * @return
 	 */
 	boolean insertBatch(List<OrderDetail> details);
+
+	/**
+	 * 根据订单id列出订单明细
+	 * @param orderId
+	 * @return
+	 */
+	List<OrderDetailQueryResponse> listOrderDetailQueryResponseByOrderId(String orderId);
 }

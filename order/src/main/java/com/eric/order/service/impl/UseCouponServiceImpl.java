@@ -52,8 +52,11 @@ public class UseCouponServiceImpl extends BaseOrderService implements UseCouponS
 		checkOrderStatus(request);
 		// 校验优惠券是否正常
 		CommonResult<List<CouponQueryResponse>> result = couponMasterFeign.findCoupon(request.getCouponNumbers());
-		if (result == null || !result.isSuccess()) {
-			return CommonResult.fail(ErrorCodeEnum.SERVER_ERROR.getMessage(), ErrorCodeEnum.SERVER_ERROR.getErrCode());
+		if (result == null) {
+			throw new CustomException(ErrorCodeEnum.SERVER_ERROR.getMessage());
+		}
+		if (!result.isSuccess()) {
+			throw new CustomException(result.getMessage());
 		}
 		Integer paymentMoney = orderMasterService.findPaymentMoneyByOrderId(request.getOrderId());
 		UseCouponResponse response = new UseCouponResponse().setOrderId(request.getOrderId())

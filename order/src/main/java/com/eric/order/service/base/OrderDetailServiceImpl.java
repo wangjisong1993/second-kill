@@ -3,6 +3,7 @@ package com.eric.order.service.base;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.order.bean.OrderDetail;
 import com.eric.order.dao.OrderDetailMapper;
+import com.eric.order.model.OrderDetailQueryResponse;
 import com.eric.order.service.OrderDetailService;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,11 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
 	@Override
 	public boolean insertBatch(List<OrderDetail> details) {
 		return saveBatch(details);
+	}
+
+	@Override
+	public List<OrderDetailQueryResponse> listOrderDetailQueryResponseByOrderId(String orderId) {
+		return this.baseMapper.listOrderDetailQueryResponseByOrderId(orderId);
 	}
 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eric.base.data.dao.SysDictMapper">
+    <select id="findDataValueByDataCode" resultType="java.lang.String">
+        SELECT
+            data_value
+        FROM
+            sys_dict
+        WHERE
+            data_type = #{dataType}
+        AND data_code = #{dataCode}
+        AND `status` = '1' for UPDATE
+    </select>
+</mapper>
