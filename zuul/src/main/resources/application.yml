@@ -31,6 +31,10 @@ zuul:
       path: /baseData/**
       serviceId: baseData
       stripPrefix: false
+    warehouse:
+      path: /warehouse/**
+      serviceId: warehouse
+      stripPrefix: false
 
 eureka:
   client:

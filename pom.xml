@@ -23,6 +23,7 @@
         <module>eureka</module>
         <module>zuul</module>
         <module>base-data</module>
+        <module>warehouse</module>
     </modules>
 
     <parent>

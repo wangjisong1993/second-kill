@@ -14,6 +14,7 @@ import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
+import com.eric.seckill.common.model.feign.CouponQueryRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import com.eric.seckill.common.utils.SignUtil;
@@ -48,11 +49,9 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 	private String appSecret;
 
 	@Override
-	public CommonResult<List<CouponQueryResponse>> findCoupons(List<String> couponSns) {
-		if (CollectionUtils.isEmpty(couponSns)) {
-			return CommonResult.fail(ErrorCodeEnum.EMPTY_PARAM.getMessage(), ErrorCodeEnum.EMPTY_PARAM.getErrCode());
-		}
-		Collection<CouponReceive> coupons = baseMapper.selectList(new QueryWrapper<CouponReceive>().in("coupon_sn", couponSns));
+	@ParamCheck
+	public CommonResult<List<CouponQueryResponse>> findCoupons(CouponQueryRequest request) {
+		Collection<CouponReceive> coupons = baseMapper.selectList(new QueryWrapper<CouponReceive>().in("id", request.getCouponIds()));
 		if (CollectionUtils.isEmpty(coupons)) {
 			return CommonResult.fail(ErrorCodeEnum.COUPON_NOT_FOUND.getMessage(), ErrorCodeEnum.COUPON_NOT_FOUND.getErrCode());
 		}
@@ -65,7 +64,7 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 			if (template.getStartTime().getTime() > System.currentTimeMillis() || System.currentTimeMillis() > template.getEndTime().getTime()) {
 				response.setCanUse(false).setErrorMsg("启用时间未开始");
 			}
-			checkCouponStatus(coupon, response);
+			checkCouponStatus(coupon, response, request);
 			responses.add(response);
 		}
 		return CommonResult.success(responses, null);
@@ -84,6 +83,13 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 		boolean verify = SignUtil.verify(request, request.getSign(), appSecret);
 		if (!verify) {
 			throw new CustomException(ErrorCodeEnum.ERROR_SIGN.getMessage());
+		}
+		// 将之前标记为正在使用中的所有订单变为正常状态
+		CouponReceive entity = new CouponReceive().setStatus(CouponStatusEnum.NORMAL.getStatusCode())
+				.setUpdateTime(new Date()).setOrderId(null);
+		update(entity, new QueryWrapper<CouponReceive>().eq("order_id", request.getOrderId()));
+		if (CollectionUtils.isEmpty(request.getCouponSns())) {
+			return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 		}
 		// 根据用户id获取该用户所有可用的优惠券
 		List<CouponReceive> couponReceives = baseMapper.selectList(new QueryWrapper<CouponReceive>().eq("user_id", request.getUserId())
@@ -134,13 +140,13 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 	 *
 	 * @param coupon
 	 * @param response
+	 * @param request
 	 */
-	private void checkCouponStatus(CouponReceive coupon, CouponQueryResponse response) {
-		if (CouponStatusEnum.NORMAL.getStatusCode().equals(coupon.getStatus())) {
-			response.setCanUse(true).setErrorMsg("状态正常");
-		} else {
+	private void checkCouponStatus(CouponReceive coupon, CouponQueryResponse response, CouponQueryRequest request) {
+		response.setCanUse(true).setErrorMsg("状态正常");
+		if (!CouponStatusEnum.NORMAL.getStatusCode().equals(coupon.getStatus()) &&
+				!request.getOrderId().equals(coupon.getOrderId())) {
 			response.setCanUse(false).setErrorMsg("当前状态不可用:" + coupon.getStatus());
 		}
-
 	}
 }

@@ -4,15 +4,20 @@ import com.eric.order.bean.OrderDetail;
 import com.eric.order.bean.OrderMaster;
 import com.eric.order.constant.OrderErrorCodeEnum;
 import com.eric.order.constant.OrderStatusEnum;
+import com.eric.order.feign.WarehouseProductFeign;
 import com.eric.order.model.CreateOrderDetail;
 import com.eric.order.model.CreateOrderRequest;
 import com.eric.order.model.CreateOrderResponse;
-import com.eric.order.service.*;
+import com.eric.order.service.CreateOrderService;
+import com.eric.order.service.OrderDetailService;
+import com.eric.order.service.OrderMasterService;
+import com.eric.order.service.ProductMasterService;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ProductQueryResponse;
+import com.eric.seckill.common.model.feign.WarehouseQueryRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
@@ -45,10 +50,10 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	private ProductMasterService productMasterService;
 
 	@Resource
-	private WarehouseProductService warehouseProductService;
+	private DozerBeanMapper dozerBeanMapper;
 
 	@Resource
-	private DozerBeanMapper dozerBeanMapper;
+	private WarehouseProductFeign warehouseProductFeign;
 
 	private static final int SCALE = 8;
 
@@ -60,7 +65,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		checkUserActive(request.getUserId());
 		String orderId = UUID.randomUUID().toString();
 		List<OrderDetail> details = new ArrayList<>();
-		BigDecimal orderMoney = new BigDecimal(request.getShippingMoney());
+		BigDecimal orderMoney = new BigDecimal(0);
 		// TODO
 		BigDecimal districtMoney = new BigDecimal(0);
 		// 计算金额
@@ -69,9 +74,16 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 			if (productMaster == null) {
 				throw new CustomException(OrderErrorCodeEnum.PRODUCT_NOT_FOUND.getMessage());
 			}
-			String warehouseId = warehouseProductService.findWarehouseId(request);
+			WarehouseQueryRequest warehouseProductRequest = new WarehouseQueryRequest().setProductCnt(detail.getProductCnt())
+					.setProductId(detail.getProductId()).setOrderId(orderId);
+			warehouseProductRequest.setSign(getSign(warehouseProductRequest));
+			CommonResult<String> commonResult = warehouseProductFeign.find(warehouseProductRequest);
+			if (!commonResult.isSuccess()) {
+				throw new CustomException(commonResult.getMessage());
+			}
+			String warehouseId = commonResult.getData();
 			if (StringUtils.isBlank(warehouseId)) {
-				throw new CustomException(OrderErrorCodeEnum.STOCK_NOT_ENOUGH.getMessage());
+				throw new CustomException(productMaster.getProductName() + OrderErrorCodeEnum.STOCK_NOT_ENOUGH.getMessage());
 			}
 			OrderDetail orderDetail = new OrderDetail().setOrderDetailId(UUID.randomUUID().toString())
 					.setOrderId(orderId).setCreateTime(new Date()).setProductCnt(detail.getProductCnt())
@@ -86,7 +98,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 				.setOrderMoney(orderMoney.intValue()).setOrderSn(UUID.randomUUID().toString())
 				.setOrderStatus(OrderStatusEnum.CREATED.getOrderStatusCode())
 				.setDistrictMoney(districtMoney.intValue())
-				.setPaymentMoney(orderMoney.subtract(districtMoney).setScale(SCALE, BigDecimal.ROUND_HALF_UP).intValue())
+				.setPaymentMoney(orderMoney.add(new BigDecimal(request.getShippingMoney())).subtract(districtMoney).setScale(SCALE, BigDecimal.ROUND_HALF_UP).intValue())
 				.setOrderPoint(0)
 				.setShippingMoney(request.getShippingMoney())
 				.setShippingUser(request.getShippingUser());

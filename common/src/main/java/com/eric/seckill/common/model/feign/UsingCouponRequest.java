@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -20,7 +19,6 @@ public class UsingCouponRequest {
 	/**
 	 * 优惠券号码
 	 */
-	@NotNull(message = "优惠券号码不能空")
 	private List<String> couponSns;
 	/**
 	 * 用户id

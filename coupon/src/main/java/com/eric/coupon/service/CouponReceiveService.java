@@ -3,6 +3,7 @@ package com.eric.coupon.service;
 import com.eric.coupon.bean.CouponReceive;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
+import com.eric.seckill.common.model.feign.CouponQueryRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 
@@ -17,10 +18,10 @@ public interface CouponReceiveService {
 	/**
 	 * 根据优惠券号获取优惠券信息
 	 *
-	 * @param couponSns
+	 * @param request
 	 * @return
 	 */
-	CommonResult<List<CouponQueryResponse>> findCoupons(List<String> couponSns);
+	CommonResult<List<CouponQueryResponse>> findCoupons(CouponQueryRequest request);
 
 	/**
 	 * 批量保存
@@ -40,6 +41,7 @@ public interface CouponReceiveService {
 
 	/**
 	 * 消费优惠券
+	 *
 	 * @param request
 	 * @return
 	 */

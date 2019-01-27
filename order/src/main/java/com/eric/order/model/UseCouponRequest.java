@@ -26,13 +26,13 @@ public class UseCouponRequest {
 	/**
 	 * 用户id
 	 */
-	@NotBlank(message = "用户id")
+	@NotBlank(message = "用户id不能为空")
 	private String userId;
 	/**
 	 * 优惠券号码
 	 */
-	@NotNull(message = "优惠券号码")
-	private List<String> couponNumbers;
+	@NotNull(message = "优惠券id不能为空")
+	private List<String> couponIds;
 	/**
 	 * 请求签名
 	 */

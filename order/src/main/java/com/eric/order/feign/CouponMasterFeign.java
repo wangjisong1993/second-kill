@@ -2,6 +2,7 @@ package com.eric.order.feign;
 
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
+import com.eric.seckill.common.model.feign.CouponQueryRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -21,11 +22,11 @@ public interface CouponMasterFeign {
 	/**
 	 * 获取优惠券信息
 	 *
-	 * @param couponSns
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/couponMaster/find", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-	CommonResult<List<CouponQueryResponse>> findCoupon(@RequestBody List<String> couponSns);
+	CommonResult<List<CouponQueryResponse>> findCoupon(@RequestBody CouponQueryRequest request);
 
 	/**
 	 * 标记优惠券状态为正在使用中

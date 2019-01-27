@@ -1,5 +1,7 @@
 package com.eric.coupon.bean;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -62,6 +64,7 @@ public class CouponReceive implements Serializable {
 	/**
 	 * 订单id
 	 */
+	@TableField(strategy= FieldStrategy.IGNORED)
 	private String orderId;
 
 	private static final long serialVersionUID = 1L;

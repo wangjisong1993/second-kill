@@ -6,6 +6,7 @@ import com.eric.coupon.service.UserReceiveCouponService;
 import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ConsumeCouponRequest;
+import com.eric.seckill.common.model.feign.CouponQueryRequest;
 import com.eric.seckill.common.model.feign.CouponQueryResponse;
 import com.eric.seckill.common.model.feign.UsingCouponRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +36,13 @@ public class CouponController {
 	/**
 	 * 查找优惠券
 	 *
-	 * @param couponSns
+	 * @param request
 	 * @return
 	 */
 	@PostMapping("/find")
 	@LogDetail
-	public CommonResult<List<CouponQueryResponse>> findCoupon(@RequestBody List<String> couponSns) {
-		return couponReceiveService.findCoupons(couponSns);
+	public CommonResult<List<CouponQueryResponse>> findCoupon(@RequestBody CouponQueryRequest request) {
+		return couponReceiveService.findCoupons(request);
 	}
 
 	/**

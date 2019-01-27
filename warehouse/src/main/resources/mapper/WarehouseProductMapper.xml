@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eric.warehouse.dao.WarehouseProductMapper">
+    <update id="updateCnt">
+        UPDATE warehouse_product
+        SET update_time = #{request.updateTime},
+         current_cnt = current_cnt - #{request.lockCnt},
+         lock_cnt = lock_cnt + #{request.lockCnt}
+        WHERE
+            product_id = #{request.productId}
+        AND w_id = #{request.wId}
+    </update>
+    <update id="updateProductCnt">
+        UPDATE warehouse_product
+        SET current_cnt = current_cnt + #{request.productCnt},
+         update_time = #{updateTime}
+        WHERE
+            wp_id = #{wpId}
+    </update>
+    <select id="findMaxCurrentCntWId" resultType="java.lang.String">
+        SELECT
+            w_id
+        FROM
+            warehouse_product
+        WHERE
+            product_id = #{productId}
+        AND current_cnt > #{productCnt}
+        ORDER BY
+            current_cnt DESC
+        LIMIT 1
+    </select>
+    <select id="findWpIdByProductIdAndWId" resultType="java.lang.String">
+        SELECT
+            wp_id
+        FROM
+            warehouse_product
+        WHERE
+            product_id = #{productId}
+        AND w_id = #{wId}
+    </select>
+</mapper>

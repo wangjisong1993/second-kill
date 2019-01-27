@@ -20,6 +20,7 @@ public enum OrderErrorCodeEnum {
 	ORDER_STATUS_ERROR("订单状态异常", "259"),
 	ERROR_STATUS_FOR_RECEIVE("当前状态不可收货", "260"),
 	ERROR_STATUS_FOR_SHIPPING("当前状态不可发货", "261"),
+	EXCEED_PAYMENT_MONEY("用券后实际支付金额小于0", "262"),
 	RECEIVE_SUCCESS("收货成功", "0"),
 	;
 	/**

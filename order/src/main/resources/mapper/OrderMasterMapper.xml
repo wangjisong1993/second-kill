@@ -11,7 +11,7 @@
     </select>
     <select id="findPaymentMoneyByOrderId" resultType="java.lang.Integer">
         SELECT
-            payment_money
+            order_money + shipping_money - district_money
         FROM
             order_master
         WHERE

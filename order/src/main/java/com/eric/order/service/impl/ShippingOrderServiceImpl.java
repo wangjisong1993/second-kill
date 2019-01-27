@@ -2,6 +2,7 @@ package com.eric.order.service.impl;
 
 import com.eric.order.constant.OrderErrorCodeEnum;
 import com.eric.order.constant.OrderStatusEnum;
+import com.eric.order.feign.WarehouseProductFeign;
 import com.eric.order.service.OrderMasterService;
 import com.eric.order.service.ShippingOrderService;
 import com.eric.seckill.cache.anno.ParamCheck;
@@ -25,6 +26,9 @@ public class ShippingOrderServiceImpl extends BaseOrderService implements Shippi
 
 	@Resource
 	private OrderMasterService orderMasterService;
+
+	@Resource
+	private WarehouseProductFeign warehouseProductFeign;
 
 	@Override
 	@ParamCheck
