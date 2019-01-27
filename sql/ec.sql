@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50622
 File Encoding         : 65001
 
-Date: 2019-01-26 23:43:42
+Date: 2019-01-27 23:22:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,15 +58,15 @@ CREATE TABLE `coupon_receive` (
 -- ----------------------------
 -- Records of coupon_receive
 -- ----------------------------
-INSERT INTO `coupon_receive` VALUES ('12b9a92e-6741-461a-9b0f-160d01b5a8f5', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '6e322341-1e1a-435a-bc51-49286adba76f', null, null);
-INSERT INTO `coupon_receive` VALUES ('1b1e8001-3563-4396-af55-7d29c2c340eb', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '300948c0-ee91-4a24-a3c0-25a232aa34ee', null, null);
+INSERT INTO `coupon_receive` VALUES ('12b9a92e-6741-461a-9b0f-160d01b5a8f5', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '2', '6e322341-1e1a-435a-bc51-49286adba76f', '2019-01-27 23:08:19', 'adc7a9b0-27a6-4954-b46e-d5be4319b5fd');
+INSERT INTO `coupon_receive` VALUES ('1b1e8001-3563-4396-af55-7d29c2c340eb', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '300948c0-ee91-4a24-a3c0-25a232aa34ee', '2019-01-27 23:11:19', null);
 INSERT INTO `coupon_receive` VALUES ('1b434e81-30ab-4835-ae77-ec51c22c8380', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '86d73842-9c8b-4455-a6c7-b770a8e8b7bc', null, null);
 INSERT INTO `coupon_receive` VALUES ('1c0210ab-396c-47e1-8110-101a56c2f579', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '14f57fd6-18cf-421e-9e39-f57d62f13bd8', null, null);
 INSERT INTO `coupon_receive` VALUES ('6ebe4851-a671-4cba-9a9b-f0c100f4c118', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', 'fc3acc4a-bfbb-45bc-a85e-0a6cee9a182d', null, null);
 INSERT INTO `coupon_receive` VALUES ('7edb6d3f-d06c-4b5c-a233-353cf6301c97', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', 'a09d470b-d5fb-4bf0-bb00-0b2372d1df43', null, null);
 INSERT INTO `coupon_receive` VALUES ('9dc808a4-370d-4b9e-b655-06384d5f1484', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', 'cbe81424-d1bc-4ccb-9e44-0613b91e8659', null, null);
-INSERT INTO `coupon_receive` VALUES ('a12370e3-3649-43d7-af5d-efa9ee896f8e', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '112600f9-0b44-4d21-a26e-0b488455e18f', null, null);
-INSERT INTO `coupon_receive` VALUES ('b7cc61a3-a3c9-4c16-853a-1fd63d8a6b61', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '056e8970-19bd-4e57-94b4-0eb43f087337', null, null);
+INSERT INTO `coupon_receive` VALUES ('a12370e3-3649-43d7-af5d-efa9ee896f8e', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '4', '112600f9-0b44-4d21-a26e-0b488455e18f', '2019-01-27 23:13:45', null);
+INSERT INTO `coupon_receive` VALUES ('b7cc61a3-a3c9-4c16-853a-1fd63d8a6b61', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '4', '056e8970-19bd-4e57-94b4-0eb43f087337', '2019-01-27 23:13:45', null);
 INSERT INTO `coupon_receive` VALUES ('c5f8fcc0-ff09-470b-85ce-98236ecd2456', 'd629c855-d147-4701-b0e9-383b27bb5126', 'ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '10000', '2019-01-26 12:09:35', '0', '1', '30333008-8e44-4a8a-b415-278fd7436327', null, null);
 
 -- ----------------------------
@@ -114,7 +114,9 @@ CREATE TABLE `order_detail` (
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES ('1b96395f-555c-44b0-8164-5631b9bfdb63', '874cc1e5-a137-48b4-988b-d1c6cab93993', '1', '1', '100', '100', '0', '1', '2019-01-25 21:15:37', '2019-01-25 21:15:37');
+INSERT INTO `order_detail` VALUES ('72c5edd1-32a2-42e0-a074-bd4fae04762c', 'adc7a9b0-27a6-4954-b46e-d5be4319b5fd', '1', '1', '100', '100', '0', '1', '2019-01-27 22:28:42', '2019-01-27 22:28:42');
+INSERT INTO `order_detail` VALUES ('8fae8801-92b4-49ee-ada3-78c1410526d2', '9d10e7c2-deb9-4f28-b070-6a7f424ceb2b', '1', '1', '100', '100', '0', '1', '2019-01-27 23:08:29', '2019-01-27 23:08:29');
+INSERT INTO `order_detail` VALUES ('d758ed40-1dec-4240-a63b-adaba9e494ab', 'bda0afd4-db7e-4fd7-a119-893302356a96', '1', '1', '1000', '100', '0', '1', '2019-01-27 23:08:54', '2019-01-27 23:08:54');
 
 -- ----------------------------
 -- Table structure for order_master
@@ -144,8 +146,9 @@ CREATE TABLE `order_master` (
 -- ----------------------------
 -- Records of order_master
 -- ----------------------------
-INSERT INTO `order_master` VALUES ('cdf4534b-287f-4764-9ee6-946b338d0cb7', 'cbc4518a-7f41-4657-90a5-5d1a8c411d2a', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '9000', null, '2019-01-25 20:43:18', null, null, null, '3', '9000', '2019-01-25 21:05:52', '1000');
-INSERT INTO `order_master` VALUES ('874cc1e5-a137-48b4-988b-d1c6cab93993', '56821d9b-2366-47d9-9c35-a91db6e1efe4', 'd629c855-d147-4701-b0e9-383b27bb5126', '561f34d8-3b5f-4a25-89a5-d81d9c3e4fc9', '1', '10000', '0', '1000', '10000', '1', '2019-01-25 21:15:37', '2019-01-26 11:33:37', '2019-01-25 21:53:27', '2019-01-26 11:33:37', '5', '10000', '2019-01-26 23:37:10', '0');
+INSERT INTO `order_master` VALUES ('adc7a9b0-27a6-4954-b46e-d5be4319b5fd', 'ebf251a4-cfc5-496b-856a-1b61ccbaf895', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '1000', null, '2019-01-27 22:28:42', null, null, null, '1', '0', '2019-01-27 23:08:19', '10000');
+INSERT INTO `order_master` VALUES ('9d10e7c2-deb9-4f28-b070-6a7f424ceb2b', '50679df4-abd1-436e-8ab7-9f11897809e0', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '11000', null, '2019-01-27 23:08:29', null, null, null, '1', '0', '2019-01-27 23:08:29', null);
+INSERT INTO `order_master` VALUES ('bda0afd4-db7e-4fd7-a119-893302356a96', '172fa49b-a671-4e45-94d8-39ec6f537ecd', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', '1', '100000', '0', '1000', '81000', null, '2019-01-27 23:08:54', null, '2019-01-27 23:13:44', null, '3', '81000', '2019-01-27 23:13:44', '20000');
 
 -- ----------------------------
 -- Table structure for product_category
@@ -187,6 +190,57 @@ CREATE TABLE `product_comment` (
 -- ----------------------------
 -- Records of product_comment
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for product_in_stock_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `product_in_stock_logs`;
+CREATE TABLE `product_in_stock_logs` (
+  `id` varchar(40) DEFAULT NULL COMMENT '数据库主键',
+  `product_id` varchar(40) DEFAULT NULL COMMENT '商品id',
+  `w_id` varchar(40) DEFAULT NULL COMMENT '仓库id',
+  `product_cnt` int(11) DEFAULT NULL COMMENT '入库数量',
+  `supplier_id` varchar(40) DEFAULT NULL COMMENT '供应商',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_user_id` varchar(40) DEFAULT NULL COMMENT '创建人',
+  `update_user_id` varchar(40) DEFAULT NULL COMMENT '更新人',
+  `contract_no` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product_in_stock_logs
+-- ----------------------------
+INSERT INTO `product_in_stock_logs` VALUES ('e44cbf05-9126-4cc2-88b8-7fecf7faf53a', '1', '1', '10000', '188624b1-e874-4651-9a68-b097fa6f04e4', '2019-01-27 21:08:03', '2019-01-27 21:08:03', 'd629c855-d147-4701-b0e9-383b27bb5126', 'd629c855-d147-4701-b0e9-383b27bb5126', '1');
+
+-- ----------------------------
+-- Table structure for product_lock_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `product_lock_detail`;
+CREATE TABLE `product_lock_detail` (
+  `id` varchar(40) DEFAULT NULL COMMENT '数据库主键',
+  `order_id` varchar(40) DEFAULT NULL COMMENT '订单id',
+  `product_id` varchar(40) DEFAULT NULL COMMENT '占用的商品id',
+  `lock_cnt` int(11) DEFAULT NULL COMMENT '占用数量',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_user_id` varchar(40) DEFAULT NULL COMMENT '创建人',
+  `update_user_id` varchar(40) DEFAULT NULL COMMENT '更新人',
+  `lock_status` varchar(1) DEFAULT NULL COMMENT '状态',
+  `w_id` varchar(40) DEFAULT NULL COMMENT '仓库id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product_lock_detail
+-- ----------------------------
+INSERT INTO `product_lock_detail` VALUES ('7e3584b5-93de-4ddf-bc4f-5e13d92327ec', '9b037a03-d6ab-4410-aa89-af24498815b8', '1', '100', '2019-01-27 21:08:36', '2019-01-27 21:08:36', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('fd528c7f-163c-415b-a541-9d30e5b44347', 'f6c9f99a-b1cf-4d27-8d7b-0244e5e7bbf7', '1', '100', '2019-01-27 22:04:17', '2019-01-27 22:04:17', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('42ee8625-edd2-46d5-a3db-f5fb64cc26dc', '4d468383-7dfe-45d8-97b1-e6290801d584', '1', '100', '2019-01-27 22:25:30', '2019-01-27 22:25:30', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('fe7b79bf-1c50-4520-9308-f8b8bf062752', 'f4db71fd-5057-467e-998c-417cdac4227c', '1', '100', '2019-01-27 22:26:52', '2019-01-27 22:26:52', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('93e59aac-7603-4bba-bf1b-0452a00a971b', '2f009a4f-1a4d-46d4-8328-b8b2b0649623', '1', '100', '2019-01-27 22:27:45', '2019-01-27 22:27:45', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('bb954d56-529b-4f52-99e8-d0b90ffce50b', 'adc7a9b0-27a6-4954-b46e-d5be4319b5fd', '1', '100', '2019-01-27 22:28:42', '2019-01-27 22:28:42', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('d747aec8-c96c-4e61-b681-9fdcf19148a5', '9d10e7c2-deb9-4f28-b070-6a7f424ceb2b', '1', '100', '2019-01-27 23:08:29', '2019-01-27 23:08:29', 'admin', 'admin', '1', '1');
+INSERT INTO `product_lock_detail` VALUES ('3d32bd65-a42f-4b03-8880-d662fe69d741', 'bda0afd4-db7e-4fd7-a119-893302356a96', '1', '1000', '2019-01-27 23:08:54', '2019-01-27 23:08:54', 'admin', 'admin', '1', '1');
 
 -- ----------------------------
 -- Table structure for product_master
@@ -259,6 +313,7 @@ CREATE TABLE `supplier_info` (
 -- ----------------------------
 -- Records of supplier_info
 -- ----------------------------
+INSERT INTO `supplier_info` VALUES ('188624b1-e874-4651-9a68-b097fa6f04e4', '1', '大傻逼有限公司', '1', '250', '123456789', '1', '2019-01-27 21:00:06', 'admin', '2019-01-27 21:00:06', 'admin');
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -384,7 +439,7 @@ CREATE TABLE `user_info` (
 -- Records of user_info
 -- ----------------------------
 INSERT INTO `user_info` VALUES ('ac3d857c-17e8-48b7-8a08-2576705177dc', 'f2414da0-9b78-4152-955f-049c398d3990', '大傻逼', '4', '123456@qq.com', null, '0', '2019-01-22 17:19:20', null, '1', '0', '2019-01-22 17:19:20', 'admin', '2019-01-23 12:09:37', 'admin');
-INSERT INTO `user_info` VALUES ('ac8cd388-cecb-4f70-b12a-88b279452996', 'd629c855-d147-4701-b0e9-383b27bb5126', null, '41', null, null, '10000', '2019-01-22 17:35:23', null, '1', '0', '2019-01-22 17:35:23', 'admin', '2019-01-22 17:35:23', 'admin');
+INSERT INTO `user_info` VALUES ('ac8cd388-cecb-4f70-b12a-88b279452996', 'd629c855-d147-4701-b0e9-383b27bb5126', null, '41', null, null, '91000', '2019-01-22 17:35:23', null, '1', '0', '2019-01-22 17:35:23', 'admin', '2019-01-22 17:35:23', 'admin');
 INSERT INTO `user_info` VALUES ('f3c60849-0f98-413e-ae69-2c274316a9e0', 'eed51653-8344-4d27-baae-0fa0b0d5eab9', null, '411', null, null, '0', '2019-01-22 17:36:10', null, '1', '0', '2019-01-22 17:36:10', 'admin', '2019-01-22 17:36:10', 'admin');
 
 -- ----------------------------
@@ -481,6 +536,7 @@ CREATE TABLE `user_point_log` (
 -- Records of user_point_log
 -- ----------------------------
 INSERT INTO `user_point_log` VALUES ('1a33083f-6a28-4e46-a06a-4add39fc90f8', 'd629c855-d147-4701-b0e9-383b27bb5126', '2', '874cc1e5-a137-48b4-988b-d1c6cab93993', '10000', '2019-01-25 21:53:27');
+INSERT INTO `user_point_log` VALUES ('cc99996a-c6c8-4c73-a1b3-6153b6ab0fda', 'd629c855-d147-4701-b0e9-383b27bb5126', '2', 'bda0afd4-db7e-4fd7-a119-893302356a96', '81000', '2019-01-27 23:13:45');
 
 -- ----------------------------
 -- Table structure for warehouse_info
@@ -522,3 +578,4 @@ CREATE TABLE `warehouse_product` (
 -- ----------------------------
 -- Records of warehouse_product
 -- ----------------------------
+INSERT INTO `warehouse_product` VALUES ('b655e4d0-c58f-4be3-8cb0-b4e92bd4c163', '1', '1', '8300', '1700', '0', '2019-01-27 21:08:03', '2019-01-27 23:08:54');
