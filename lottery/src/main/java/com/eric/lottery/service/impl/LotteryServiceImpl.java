@@ -44,6 +44,7 @@ public class LotteryServiceImpl implements LotteryService {
 		if (regions == null) {
 			throw new CustomException("获取抽象活动明细失败, 请重试");
 		}
+		// TODO 扣除用户的积分
 		int randomNum = RandomUtils.nextInt(0, LotteryConstant.BASE_NUMBER);
 		LOGGER.info("生成的随机数为{}", randomNum);
 		LotteryRegion region = findRegion(regions, randomNum);

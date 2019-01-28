@@ -29,9 +29,6 @@ public class CreateOrderRequest {
 	@NotBlank(message = "收货人姓名不能为空")
 	private String shippingUser;
 
-	@NotNull(message = "运费不能为空")
-	private Integer shippingMoney;
-
 	/**
 	 * 订单明细
 	 */

@@ -20,6 +20,7 @@ import com.eric.seckill.common.model.feign.ProductQueryResponse;
 import com.eric.seckill.common.model.feign.WarehouseQueryRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +56,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	@Resource
 	private WarehouseProductFeign warehouseProductFeign;
 
+	@Value("${order.noShippingMoney}")
+	private Integer noShippingMoney;
+
 	private static final int SCALE = 8;
 
 	@Override
@@ -68,6 +72,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		BigDecimal orderMoney = new BigDecimal(0);
 		// TODO
 		BigDecimal districtMoney = new BigDecimal(0);
+		Integer shippingMoney = 1000;
 		// 计算金额
 		for (CreateOrderDetail detail : request.getDetails()) {
 			ProductQueryResponse productMaster = productMasterService.findProductMasterById(detail.getProductId());
@@ -93,14 +98,16 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 			details.add(orderDetail);
 			orderMoney = orderMoney.add(new BigDecimal(productMaster.getPrice()).multiply(new BigDecimal(detail.getProductCnt())).setScale(SCALE, BigDecimal.ROUND_HALF_UP));
 		}
+		// 实付金额超过200可以免运费
+		shippingMoney = orderMoney.intValue() > noShippingMoney ? 0 : shippingMoney;
 		OrderMaster orderMaster = new OrderMaster().setOrderId(orderId).setUserId(request.getUserId())
 				.setCreateTime(new Date()).setUpdateTime(new Date())
 				.setOrderMoney(orderMoney.intValue()).setOrderSn(UUID.randomUUID().toString())
 				.setOrderStatus(OrderStatusEnum.CREATED.getOrderStatusCode())
 				.setDistrictMoney(districtMoney.intValue())
-				.setPaymentMoney(orderMoney.add(new BigDecimal(request.getShippingMoney())).subtract(districtMoney).setScale(SCALE, BigDecimal.ROUND_HALF_UP).intValue())
+				.setPaymentMoney(orderMoney.add(new BigDecimal(shippingMoney)).subtract(districtMoney).setScale(SCALE, BigDecimal.ROUND_HALF_UP).intValue())
 				.setOrderPoint(0)
-				.setShippingMoney(request.getShippingMoney())
+				.setShippingMoney(shippingMoney)
 				.setShippingUser(request.getShippingUser());
 		// 保存订单主表
 		int insert = orderMasterService.insert(orderMaster);

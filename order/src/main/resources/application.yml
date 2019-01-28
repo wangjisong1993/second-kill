@@ -97,3 +97,4 @@ mybatis-plus:
 order:
   createOrder:
     secret: 123
+  noShippingMoney: 20000 # 单位是分

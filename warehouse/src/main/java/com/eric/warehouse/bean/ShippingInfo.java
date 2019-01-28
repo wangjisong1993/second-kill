@@ -22,6 +22,11 @@ public class ShippingInfo implements Serializable {
 	private String shipId;
 
 	/**
+	 * 负责配送的仓库id
+	 */
+	private String warehouseId;
+
+	/**
 	 * 物流公司名称
 	 */
 	private String shipName;
