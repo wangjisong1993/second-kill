@@ -70,3 +70,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+card:
+  collect:
+    limit: 2

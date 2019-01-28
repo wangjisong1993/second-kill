@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50622
 File Encoding         : 65001
 
-Date: 2019-01-27 23:22:09
+Date: 2019-01-28 23:12:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,6 +36,71 @@ CREATE TABLE `brand_info` (
 -- ----------------------------
 -- Records of brand_info
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for card_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `card_logs`;
+CREATE TABLE `card_logs` (
+  `log_id` varchar(40) DEFAULT NULL COMMENT '记录id',
+  `template_id` varchar(40) DEFAULT NULL COMMENT '模板id',
+  `user_id` varchar(40) DEFAULT NULL COMMENT '用户id',
+  `card_id` varchar(40) DEFAULT NULL COMMENT '卡id',
+  `card_status` varchar(1) DEFAULT NULL COMMENT '卡状态',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of card_logs
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for card_rate
+-- ----------------------------
+DROP TABLE IF EXISTS `card_rate`;
+CREATE TABLE `card_rate` (
+  `record_id` varchar(40) DEFAULT NULL COMMENT '记录id',
+  `template_id` varchar(40) DEFAULT NULL COMMENT '卡模板id',
+  `card_rate` double DEFAULT NULL COMMENT '出现概率',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of card_rate
+-- ----------------------------
+INSERT INTO `card_rate` VALUES ('4', '4', '0.1', '2019-01-28 22:20:17', '2019-01-28 22:20:19');
+INSERT INTO `card_rate` VALUES ('2', '2', '0.3', '2019-01-28 22:20:28', '2019-01-28 22:20:31');
+INSERT INTO `card_rate` VALUES ('3', '3', '0.1', '2019-01-28 22:20:17', '2019-01-28 22:20:19');
+INSERT INTO `card_rate` VALUES ('1', '1', '0.3', '2019-01-28 22:20:17', '2019-01-28 22:20:19');
+INSERT INTO `card_rate` VALUES ('5', '5', '0.01', '2019-01-28 22:20:17', '2019-01-28 22:20:19');
+INSERT INTO `card_rate` VALUES ('6', '6', '0.05', '2019-01-28 22:21:33', '2019-01-28 22:21:35');
+INSERT INTO `card_rate` VALUES ('7', '7', '0.001', '2019-01-28 22:22:00', '2019-01-28 22:22:03');
+
+-- ----------------------------
+-- Table structure for card_template
+-- ----------------------------
+DROP TABLE IF EXISTS `card_template`;
+CREATE TABLE `card_template` (
+  `template_id` varchar(40) DEFAULT NULL COMMENT '模板id',
+  `template_name` varchar(40) DEFAULT NULL COMMENT '模板名称',
+  `card_type` varchar(2) DEFAULT NULL COMMENT '卡类型',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of card_template
+-- ----------------------------
+INSERT INTO `card_template` VALUES ('1', '爱国福', '1', '2019-01-28 22:18:06', '2019-01-28 22:18:09');
+INSERT INTO `card_template` VALUES ('2', '富强福', '1', '2019-01-28 22:18:22', '2019-01-28 22:18:24');
+INSERT INTO `card_template` VALUES ('3', '和谐福', '1', '2019-01-28 22:18:34', '2019-01-28 22:18:37');
+INSERT INTO `card_template` VALUES ('4', '友善福', '1', '2019-01-28 22:18:47', '2019-01-28 22:18:50');
+INSERT INTO `card_template` VALUES ('5', '敬业福', '1', '2019-01-28 22:19:01', '2019-01-28 22:19:03');
+INSERT INTO `card_template` VALUES ('6', '沾福气', '2', '2019-01-28 22:19:29', '2019-01-28 22:19:31');
+INSERT INTO `card_template` VALUES ('7', '万能福', '3', '2019-01-28 22:19:56', '2019-01-28 22:19:58');
+INSERT INTO `card_template` VALUES ('8', '五福到', '4', '2019-01-28 23:12:35', '2019-01-28 23:12:37');
 
 -- ----------------------------
 -- Table structure for coupon_receive
@@ -149,6 +214,24 @@ CREATE TABLE `order_master` (
 INSERT INTO `order_master` VALUES ('adc7a9b0-27a6-4954-b46e-d5be4319b5fd', 'ebf251a4-cfc5-496b-856a-1b61ccbaf895', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '1000', null, '2019-01-27 22:28:42', null, null, null, '1', '0', '2019-01-27 23:08:19', '10000');
 INSERT INTO `order_master` VALUES ('9d10e7c2-deb9-4f28-b070-6a7f424ceb2b', '50679df4-abd1-436e-8ab7-9f11897809e0', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', null, '10000', '0', '1000', '11000', null, '2019-01-27 23:08:29', null, null, null, '1', '0', '2019-01-27 23:08:29', null);
 INSERT INTO `order_master` VALUES ('bda0afd4-db7e-4fd7-a119-893302356a96', '172fa49b-a671-4e45-94d8-39ec6f537ecd', 'd629c855-d147-4701-b0e9-383b27bb5126', '大傻逼', '1', '100000', '0', '1000', '81000', null, '2019-01-27 23:08:54', null, '2019-01-27 23:13:44', null, '3', '81000', '2019-01-27 23:13:44', '20000');
+
+-- ----------------------------
+-- Table structure for present_card_log
+-- ----------------------------
+DROP TABLE IF EXISTS `present_card_log`;
+CREATE TABLE `present_card_log` (
+  `log_id` varchar(40) DEFAULT NULL COMMENT '记录id',
+  `from_user_id` varchar(40) DEFAULT NULL COMMENT '来源人',
+  `to_user_id` varchar(40) DEFAULT NULL COMMENT '接收人',
+  `card_id` varchar(40) DEFAULT NULL COMMENT '卡id',
+  `template_id` varchar(40) DEFAULT NULL COMMENT '卡模板id',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of present_card_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for product_category
@@ -270,6 +353,22 @@ CREATE TABLE `product_master` (
 -- Records of product_master
 -- ----------------------------
 INSERT INTO `product_master` VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '100', '1', '2', '2019-01-25 10:55:13', '1', '2019-01-25 10:55:16', '1', '2019-01-25 10:55:20', '1');
+
+-- ----------------------------
+-- Table structure for receive_log
+-- ----------------------------
+DROP TABLE IF EXISTS `receive_log`;
+CREATE TABLE `receive_log` (
+  `log_id` varchar(40) DEFAULT NULL COMMENT '记录id',
+  `user_id` varchar(40) DEFAULT NULL COMMENT '用户id',
+  `card_id` varchar(40) DEFAULT NULL COMMENT '卡id',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of receive_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for shipping_info
