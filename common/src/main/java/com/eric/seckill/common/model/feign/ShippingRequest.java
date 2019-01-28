@@ -29,6 +29,9 @@ public class ShippingRequest {
 	@NotBlank(message = "收货人不能为空")
 	private String shippingUser;
 
+	@NotBlank(message = "操作人不能为空")
+	private String userId;
+
 	@NotBlank(message = "签名不能为空")
 	private String sign;
 

@@ -1,6 +1,7 @@
 package com.eric.warehouse.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.eric.warehouse.bean.ProductLockDetail;
 import com.eric.warehouse.bean.WarehouseProduct;
 import com.eric.warehouse.model.InStockRequest;
 import com.eric.warehouse.model.WarehouseCntUpdateRequest;
@@ -49,4 +50,21 @@ public interface WarehouseProductMapper extends BaseMapper<WarehouseProduct> {
 	 */
 	int updateProductCnt(@Param("request") InStockRequest request, @Param("wpId") String wpId,
 	                     @Param("updateTime") Date updateTime);
+
+	/**
+	 * 更新在途数量
+	 *
+	 * @param lockDetail
+	 * @param updateTime
+	 * @return
+	 */
+	int updateInTransitCnt(@Param("lockDetail") ProductLockDetail lockDetail, @Param("updateTime") Date updateTime);
+
+	/**
+	 * 减少在途数量
+	 * @param lockDetail
+	 * @param date
+	 * @return
+	 */
+	int updateReceived(@Param("lockDetail") ProductLockDetail lockDetail, @Param("updateTime") Date date);
 }

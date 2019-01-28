@@ -7,8 +7,10 @@ import com.eric.order.service.OrderMasterService;
 import com.eric.order.service.ShippingOrderService;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
+import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ShippingRequest;
+import com.eric.seckill.common.model.feign.WarehouseShippingRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,14 @@ public class ShippingOrderServiceImpl extends BaseOrderService implements Shippi
 		}
 		// 可以发货, 修改状态
 		orderMasterService.orderShipping(request);
+		// 修改仓库库存占用记录的状态为已发货
+		WarehouseShippingRequest warehouseShippingRequest = new WarehouseShippingRequest().setOrderId(request.getOrderId())
+				.setUserId(request.getUserId());
+		warehouseShippingRequest.setSign(getSign(warehouseShippingRequest));
+		CommonResult<Void> shipping = warehouseProductFeign.shipping(warehouseShippingRequest);
+		if (!shipping.isSuccess()) {
+			throw new CustomException(shipping.getMessage());
+		}
 		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 	}
 

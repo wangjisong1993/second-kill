@@ -1,6 +1,10 @@
 package com.eric.warehouse.service;
 
-import com.eric.warehouse.bean.ProductLockDetail; /**
+import com.eric.warehouse.bean.ProductLockDetail;
+
+import java.util.List;
+
+/**
  * @author Eric on 2019/1/27.
  * @version 1.0
  */
@@ -21,4 +25,18 @@ public interface ProductLockDetailService {
 	 * @return
 	 */
 	boolean insert(ProductLockDetail t);
+
+	/**
+	 * 列出所有正在占用的
+	 * @param orderId
+	 * @param statusCode
+	 * @return
+	 */
+	List<ProductLockDetail> listByOrderId(String orderId, String statusCode);
+
+	/**
+	 * 批量更新
+	 * @param lockDetails
+	 */
+	void updateBatch(List<ProductLockDetail> lockDetails);
 }

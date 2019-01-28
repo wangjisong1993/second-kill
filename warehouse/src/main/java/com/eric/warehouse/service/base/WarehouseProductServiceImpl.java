@@ -85,6 +85,22 @@ public class WarehouseProductServiceImpl extends ServiceImpl<WarehouseProductMap
 		return updateProductCnt(request, wpId);
 	}
 
+	@Override
+	public void updateInTransitCnt(ProductLockDetail lockDetail) {
+		int result = this.baseMapper.updateInTransitCnt(lockDetail, new Date());
+		if (result == 0) {
+			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getMessage());
+		}
+	}
+
+	@Override
+	public void updateReceived(ProductLockDetail lockDetail) {
+		int result = this.baseMapper.updateReceived(lockDetail, new Date());
+		if (result == 0) {
+			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getMessage());
+		}
+	}
+
 	/**
 	 * 更新商品库存
 	 *

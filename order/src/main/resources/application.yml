@@ -7,6 +7,9 @@ eureka:
 ribbon:
   eureka:
     enabled: true
+  connectTimeout: 2000
+  readTimeout: 3000
+  maxAutoRetries: 1
 
 feign:
   hystrix:

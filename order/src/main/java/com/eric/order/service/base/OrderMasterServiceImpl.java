@@ -98,7 +98,7 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 	public void orderReceive(ReceiveOrderRequest request) {
 		OrderMaster entity = new OrderMaster();
 		dozerBeanMapper.map(request, entity);
-		entity.setOrderStatus(OrderStatusEnum.CLOSED.getOrderStatusCode()).setUpdateTime(new Date());
+		entity.setOrderStatus(OrderStatusEnum.RECEIVE.getOrderStatusCode()).setUpdateTime(new Date());
 		boolean update = update(entity, new QueryWrapper<OrderMaster>().eq("order_id", request.getOrderId())
 				.eq("order_status", OrderStatusEnum.SHIPPING.getOrderStatusCode()));
 		if (!update) {

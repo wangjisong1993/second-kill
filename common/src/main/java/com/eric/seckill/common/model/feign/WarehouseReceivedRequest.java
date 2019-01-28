@@ -4,39 +4,22 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-
 /**
- * 订单确认收货
+ * 用户收货
  *
- * @author Eric on 2019/1/26.
+ * @author wang.js on 2019/1/28.
  * @version 1.0
  */
 @Data
 @Accessors(chain = true)
-public class ReceiveOrderRequest {
+public class WarehouseReceivedRequest {
 
-	/**
-	 * 订单id
-	 */
 	@NotBlank(message = "订单id不能为空")
 	private String orderId;
 
-	/**
-	 * 收货时间
-	 */
-	@NotNull(message = "收货时间不能为空")
-	private Date receiveTime;
-
-	@NotBlank(message = "操作的用户id不能为空")
+	@NotBlank(message = "操作的员工id不能为空")
 	private String operateUserId;
 
-	/**
-	 * 签名
-	 */
 	@NotBlank(message = "签名不能为空")
 	private String sign;
-
-
 }

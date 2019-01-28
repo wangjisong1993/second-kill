@@ -2,6 +2,7 @@ package com.eric.warehouse.service;
 
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.WarehouseQueryRequest;
+import com.eric.warehouse.bean.ProductLockDetail;
 import com.eric.warehouse.model.InStockRequest;
 
 /**
@@ -20,7 +21,22 @@ public interface WarehouseProductService {
 
 	/**
 	 * 更新库存主表
+	 *
 	 * @param request
 	 */
 	boolean saveOrUpdateProductCnt(InStockRequest request);
+
+	/**
+	 * 更新在途数量
+	 *
+	 * @param lockDetail
+	 */
+	void updateInTransitCnt(ProductLockDetail lockDetail);
+
+	/**
+	 * 减去已收货的在途数量
+	 *
+	 * @param lockDetail
+	 */
+	void updateReceived(ProductLockDetail lockDetail);
 }

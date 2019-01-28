@@ -17,6 +17,23 @@
         WHERE
             wp_id = #{wpId}
     </update>
+    <update id="updateInTransitCnt">
+        UPDATE warehouse_product
+        SET lock_cnt = lock_cnt - #{lockDetail.lockCnt},
+         in_transit_cnt = in_transit_cnt + #{lockDetail.lockCnt},
+         update_time = #{updateTime}
+        WHERE
+            product_id = #{lockDetail.productId}
+        AND w_id = #{lockDetail.wId}
+    </update>
+    <update id="updateReceived">
+        UPDATE warehouse_product
+        SET in_transit_cnt = in_transit_cnt - #{lockDetail.lockCnt},
+         update_time = #{updateTime}
+        WHERE
+            product_id = #{lockDetail.productId}
+        AND w_id = #{lockDetail.wId}
+    </update>
     <select id="findMaxCurrentCntWId" resultType="java.lang.String">
         SELECT
             w_id

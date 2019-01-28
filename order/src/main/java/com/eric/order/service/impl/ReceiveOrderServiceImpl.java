@@ -2,11 +2,14 @@ package com.eric.order.service.impl;
 
 import com.eric.order.constant.OrderErrorCodeEnum;
 import com.eric.order.constant.OrderStatusEnum;
+import com.eric.order.feign.WarehouseProductFeign;
 import com.eric.order.service.OrderMasterService;
 import com.eric.order.service.ReceiveOrderService;
 import com.eric.seckill.cache.anno.ParamCheck;
+import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ReceiveOrderRequest;
+import com.eric.seckill.common.model.feign.WarehouseReceivedRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,9 @@ public class ReceiveOrderServiceImpl extends BaseOrderService implements Receive
 	@Resource
 	private OrderMasterService orderMasterService;
 
+	@Resource
+	private WarehouseProductFeign warehouseProductFeign;
+
 	@Override
 	@ParamCheck
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -35,6 +41,13 @@ public class ReceiveOrderServiceImpl extends BaseOrderService implements Receive
 		}
 		// 确认收货
 		orderMasterService.orderReceive(request);
+		WarehouseReceivedRequest warehouseReceivedRequest = new WarehouseReceivedRequest()
+				.setOrderId(request.getOrderId()).setOperateUserId(request.getOperateUserId());
+		warehouseReceivedRequest.setSign(getSign(warehouseReceivedRequest));
+		CommonResult<Void> commonResult = warehouseProductFeign.received(warehouseReceivedRequest);
+		if (!commonResult.isSuccess()) {
+			throw new CustomException(commonResult.getMessage());
+		}
 		return CommonResult.success(null, OrderErrorCodeEnum.RECEIVE_SUCCESS.getMessage());
 	}
 }
