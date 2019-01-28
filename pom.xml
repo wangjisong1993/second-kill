@@ -24,6 +24,7 @@
         <module>zuul</module>
         <module>base-data</module>
         <module>warehouse</module>
+        <module>collect-card</module>
     </modules>
 
     <parent>
