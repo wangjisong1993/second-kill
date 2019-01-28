@@ -46,6 +46,7 @@ public abstract class BaseOrderService {
 
 	/**
 	 * 获取签名
+	 *
 	 * @param obj
 	 * @return
 	 */
@@ -62,7 +63,7 @@ public abstract class BaseOrderService {
 		UserQueryRequest request = new UserQueryRequest();
 		request.setUserId(userId);
 		CommonResult<UserQueryResponse> response = userMasterFeign.findUserByUserIdOrLoginName(request);
-		LOGGER.info("返回的数据为:{}", JSON. toJSONString(response));
+		LOGGER.info("返回的数据为:{}", JSON.toJSONString(response));
 		if (response != null) {
 			UserQueryResponse data = response.getData();
 			if (response.isSuccess() && UserStatus.ACTIVE.getStatusCode().equals(data.getUserStats())) {
