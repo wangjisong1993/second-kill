@@ -9,4 +9,23 @@
         WHERE
             card_id = #{cardId}
     </select>
+    <select id="listCardMergeVo" resultType="com.eric.collect.card.model.CardMergeVo">
+        SELECT
+            a.log_id,
+            b.card_type,
+            b.template_id,
+            a.card_id,
+            a.card_status
+        FROM
+            card_logs a,
+            card_template b
+        WHERE
+            a.template_id = b.template_id
+        AND a.user_id = #{request.userId}
+        <if test="request.cardIds != null">
+            <foreach collection="request.cardIds" item="cardId" open="AND a.card_id IN (" close=")" separator=", ">
+                #{cardId}
+            </foreach>
+        </if>
+    </select>
 </mapper>

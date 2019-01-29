@@ -35,6 +35,10 @@ zuul:
       path: /warehouse/**
       serviceId: warehouse
       stripPrefix: false
+    collectCard:
+      path: /collectCard/**
+      serviceId: collectCard
+      stripPrefix: false
 
 eureka:
   client:
