@@ -10,7 +10,10 @@ import com.eric.collect.card.constant.CardTypeEnum;
 import com.eric.collect.card.constant.CollectCardConstant;
 import com.eric.collect.card.model.*;
 import com.eric.collect.card.service.*;
+import com.eric.seckill.cache.anno.DisLock;
+import com.eric.seckill.cache.anno.LogDetail;
 import com.eric.seckill.cache.anno.ParamCheck;
+import com.eric.seckill.cache.constant.CommonBizConstant;
 import com.eric.seckill.common.model.CommonResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -62,6 +66,8 @@ public class CollectCardServiceImpl implements CollectCardService {
 	@Override
 	@ParamCheck
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@LogDetail
+	@DisLock(key = "#request.userId", biz = CommonBizConstant.COLLECT_CARD_COLLECT)
 	public CommonResult<CollectCardResponse> collect(CollectCardRequest request) {
 		// 判断集福次数是否超过上限
 		int count = receiveLogService.countByUserId(request.getUserId());
@@ -145,6 +151,47 @@ public class CollectCardServiceImpl implements CollectCardService {
 				.setUpdateTime(new Date()).setUserId(request.getUserId()).setTemplateId(cardTemplateService.findTemplateId(CardTypeEnum.MASTER_CARD.getCardType()));
 		cardLogsService.saveBossCard(cardLogs);
 		return CommonResult.success(null, CardErrorCodeEnum.MERGE_SUCCESS.getErrorMsg());
+	}
+
+	@Override
+	@ParamCheck
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public CommonResult<CopyCardResponse> copy(CopyCardRequest request) {
+		// 获取要沾的人现有的卡数
+		List<CardLogs> cardLogs = cardLogsService.listNormalCardsByUserId(request.getCopyUserId());
+		if (CollectionUtils.isEmpty(cardLogs)) {
+			return CommonResult.fail(CardErrorCodeEnum.CARD_NOT_FIND.getErrorMsg(), CardErrorCodeEnum.CARD_NOT_FIND.getErrorCode());
+		}
+		CardLogs useCopyCard = cardLogsService.findCardLogsByCardId(request.getCardId());
+		// 判断状态
+		if (useCopyCard == null || !CardStatusEnum.NORMAL.getStatusCode().equals(useCopyCard.getCardStatus())) {
+			return CommonResult.fail(CardErrorCodeEnum.CARD_NOT_FIND.getErrorMsg(), CardErrorCodeEnum.CARD_NOT_FIND.getErrorCode());
+		}
+		Double rate = cardRateService.findCopyCardRateByTemplateId(useCopyCard.getTemplateId(), CardTypeEnum.COPY_CARD.getCardType());
+		// 标记沾福卡的状态为已使用
+		cardLogsService.updateUsed(request.getCardId());
+		if (rate == null) {
+			return CommonResult.fail(CardErrorCodeEnum.ERROR_SETTING.getErrorMsg(), CardErrorCodeEnum.ERROR_SETTING.getErrorCode());
+		}
+		int randomNum = RandomUtils.nextInt(0, CollectCardConstant.BASE_NUMBER);
+		int baseNum = new BigDecimal(rate).multiply(new BigDecimal(CollectCardConstant.BASE_NUMBER)).setScale(8, BigDecimal.ROUND_HALF_UP).intValue();
+		if (randomNum > baseNum) {
+			return CommonResult.fail(CardErrorCodeEnum.COPY_FAIL.getErrorMsg(), CardErrorCodeEnum.COPY_FAIL.getErrorCode());
+		}
+		// 沾到了, 获取具体的卡
+		int index = randomNum % cardLogs.size();
+		CardLogs copyCardLogs = cardLogs.get(index);
+		CardTemplate template = cardTemplateService.findCardTemplateById(copyCardLogs.getTemplateId());
+		if (CardTypeEnum.BOSS_CARD.getCardType().equals(template.getCardType())) {
+			return CommonResult.fail(CardErrorCodeEnum.COPY_FAIL.getErrorMsg(), CardErrorCodeEnum.COPY_FAIL.getErrorCode());
+		}
+		// 为用户生成新的卡
+		copyCardLogs.setLogId(UUID.randomUUID().toString()).setUpdateTime(new Date())
+				.setUserId(useCopyCard.getUserId());
+		cardLogsService.saveCardLogs(copyCardLogs);
+		CopyCardResponse response = new CopyCardResponse().setCardId(copyCardLogs.getCardId());
+		dozerBeanMapper.map(template, response);
+		return CommonResult.success(response, CardErrorCodeEnum.COPY_SUCCESS.getErrorMsg());
 	}
 
 	/**

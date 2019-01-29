@@ -4,6 +4,7 @@ import com.eric.collect.card.bean.CardLogs;
 import com.eric.collect.card.model.CardMergeRequest;
 import com.eric.collect.card.model.CardMergeVo;
 import com.eric.collect.card.model.PresentCardRequest;
+import com.eric.seckill.common.model.CommonResult;
 
 import java.util.List;
 
@@ -66,4 +67,35 @@ public interface CardLogsService {
 	 * @return
 	 */
 	int countByUserIdAndCardId(String userId, String cardId);
+
+	/**
+	 * 根据用户id获取能沾的卡
+	 *
+	 * @param copyUserId
+	 * @return
+	 */
+	List<CardLogs> listNormalCardsByUserId(String copyUserId);
+
+	/**
+	 * 将卡的状态标记为已使用
+	 *
+	 * @param cardId
+	 */
+	void updateUsed(String cardId);
+
+	/**
+	 * 根据卡id找到具体的卡
+	 *
+	 * @param cardId
+	 * @return
+	 */
+	CardLogs findCardLogsByCardId(String cardId);
+
+	/**
+	 * 列出用户可用的卡
+	 *
+	 * @param userId
+	 * @return
+	 */
+	CommonResult<List<CardLogs>> listCardLosByUserId(String userId);
 }

@@ -10,8 +10,11 @@ import com.eric.collect.card.model.CardMergeRequest;
 import com.eric.collect.card.model.CardMergeVo;
 import com.eric.collect.card.model.PresentCardRequest;
 import com.eric.collect.card.service.CardLogsService;
+import com.eric.seckill.cache.anno.DisLock;
+import com.eric.seckill.cache.constant.CommonBizConstant;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
+import com.eric.seckill.common.model.CommonResult;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +85,31 @@ public class CardLogsServiceImpl extends ServiceImpl<CardLogsMapper, CardLogs> i
 	@Override
 	public int countByUserIdAndCardId(String userId, String cardId) {
 		return count(new QueryWrapper<CardLogs>().eq("user_id", userId).eq("card_id", cardId));
+	}
+
+	@Override
+	public List<CardLogs> listNormalCardsByUserId(String userId) {
+		return list(new QueryWrapper<CardLogs>().eq("user_id", userId).eq("card_status", CardStatusEnum.NORMAL.getStatusCode()));
+	}
+
+	@Override
+	public void updateUsed(String cardId) {
+		CardLogs entity = new CardLogs().setCardStatus(CardStatusEnum.USED.getStatusCode()).setUpdateTime(new Date());
+		boolean update = update(entity, new QueryWrapper<CardLogs>().eq("card_id", cardId).eq("card_status", CardStatusEnum.NORMAL.getStatusCode()));
+		if (!update) {
+			throw new CustomException(CardErrorCodeEnum.MARK_USED_FAIL.getErrorMsg());
+		}
+	}
+
+	@Override
+	public CardLogs findCardLogsByCardId(String cardId) {
+		return this.baseMapper.selectOne(new QueryWrapper<CardLogs>().eq("card_id", cardId));
+	}
+
+	@Override
+	@DisLock(key = "#userId", biz = CommonBizConstant.COLLECT_CARD_LIST)
+	public CommonResult<List<CardLogs>> listCardLosByUserId(String userId) {
+		List<CardLogs> list = list(new QueryWrapper<CardLogs>().eq("user_id", userId).eq("card_status", CardStatusEnum.NORMAL.getStatusCode()));
+		return CommonResult.success(list, null);
 	}
 }

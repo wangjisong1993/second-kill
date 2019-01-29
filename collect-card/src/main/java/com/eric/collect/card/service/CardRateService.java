@@ -18,4 +18,13 @@ public interface CardRateService {
 	 */
 	@MethodCache(expireSeconds = 120)
 	List<CollectCardRegion> listAllRegion();
+
+	/**
+	 * 根据模板id获取配置的概率
+	 *
+	 * @param templateId
+	 * @param rateType
+	 * @return
+	 */
+	Double findCopyCardRateByTemplateId(String templateId, String rateType);
 }

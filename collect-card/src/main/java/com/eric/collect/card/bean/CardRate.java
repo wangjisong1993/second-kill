@@ -38,6 +38,10 @@ public class CardRate implements Serializable {
 	 * 更新时间
 	 */
 	private Date updateTime;
+	/**
+	 * 概率类型
+	 */
+	private String rateType;
 
 	private static final long serialVersionUID = 1L;
 

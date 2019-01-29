@@ -1,9 +1,6 @@
 package com.eric.collect.card.service;
 
-import com.eric.collect.card.model.CardMergeRequest;
-import com.eric.collect.card.model.CollectCardRequest;
-import com.eric.collect.card.model.CollectCardResponse;
-import com.eric.collect.card.model.PresentCardRequest;
+import com.eric.collect.card.model.*;
 import com.eric.seckill.common.model.CommonResult;
 
 /**
@@ -35,4 +32,11 @@ public interface CollectCardService {
 	 * @return
 	 */
 	CommonResult<Void> merge(CardMergeRequest request);
+
+	/**
+	 * 使用沾福卡
+	 * @param request
+	 * @return
+	 */
+	CommonResult<CopyCardResponse> copy(CopyCardRequest request);
 }

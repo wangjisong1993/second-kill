@@ -11,6 +11,7 @@ public enum CardStatusEnum {
 	NORMAL("正常", "1"),
 	ABNORMAL("失效", "0"),
 	MERGED("合成", "2"),
+	USED("已使用", "3"),
 	;
 
 	/**

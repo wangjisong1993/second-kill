@@ -20,6 +20,9 @@ public enum CardErrorCodeEnum {
 	NO_ENOUGH_MERGE_CARD("没有足够的卡可以合并", "258"),
 	PRESENT_SUCCESS("转赠成功", "0"),
 	MERGE_SUCCESS("合成成功", "0"),
+	COPY_SUCCESS("复制成功", "0"),
+	COPY_FAIL("没有沾到福气", "259"),
+	MARK_USED_FAIL("卡状态标记为已使用失败", "259"),
 	;
 
 

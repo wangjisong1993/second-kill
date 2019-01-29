@@ -1,17 +1,14 @@
 package com.eric.collect.card.controller;
 
-import com.eric.collect.card.model.CardMergeRequest;
-import com.eric.collect.card.model.CollectCardRequest;
-import com.eric.collect.card.model.CollectCardResponse;
-import com.eric.collect.card.model.PresentCardRequest;
+import com.eric.collect.card.bean.CardLogs;
+import com.eric.collect.card.model.*;
+import com.eric.collect.card.service.CardLogsService;
 import com.eric.collect.card.service.CollectCardService;
 import com.eric.seckill.common.model.CommonResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Eric on 2019/1/28.
@@ -23,6 +20,9 @@ public class CardController {
 
 	@Resource
 	private CollectCardService collectCardService;
+
+	@Resource
+	private CardLogsService cardLogsService;
 
 	/**
 	 * 集福请求
@@ -57,4 +57,25 @@ public class CardController {
 		return collectCardService.merge(request);
 	}
 
+	/**
+	 * 使用沾福卡
+	 *
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/copy")
+	public CommonResult<CopyCardResponse> copy(@RequestBody CopyCardRequest request) {
+		return collectCardService.copy(request);
+	}
+
+	/**
+	 * 列出用户现有的卡
+	 *
+	 * @param userId
+	 * @return
+	 */
+	@GetMapping("/listCardLogs")
+	public CommonResult<List<CardLogs>> listCardLosByUserId(@RequestParam("userId") String userId) {
+		return cardLogsService.listCardLosByUserId(userId);
+	}
 }

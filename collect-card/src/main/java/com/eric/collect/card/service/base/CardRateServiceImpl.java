@@ -1,8 +1,10 @@
 package com.eric.collect.card.service.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.eric.collect.card.bean.CardRate;
 import com.eric.collect.card.constant.CardErrorCodeEnum;
+import com.eric.collect.card.constant.CardRateTypeEnum;
 import com.eric.collect.card.constant.CollectCardConstant;
 import com.eric.collect.card.dao.CardRateMapper;
 import com.eric.collect.card.model.CollectCardRegion;
@@ -26,7 +28,7 @@ public class CardRateServiceImpl extends ServiceImpl<CardRateMapper, CardRate> i
 	@Override
 	@MethodCache(expireSeconds = 120)
 	public List<CollectCardRegion> listAllRegion() {
-		List<CardRate> list = list();
+		List<CardRate> list = list(new QueryWrapper<CardRate>().eq("rate_type", CardRateTypeEnum.COLLECT.getRateType()));
 		if (CollectionUtils.isEmpty(list)) {
 			throw new CustomException(CardErrorCodeEnum.ERROR_SETTING.getErrorMsg());
 		}
@@ -43,6 +45,12 @@ public class CardRateServiceImpl extends ServiceImpl<CardRateMapper, CardRate> i
 			throw new CustomException("配置错误, 初始化失败");
 		}
 		return regions;
+	}
+
+	@Override
+	@MethodCache
+	public Double findCopyCardRateByTemplateId(String templateId, String rateType) {
+		return this.baseMapper.findCardRateByTemplateId(templateId, rateType);
 	}
 
 }
