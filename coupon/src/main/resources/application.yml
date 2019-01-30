@@ -32,6 +32,8 @@ server:
 
 
 spring:
+  zipkin:
+    base-url: http://localhost:12382/
   application:
     name: coupon
   redis:

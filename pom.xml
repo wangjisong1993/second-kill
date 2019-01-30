@@ -26,6 +26,7 @@
         <module>warehouse</module>
         <module>collect-card</module>
         <module>service-admin</module>
+        <module>sleuth</module>
     </modules>
 
     <parent>
