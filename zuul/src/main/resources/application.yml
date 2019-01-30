@@ -6,6 +6,10 @@ spring:
   sleuth:
     sampler:
       percentage: 1
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
 server:
   port: 12371
 
@@ -55,3 +59,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 3000 #断路器超时时间，默认1000ms
+
+token:
+  exclude: /member/api/user/login

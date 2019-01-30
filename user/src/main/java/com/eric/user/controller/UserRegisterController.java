@@ -26,6 +26,7 @@ public class UserRegisterController {
 
 	/**
 	 * 会员注册
+	 *
 	 * @param registerUserRequest
 	 * @return
 	 */
@@ -36,6 +37,7 @@ public class UserRegisterController {
 
 	/**
 	 * 会员登陆
+	 *
 	 * @param userLogin
 	 * @return
 	 */
@@ -52,6 +54,7 @@ public class UserRegisterController {
 
 	/**
 	 * 修改用户的状态
+	 *
 	 * @param userModifyRequest
 	 * @return
 	 */
@@ -73,12 +76,21 @@ public class UserRegisterController {
 
 	/**
 	 * 更新用户密码
+	 *
 	 * @param request
 	 * @return
 	 */
 	@PostMapping("/updatePassword")
 	public CommonResult<Void> updatePassword(@RequestBody PasswordModifyRequest request) {
 		return userMasterService.updatePassword(request);
+	}
+
+	/**
+	 * 重置密码为123456
+	 */
+	@PostMapping("/reset")
+	public CommonResult<Void> resetPassword(@RequestBody ResetPasswordRequest request) {
+		return userMasterService.resetPassword(request);
 	}
 
 }

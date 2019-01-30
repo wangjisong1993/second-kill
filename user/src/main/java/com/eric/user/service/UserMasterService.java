@@ -14,6 +14,7 @@ public interface UserMasterService {
 
 	/**
 	 * 用户注册
+	 *
 	 * @param registerUserRequest
 	 * @return
 	 */
@@ -21,6 +22,7 @@ public interface UserMasterService {
 
 	/**
 	 * 用户登陆
+	 *
 	 * @param userLogin
 	 * @return
 	 */
@@ -28,6 +30,7 @@ public interface UserMasterService {
 
 	/**
 	 * 更新用户的状态
+	 *
 	 * @param userModifyRequest
 	 * @return
 	 */
@@ -35,6 +38,7 @@ public interface UserMasterService {
 
 	/**
 	 * 修改用户密码
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -42,6 +46,7 @@ public interface UserMasterService {
 
 	/**
 	 * 根据用户id获取用户主信息
+	 *
 	 * @param userId
 	 * @return
 	 */
@@ -49,6 +54,7 @@ public interface UserMasterService {
 
 	/**
 	 * 查找用户信息
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -56,8 +62,17 @@ public interface UserMasterService {
 
 	/**
 	 * 根据用户id获取用户状态
+	 *
 	 * @param userId
 	 * @return
 	 */
 	String findUserStatsByUserId(String userId);
+
+	/**
+	 * 重置密码
+	 *
+	 * @param request
+	 * @return
+	 */
+	CommonResult<Void> resetPassword(ResetPasswordRequest request);
 }

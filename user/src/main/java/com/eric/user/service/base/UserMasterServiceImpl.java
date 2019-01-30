@@ -8,6 +8,7 @@ import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.UserQueryRequest;
 import com.eric.seckill.common.model.feign.UserQueryResponse;
+import com.eric.seckill.common.utils.TokenUtil;
 import com.eric.user.bean.UserLoginLog;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.constant.ErrorCodeEnum;
@@ -100,6 +101,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		if (verify) {
 			UserLoginResponse response = new UserLoginResponse();
 			dozerBeanMapper.map(userMaster, response);
+			response.setToken(TokenUtil.getToken(userMaster.getUserId(), userMaster.getPassword()));
 			return CommonResult.success(response, ErrorCodeEnum.LOGIN_SUCCESS.getErrorMsg());
 		}
 		return CommonResult.fail(ErrorCodeEnum.ERROR_PASSWORD.getErrorMsg(), ErrorCodeEnum.ERROR_PASSWORD.getErrorCode());
@@ -168,6 +170,34 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 	@Override
 	public String findUserStatsByUserId(String userId) {
 		return baseMapper.findUserStatsByUserId(userId);
+	}
+
+	@Override
+	@ParamCheck
+	public CommonResult<Void> resetPassword(ResetPasswordRequest request) {
+		// 校验用户的状态
+		String userStatus = findUserStatsByLoginName(request.getLoginName());
+		if (!UserStatus.ACTIVE.getStatusCode().equals(userStatus)) {
+			return CommonResult.fail(ErrorCodeEnum.USER_ABNORMAL.getErrorMsg(), ErrorCodeEnum.USER_ABNORMAL.getErrorCode());
+		}
+		// TODO 校验手机号和验证码是否一致
+		UserMaster entity = new UserMaster().setPassword(PasswordUtil.generate(UserConstant.DEFAULT_PASSWORD));
+		entity.setUpdateTime(new Date());
+		boolean update = update(entity, new QueryWrapper<UserMaster>().eq("login_name", request.getLoginName()).eq("user_stats", UserStatus.ACTIVE.getStatusCode()));
+		if (update) {
+			return CommonResult.success(null, ErrorCodeEnum.RESET_PASSWORD_SUCCESS.getErrorMsg());
+		}
+		return CommonResult.fail(ErrorCodeEnum.RESET_PASSWORD_FAIL.getErrorMsg(), ErrorCodeEnum.RESET_PASSWORD_FAIL.getErrorCode());
+	}
+
+	/**
+	 * 获取用户状态
+	 *
+	 * @param loginName
+	 * @return
+	 */
+	private String findUserStatsByLoginName(String loginName) {
+		return this.baseMapper.findUserStatsByLoginName(loginName);
 	}
 
 	/**

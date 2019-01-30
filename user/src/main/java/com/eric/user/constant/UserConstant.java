@@ -32,4 +32,9 @@ public class UserConstant {
 	 * 作废用户
 	 */
 	public static final String MODIFY_OPERATION_DISACTIVE = "disactive";
+	/**
+	 * 默认密码
+	 */
+	public static final String DEFAULT_PASSWORD = "123456";
+
 }

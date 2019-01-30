@@ -22,6 +22,8 @@ public enum ErrorCodeEnum {
 	COUPON_NOT_FOUND("找不到优惠券", "503"),
 	DUPLICATE("出现重复", "504"),
 	USER_STATUS_ABNORMAL("用户状态异常", "505"),
+	NO_TOKEN("无token，请重新登录", "506"),
+	ERROR_TOKEN("token不合法", "507"),
 	;
 
 	/**

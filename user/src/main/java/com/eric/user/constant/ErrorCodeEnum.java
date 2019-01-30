@@ -25,6 +25,8 @@ public enum ErrorCodeEnum {
 	BALANCE_NOT_ENOUGH("263", "余额不足"),
 	ERROR_SIGN("260", "签名不合法"),
 	USER_ABNORMAL("261", "用户状态不正常"),
+	RESET_PASSWORD_SUCCESS("0", "密码重置成功"),
+	RESET_PASSWORD_FAIL("262", "密码重置失败"),
 	;
 
 	/**

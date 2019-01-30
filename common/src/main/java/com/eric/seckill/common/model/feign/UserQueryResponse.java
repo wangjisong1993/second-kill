@@ -23,4 +23,8 @@ public class UserQueryResponse {
 	 * 用户状态
 	 */
 	private String userStats;
+	/**
+	 * 密码
+	 */
+	private String password;
 }

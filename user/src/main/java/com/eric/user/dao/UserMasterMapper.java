@@ -12,6 +12,7 @@ public interface UserMasterMapper extends BaseMapper<UserMaster> {
 
 	/**
 	 * 根据登录名找登陆密码
+	 *
 	 * @param loginName
 	 * @return
 	 */
@@ -19,6 +20,7 @@ public interface UserMasterMapper extends BaseMapper<UserMaster> {
 
 	/**
 	 * 根据登陆名获取用户id
+	 *
 	 * @param loginName
 	 * @return
 	 */
@@ -26,8 +28,17 @@ public interface UserMasterMapper extends BaseMapper<UserMaster> {
 
 	/**
 	 * 根据用户id获取用户状态
+	 *
 	 * @param userId
 	 * @return
 	 */
 	String findUserStatsByUserId(@Param("userId") String userId);
+
+	/**
+	 * 根据登陆名获取用户的状态
+	 *
+	 * @param loginName
+	 * @return
+	 */
+	String findUserStatsByLoginName(@Param("loginName") String loginName);
 }

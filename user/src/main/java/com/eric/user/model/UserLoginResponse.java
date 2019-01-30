@@ -23,5 +23,9 @@ public class UserLoginResponse {
 	 * 用户状态
 	 */
 	private String userStats;
+	/**
+	 * 登陆成功后返回的令牌
+	 */
+	private String token;
 
 }
