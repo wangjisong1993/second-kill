@@ -62,3 +62,7 @@ hystrix:
 
 token:
   exclude: /member/api/user/login
+
+management:
+  security:
+    enabled: false
