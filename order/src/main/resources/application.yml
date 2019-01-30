@@ -29,6 +29,8 @@ hystrix:
 server:
   port: 12406
   context-path: /order
+  servlet:
+    context-path: /order
   undertow:
     io-threads: 16
     worker-threads: 256
@@ -98,3 +100,7 @@ order:
   createOrder:
     secret: 123
   noShippingMoney: 20000 # 单位是分
+
+management:
+  security:
+    enabled: false

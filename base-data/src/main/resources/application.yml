@@ -6,6 +6,8 @@ eureka:
 server:
   port: 12412
   context-path: /baseData
+  servlet:
+    context-path: /baseData
   undertow:
     io-threads: 16
     worker-threads: 256

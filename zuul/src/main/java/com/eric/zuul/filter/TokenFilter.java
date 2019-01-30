@@ -10,13 +10,11 @@ import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.UserQueryRequest;
 import com.eric.seckill.common.model.feign.UserQueryResponse;
-import com.eric.seckill.common.utils.SpringUtils;
 import com.eric.zuul.feign.UserMasterFeign;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author wang.js on 2019/1/30.
  * @version 1.0
  */
-@Component
+//@Component
 public class TokenFilter extends ZuulFilter {
 
 	@Value("${token.exclude}")

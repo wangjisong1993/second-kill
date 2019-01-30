@@ -16,6 +16,8 @@ server:
       dir: my-undertow
       enabled: true
       pattern: '%t %a "%r" %s (%D ms)'
+  servlet:
+    context-path: /member
 
 
 spring:
@@ -80,12 +82,3 @@ user:
 management:
   security:
     enabled: false
-  endpoints:
-    web:
-      exposure:
-        include: refresh,health,info #暴露所有节点
-    health:
-      sensitive: false #关闭过滤敏感信息
-  endpoint:
-    health:
-      show-details: ALWAYS  #显示详细信息

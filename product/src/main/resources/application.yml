@@ -6,6 +6,8 @@ eureka:
 server:
   port: 12407
   context-path: /product
+  servlet:
+    context-path: /product
   undertow:
     io-threads: 16
     worker-threads: 256

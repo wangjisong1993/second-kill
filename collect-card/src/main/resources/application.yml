@@ -6,6 +6,8 @@ eureka:
 server:
   port: 12422
   context-path: /collectCard
+  servlet:
+    context-path: /collectCard
   undertow:
     io-threads: 16
     worker-threads: 256

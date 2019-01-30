@@ -1,5 +1,5 @@
 server:
-  port: 7088
+  port: 12388
 spring:
   application:
     name: service-admin
