@@ -1,2 +1,47 @@
 server:
   port: 12382
+
+spring:
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1
+  application:
+    name: zipkin-server
+  rabbitmq: #配置mq消息队列
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+zipkin:
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      hosts: http://192.168.86.137:9200
+      #      username: elastic
+      #      password: changeme
+      cluster: elasticsearch
+      index: zipkin
+      index-shards: 1
+      index-replicas: 1
+      max-requests: 64
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://localhost:12370/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  metrics:
+    web:
+      server:
+        auto-time-requests: false

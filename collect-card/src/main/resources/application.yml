@@ -18,6 +18,11 @@ server:
 
 
 spring:
+  rabbitmq: #配置mq消息队列
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   zipkin:
     base-url: http://localhost:12382/
   application:
