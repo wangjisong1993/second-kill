@@ -14,7 +14,7 @@ import java.util.List;
  * @author wang.js on 2019/1/25.
  * @version 1.0
  */
-@FeignClient(name = "baseData", path = "/baseData", fallback = BaseDataFeignFallback.class)
+@FeignClient(name = "baseData", fallback = BaseDataFeignFallback.class)
 public interface BaseDataFeign {
 
 	/**

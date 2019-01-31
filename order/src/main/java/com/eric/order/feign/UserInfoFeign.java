@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author wang.js on 2019/1/24.
  * @version 1.0
  */
-@FeignClient(name = "MEMBER", path = "/member", fallback = UserInfoFeignFallback.class)
+@FeignClient(name = "MEMBER", fallback = UserInfoFeignFallback.class)
 public interface UserInfoFeign {
 
 	/**

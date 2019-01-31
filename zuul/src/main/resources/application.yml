@@ -18,19 +18,15 @@ zuul:
     member:
       path: /member/**
       serviceId: member
-      stripPrefix: false
     order:
       path: /order/**
       serviceId: order
-      stripPrefix: false
     coupon:
       path: /coupon/**
       serviceId: coupon
-      stripPrefix: false
     user:
       path: /user/**
       serviceId: user
-      stripPrefix: false
     baseData:
       path: /baseData/**
       serviceId: baseData
@@ -38,11 +34,9 @@ zuul:
     warehouse:
       path: /warehouse/**
       serviceId: warehouse
-      stripPrefix: false
     collectCard:
       path: /collectCard/**
       serviceId: collectCard
-      stripPrefix: false
 
 eureka:
   client:

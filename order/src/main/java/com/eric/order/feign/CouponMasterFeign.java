@@ -16,7 +16,7 @@ import java.util.List;
  * @author wang.js on 2019/1/25.
  * @version 1.0
  */
-@FeignClient(name = "coupon", path = "/coupon", fallback = CouponMasterFeignFallback.class)
+@FeignClient(name = "coupon", fallback = CouponMasterFeignFallback.class)
 public interface CouponMasterFeign {
 
 	/**

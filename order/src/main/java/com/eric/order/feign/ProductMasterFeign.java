@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author wang.js on 2019/1/25.
  * @version 1.0
  */
-@FeignClient(name = "product", path = "/product", fallback = ProductMasterFeignFallback.class)
+@FeignClient(name = "product", fallback = ProductMasterFeignFallback.class)
 public interface ProductMasterFeign {
 
 	/**

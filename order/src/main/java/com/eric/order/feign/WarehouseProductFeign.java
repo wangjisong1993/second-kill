@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author wang.js on 2019/1/25.
  * @version 1.0
  */
-@FeignClient(name = "warehouse", path = "/warehouse", fallback = WarehouseProductFeignFallback.class)
+@FeignClient(name = "warehouse", fallback = WarehouseProductFeignFallback.class)
 public interface WarehouseProductFeign {
 
 	/**
