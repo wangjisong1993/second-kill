@@ -27,6 +27,7 @@ public enum ErrorCodeEnum {
 	USER_ABNORMAL("261", "用户状态不正常"),
 	RESET_PASSWORD_SUCCESS("0", "密码重置成功"),
 	RESET_PASSWORD_FAIL("262", "密码重置失败"),
+	POINT_NOT_ENOUGH("263", "用户积分不足"),
 	;
 
 	/**

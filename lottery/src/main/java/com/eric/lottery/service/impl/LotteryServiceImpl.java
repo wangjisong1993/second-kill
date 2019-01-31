@@ -1,16 +1,21 @@
 package com.eric.lottery.service.impl;
 
 import com.eric.lottery.constant.LotteryConstant;
+import com.eric.lottery.feign.UserInfoFeign;
 import com.eric.lottery.service.LotteryService;
 import com.eric.lottery.service.base.LotteryItemService;
 import com.eric.lottery.service.base.LotteryRecordService;
 import com.eric.seckill.common.bean.LotteryRecord;
+import com.eric.seckill.common.constant.UserPointSourceEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.LotteryRegion;
+import com.eric.seckill.common.model.feign.ChangePointRequest;
+import com.eric.seckill.common.utils.SignUtil;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -36,6 +41,12 @@ public class LotteryServiceImpl implements LotteryService {
 	@Resource
 	private LotteryRecordService lotteryRecordService;
 
+	@Resource
+	private UserInfoFeign userInfoFeign;
+
+	@Value("${lottery.point.secret}")
+	private String appSecret;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(LotteryServiceImpl.class);
 
 	@Override
@@ -44,7 +55,13 @@ public class LotteryServiceImpl implements LotteryService {
 		if (regions == null) {
 			throw new CustomException("获取抽象活动明细失败, 请重试");
 		}
-		// TODO 扣除用户的积分
+		ChangePointRequest request = new ChangePointRequest().setChangePoint(-1).setReferNumber(UUID.randomUUID().toString())
+				.setUserId(userId).setPointSource(UserPointSourceEnum.LOTTERY_CONSUME.getSourceType());
+		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
+		CommonResult<Void> result = userInfoFeign.changePoint(request);
+		if (!result.isSuccess()) {
+			return result;
+		}
 		int randomNum = RandomUtils.nextInt(0, LotteryConstant.BASE_NUMBER);
 		LOGGER.info("生成的随机数为{}", randomNum);
 		LotteryRegion region = findRegion(regions, randomNum);
@@ -75,7 +92,7 @@ public class LotteryServiceImpl implements LotteryService {
 	/**
 	 * 判断具体的奖项
 	 *
-	 * @param regions 各个奖项的中奖范围
+	 * @param regions   各个奖项的中奖范围
 	 * @param randomNum 产生的随机数
 	 * @return LotteryRegion
 	 */

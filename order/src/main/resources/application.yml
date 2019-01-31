@@ -28,9 +28,6 @@ hystrix:
 
 server:
   port: 12406
-  context-path: /order
-  servlet:
-    context-path: /order
   undertow:
     io-threads: 16
     worker-threads: 256

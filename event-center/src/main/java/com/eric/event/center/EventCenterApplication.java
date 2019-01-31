@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author wang.js on 2019/1/22.
  * @version 1.0
  */
+// TODO
 @SpringBootApplication
 public class EventCenterApplication {
 

@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author wang.js on 2019/1/18.
  * @version 1.0
  */
+// TODO
 @SpringBootApplication
 @MapperScan("com.eric.strategy.dao")
 public class StrategyApplication {

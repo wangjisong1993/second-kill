@@ -14,6 +14,15 @@ server:
   port: 12371
 
 zuul:
+  ratelimit:
+    enabled: true
+    repository: REDIS #使用redis存储，一定要大写！
+    policies:
+      test: #针对上面那个服务的限流
+        limit: 1 #每秒多少个请求
+        refreshInterval: 60
+        type:
+          - ORIGIN #这里一定要大写！
   routes:
     member:
       path: /member/**
@@ -37,6 +46,9 @@ zuul:
     collectCard:
       path: /collectCard/**
       serviceId: collectCard
+    lottery:
+      path: /lottery/**
+      serviceId: lottery
 
 eureka:
   client:

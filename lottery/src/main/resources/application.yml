@@ -1,6 +1,33 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:12370/eureka/
+  instance:
+    preferIpAddress: true
+ribbon:
+  eureka:
+    enabled: true
+  connectTimeout: 2000
+  readTimeout: 3000
+  maxAutoRetries: 1
+
+feign:
+  hystrix:
+   enabled: true
+
+hystrix:
+  command:
+    default:  #default全局有效，service id指定应用有效
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制,为true,则超时作为熔断根据
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 #断路器超时时间，默认1000ms
+
 server:
-  port: 12402
-  context-path: /lottery
+  port: 12492
   undertow:
     io-threads: 16
     worker-threads: 256
@@ -14,6 +41,10 @@ server:
 
 
 spring:
+  zipkin:
+    base-url: http://localhost:12382/
+  application:
+    name: lottery
   redis:
     host: 127.0.0.1
     port: 6379
@@ -69,3 +100,11 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+lottery:
+  point:
+    secret: 123
+
+management:
+  security:
+    enabled: false

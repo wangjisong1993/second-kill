@@ -70,7 +70,7 @@ public class LotteryItemService extends ServiceImpl<LotteryItemMapper, LotteryIt
 	 *
 	 * @param projectId 抽奖的项目id
 	 */
-	@MethodCache(expireSeconds = 120)
+	@MethodCache(expireSeconds = 300)
 	public List<LotteryRegion> findLotteryRegionByProjectId(String projectId) {
 		List<LotteryItem> lotteryItems = listLotteryItems(projectId);
 		List<LotteryRegion> lotteryRegions = new ArrayList<>(lotteryItems.size());

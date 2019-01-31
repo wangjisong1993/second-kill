@@ -139,6 +139,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 			return CommonResult.fail(ErrorCodeEnum.ERROR_SIGN.getErrorMsg(), ErrorCodeEnum.ERROR_SIGN.getErrorCode());
 		}
 		String userStats = userMasterService.findUserStatsByUserId(request.getUserId());
+		if (StringUtils.isBlank(userStats)) {
+			return CommonResult.fail(ErrorCodeEnum.USER_NOT_FOUND.getErrorMsg(), ErrorCodeEnum.USER_NOT_FOUND.getErrorCode());
+		}
 		if (!UserStatus.ACTIVE.getStatusCode().equals(userStats)) {
 			return CommonResult.fail(ErrorCodeEnum.USER_ABNORMAL.getErrorMsg(), ErrorCodeEnum.USER_ABNORMAL.getErrorCode());
 		}
@@ -147,13 +150,19 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 		if (integer != null && integer > 0) {
 			return CommonResult.fail(ErrorCodeEnum.DUPLICATE.getErrorMsg(), ErrorCodeEnum.DUPLICATE.getErrorCode());
 		}
+		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getUserId());
+		// 改动后的积分是否小于0
+		Integer originalUserPoint = this.baseMapper.findUserPointByUserInfoId(userInfoId);
+		int lastPoint = new BigDecimal(originalUserPoint).add(new BigDecimal(request.getChangePoint())).intValue();
+		if (lastPoint < 0) {
+			return CommonResult.fail(ErrorCodeEnum.POINT_NOT_ENOUGH.getErrorMsg(), ErrorCodeEnum.POINT_NOT_ENOUGH.getErrorCode());
+		}
 		// 保存积分变动记录, 修改最终积分
 		UserPointLog log = new UserPointLog().setUserId(request.getUserId()).setReferNumber(request.getReferNumber())
 				.setPointSource(request.getPointSource()).setId(UUID.randomUUID().toString()).setCreateTime(new Date())
 				.setChangePoint(request.getChangePoint());
 		userPointLogService.insert(log);
 		// 修改最终积分
-		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getUserId());
 		baseMapper.updateUserPoint(userInfoId, request.getChangePoint());
 		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
 	}

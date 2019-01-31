@@ -7,6 +7,7 @@ package com.eric.seckill.common.constant;
 public enum UserPointSourceEnum {
 	USER_CHARGE("用户充值赠送积分", "1"),
 	ORDER_PRESENT("用户下单赠送", "2"),
+	LOTTERY_CONSUME("用户抽奖扣除", "3"),
 	;
 
 	/**
