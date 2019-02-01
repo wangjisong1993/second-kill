@@ -10,4 +10,15 @@
             t.min_point
         LIMIT 1
     </select>
+    <select id="findLevelDetailId" resultType="java.lang.String">
+        SELECT
+            id
+        FROM
+            user_level_detail
+        WHERE
+            min_point > #{lastPoint}
+        ORDER BY
+            min_point
+        LIMIT 1
+    </select>
 </mapper>

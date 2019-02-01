@@ -12,6 +12,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 	/**
 	 * 查询用户的余额
+	 *
 	 * @param userInfoId
 	 * @return
 	 */
@@ -19,6 +20,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 	/**
 	 * 更新用户余额
+	 *
 	 * @param userInfoId
 	 * @param balance
 	 * @return
@@ -27,13 +29,15 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 	/**
 	 * 根据用户id查询用户信息id
+	 *
 	 * @param userId
 	 * @return
 	 */
-	String findUserInfoIdByUserId(@Param("userId")String userId);
+	String findUserInfoIdByUserId(@Param("userId") String userId);
 
 	/**
 	 * 根据用户信息id获取用户的积分
+	 *
 	 * @param userInfoId
 	 * @return
 	 */
@@ -41,9 +45,12 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 	/**
 	 * 修改用户积分
+	 *
 	 * @param userInfoId
 	 * @param point
 	 * @return
 	 */
-	int updateUserPoint(@Param("userInfoId") String userInfoId, @Param("point") int point);
+	int updateUserPoint(@Param("userInfoId") String userInfoId, @Param("point") int point,
+	                    @Param("userLevel") String userLevel);
+
 }
