@@ -18,7 +18,7 @@ zipkin:
   storage:
     type: elasticsearch
     elasticsearch:
-      hosts: http://192.168.86.137:9200
+      hosts: http://172.17.225.139:9200
       #      username: elastic
       #      password: changeme
       cluster: elasticsearch
