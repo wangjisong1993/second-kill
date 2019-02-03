@@ -1,0 +1,1 @@
+java -jar zipkin-server-2.8.3-exec.jar --STORAGE_TYPE=mysql --MYSQL_DB=zipkin --MYSQL_USER=root --MYSQL_PASS=123456 --RABBIT_ADDRESSES=mini7 --RABBIT_USER=root --RABBIT_PASSWORD=123456 --RABBIT_QUEUE=sleuth.sleuth

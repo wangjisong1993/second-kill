@@ -1,0 +1,1 @@
+java -jar zipkin-server-2.8.3-exec.jar --STORAGE_TYPE=elasticsearch --ES_HOSTS=http://192.168.86.137:9200 --RABBIT_ADDRESSES=mini7 --RABBIT_USER=root --RABBIT_PASSWORD=123456 --RABBIT_QUEUE=sleuth.sleuth  --ES_HTTP_LOGGING=BASIC --logging.exception-conversion-word=%wEx{full} --ES_USERNAME=elastic --ES_PASSWORD=changme
