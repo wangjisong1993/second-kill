@@ -1,6 +1,5 @@
 server:
   port: 12402
-  context-path: /member
   undertow:
     io-threads: 16
     worker-threads: 256

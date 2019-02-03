@@ -1,6 +1,5 @@
 server:
   port: 12409
-  context-path: /strategy
   undertow:
     io-threads: 16
     worker-threads: 256

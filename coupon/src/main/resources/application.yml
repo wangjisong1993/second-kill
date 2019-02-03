@@ -16,9 +16,6 @@ hystrix:
 
 server:
   port: 12405
-  context-path: /coupon
-  servlet:
-    context-path: /coupon
   undertow:
     io-threads: 16
     worker-threads: 256
