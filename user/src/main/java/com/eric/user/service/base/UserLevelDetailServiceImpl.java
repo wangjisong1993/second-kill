@@ -21,4 +21,14 @@ public class UserLevelDetailServiceImpl extends ServiceImpl<UserLevelDetailMappe
 		return baseMapper.findBaseLevelId();
 	}
 
+	@Override
+	public UserLevelDetail findMinPointByUserLevelId(String userLevelId) {
+		return this.baseMapper.selectById(userLevelId);
+	}
+
+	@Override
+	public String findLevelDetailId(int lastPoint) {
+		return this.baseMapper.findLevelDetailId(lastPoint);
+	}
+
 }

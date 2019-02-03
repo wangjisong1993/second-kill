@@ -49,7 +49,6 @@ public class SecondKillServiceImpl implements SecondKillService {
 		if (result) {
 			return CommonResult.fail("已经秒杀到该商品", ErrorCodeEnum.GOODS_KILLED.getErrCode());
 		}
-		// TODO 扣除用户的积分
 		// 根据项目id获取秒杀的库存
 		long seckill = skGoodsSeckillService.seckill(skProject.getGoodsId());
 		if (seckill >= 0) {

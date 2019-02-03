@@ -5,7 +5,11 @@
         update user_info set user_balance = user_balance + #{balance} where user_info_id = #{userInfoId}
     </update>
     <update id="updateUserPoint">
-        update user_info set user_point = user_point + #{point} where user_info_id = #{userInfoId}
+        update user_info set user_point = user_point + #{point}
+        <if test="userLevel != null and userLevel != ''">
+            , user_level = #{userLevel}
+        </if>
+        where user_info_id = #{userInfoId}
     </update>
     <select id="findUserBalanceByUserInfoId" resultType="java.lang.Integer">
         select user_balance from user_info where user_info_id=#{userInfoId} for update

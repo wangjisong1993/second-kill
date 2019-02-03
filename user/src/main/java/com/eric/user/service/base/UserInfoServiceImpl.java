@@ -9,6 +9,7 @@ import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.ChangePointRequest;
 import com.eric.seckill.common.utils.SignUtil;
 import com.eric.user.bean.UserInfo;
+import com.eric.user.bean.UserLevelDetail;
 import com.eric.user.bean.UserMaster;
 import com.eric.user.bean.UserPointLog;
 import com.eric.user.constant.ErrorCodeEnum;
@@ -122,7 +123,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 		if (finalPoint < 0) {
 			throw new CustomException(ErrorCodeEnum.BALANCE_NOT_ENOUGH.getErrorMsg());
 		}
-		int effect = baseMapper.updateUserPoint(userInfoId, request.getChangePoint());
+		int effect = baseMapper.updateUserPoint(userInfoId, request.getChangePoint(), null);
 		if (effect == 0) {
 			throw new CustomException(ErrorCodeEnum.UPDATE_FAIL.getErrorMsg());
 		}
@@ -150,9 +151,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 		if (integer != null && integer > 0) {
 			return CommonResult.fail(ErrorCodeEnum.DUPLICATE.getErrorMsg(), ErrorCodeEnum.DUPLICATE.getErrorCode());
 		}
-		String userInfoId = baseMapper.findUserInfoIdByUserId(request.getUserId());
+		UserInfo userInfo = this.baseMapper.selectOne(new QueryWrapper<UserInfo>().eq("user_id", request.getUserId()));
 		// 改动后的积分是否小于0
-		Integer originalUserPoint = this.baseMapper.findUserPointByUserInfoId(userInfoId);
+		Integer originalUserPoint = this.baseMapper.findUserPointByUserInfoId(userInfo.getUserInfoId());
 		int lastPoint = new BigDecimal(originalUserPoint).add(new BigDecimal(request.getChangePoint())).intValue();
 		if (lastPoint < 0) {
 			return CommonResult.fail(ErrorCodeEnum.POINT_NOT_ENOUGH.getErrorMsg(), ErrorCodeEnum.POINT_NOT_ENOUGH.getErrorCode());
@@ -162,8 +163,15 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 				.setPointSource(request.getPointSource()).setId(UUID.randomUUID().toString()).setCreateTime(new Date())
 				.setChangePoint(request.getChangePoint());
 		userPointLogService.insert(log);
+		// 判断用户的等级是否有变动
+		UserLevelDetail currentLevel = userLevelDetailService.findMinPointByUserLevelId(userInfo.getUserLevel());
+		String userLevelDetailId = null;
+		if (lastPoint > currentLevel.getMaxPoint()) {
+			// 需要升级
+			userLevelDetailId = userLevelDetailService.findLevelDetailId(lastPoint);
+		}
 		// 修改最终积分
-		baseMapper.updateUserPoint(userInfoId, request.getChangePoint());
+		baseMapper.updateUserPoint(userInfo.getUserInfoId(), request.getChangePoint(), userLevelDetailId);
 		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
 	}
 }
