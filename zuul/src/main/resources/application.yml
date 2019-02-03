@@ -1,18 +1,24 @@
 spring:
   rabbitmq: #配置mq消息队列
-    host: localhost
+    host: mini7
     port: 5672
-    username: guest
-    password: guest
+    username: root
+    password: 123456
   application:
     name: zuul
   zipkin:
-    base-url: http://localhost:12382/
+    base-url: http://localhost:9411/
+    enabled: true
+    sender:
+      type: RABBIT
   sleuth:
+    web:
+      client:
+        enabled: true
     sampler:
-      percentage: 1
+      probability: 1.0
   redis:
-    host: 127.0.0.1
+    host: mini7
     port: 6379
 
 server:

@@ -1,31 +1,32 @@
 server:
-  port: 12382
+  port: 9411
 
 spring:
   sleuth:
     enabled: false
     sampler:
-      percentage: 1
+      percentage: 1.0
   application:
     name: zipkin-server
   rabbitmq: #配置mq消息队列
-    host: localhost
+    host: mini7
     port: 5672
-    username: guest
-    password: guest
+    username: root
+    password: 123456
 
 zipkin:
   storage:
     type: elasticsearch
     elasticsearch:
-      hosts: http://192.168.86.137:9200
+      hosts: mini7
       #      username: elastic
       #      password: changeme
-      cluster: elasticsearch
+      cluster: cluster1
       index: zipkin
       index-shards: 1
       index-replicas: 1
       max-requests: 64
+      port: 9200
 
 eureka:
   client:
@@ -34,6 +35,8 @@ eureka:
       defaultZone: http://localhost:12370/eureka/
 
 management:
+  security:
+    enabled: false
   endpoints:
     web:
       exposure:

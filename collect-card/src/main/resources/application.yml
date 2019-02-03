@@ -19,16 +19,23 @@ server:
 
 spring:
   rabbitmq: #配置mq消息队列
-    host: localhost
+    host: mini7
     port: 5672
-    username: guest
-    password: guest
+    username: root
+    password: 123456
   zipkin:
-    base-url: http://localhost:12382/
+    base-url: http://localhost:9411/
+    enabled: true
+    sender:
+      type: RABBIT
+  sleuth:
+    sampler:
+      percentage: 1.0
+      probability: 1.0
   application:
     name: collectCard
   redis:
-    host: 127.0.0.1
+    host: mini7
     port: 6379
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
