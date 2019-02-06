@@ -1,5 +1,6 @@
 package com.eric.strategy.config;
 
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
@@ -46,4 +47,15 @@ public class MybatisPlusConfig {
 	public OptimisticLockerInterceptor optimisticLockerInterceptor() {
 		return new OptimisticLockerInterceptor();
 	}
+
+	/**
+	 * 逻辑删除注入器
+	 *
+	 * @return LogicSqlInjector
+	 */
+	@Bean
+	public LogicSqlInjector logicSqlInjector() {
+		return new LogicSqlInjector();
+	}
+
 }

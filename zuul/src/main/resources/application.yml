@@ -60,6 +60,9 @@ zuul:
     lottery:
       path: /lottery/**
       serviceId: lottery
+    strategy:
+      path: /strategy/**
+      serviceId: strategy
 
 eureka:
   client:
