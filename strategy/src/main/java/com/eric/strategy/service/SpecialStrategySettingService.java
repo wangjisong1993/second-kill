@@ -27,4 +27,13 @@ public interface SpecialStrategySettingService {
 	 * @return
 	 */
 	CommonResult<List<SpecialStrategySetting>> listAll();
+
+	/**
+	 * 查找特殊策略的配置
+	 *
+	 * @param storeId
+	 * @param userLevelId
+	 * @return
+	 */
+	SpecialStrategySetting findSpecialStrategySetting(String storeId, String userLevelId);
 }

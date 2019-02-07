@@ -4,6 +4,7 @@ import com.eric.order.bean.OrderDetail;
 import com.eric.order.bean.OrderMaster;
 import com.eric.order.constant.OrderErrorCodeEnum;
 import com.eric.order.constant.OrderStatusEnum;
+import com.eric.order.feign.DiscountStrategyFeign;
 import com.eric.order.feign.WarehouseProductFeign;
 import com.eric.order.model.CreateOrderDetail;
 import com.eric.order.model.CreateOrderRequest;
@@ -16,6 +17,8 @@ import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.model.CommonResult;
+import com.eric.seckill.common.model.feign.ComputeDiscountRequest;
+import com.eric.seckill.common.model.feign.ComputeDiscountResponse;
 import com.eric.seckill.common.model.feign.ProductQueryResponse;
 import com.eric.seckill.common.model.feign.WarehouseQueryRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -56,6 +59,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	@Resource
 	private WarehouseProductFeign warehouseProductFeign;
 
+	@Resource
+	private DiscountStrategyFeign discountStrategyFeign;
+
 	@Value("${order.noShippingMoney}")
 	private Integer noShippingMoney;
 
@@ -70,8 +76,6 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		String orderId = UUID.randomUUID().toString();
 		List<OrderDetail> details = new ArrayList<>();
 		BigDecimal orderMoney = new BigDecimal(0);
-		// TODO
-		BigDecimal districtMoney = new BigDecimal(0);
 		Integer shippingMoney = 1000;
 		// 计算金额
 		for (CreateOrderDetail detail : request.getDetails()) {
@@ -97,6 +101,13 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 					.setFeeMoney(0);
 			details.add(orderDetail);
 			orderMoney = orderMoney.add(new BigDecimal(productMaster.getPrice()).multiply(new BigDecimal(detail.getProductCnt())).setScale(SCALE, BigDecimal.ROUND_HALF_UP));
+		}
+		ComputeDiscountRequest discountStrategyRequest = new ComputeDiscountRequest().setOrderMoney(orderMoney.intValue())
+				.setOrderNumber(orderId).setStoreId(request.getStoreId()).setUserId(request.getUserId());
+		CommonResult<ComputeDiscountResponse> compute = discountStrategyFeign.compute(discountStrategyRequest);
+		BigDecimal districtMoney = new BigDecimal(0);
+		if (!compute.isSuccess()) {
+			districtMoney.add(new BigDecimal(compute.getData().getActualDiscountMoney()));
 		}
 		// 实付金额超过200可以免运费
 		shippingMoney = orderMoney.intValue() > noShippingMoney ? 0 : shippingMoney;

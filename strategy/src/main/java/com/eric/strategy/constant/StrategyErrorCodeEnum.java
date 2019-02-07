@@ -10,6 +10,7 @@ public enum StrategyErrorCodeEnum {
 	SAVE_SUCCESS("保存成功", "0"),
 	FIND_USER_LEVEL_ERROR("查询用户等级失败", "250"),
 	STRATEGY_NOT_FIND("策略不存在", "251"),
+	ERROR_END_TIME("结束时间应该比开始时间大", "252"),
 	;
 
 	/**

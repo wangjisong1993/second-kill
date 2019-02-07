@@ -2,6 +2,7 @@ package com.eric.strategy.service.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
@@ -17,6 +18,8 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +40,9 @@ public class SpecialStrategySettingServiceImpl extends ServiceImpl<SpecialStrate
 	@ParamCheck
 	@Override
 	public CommonResult<AddSpecialStrategyResponse> setSpecialStrategy(AddSpecialStrategyRequest request) {
+		if (request.getEndTime().getTime() <= request.getStartTime().getTime() || request.getSpecialEndTime().getTime() <= request.getSpecialStartTime().getTime()) {
+			return CommonResult.fail(StrategyErrorCodeEnum.ERROR_END_TIME.getMessage(), StrategyErrorCodeEnum.ERROR_END_TIME.getErrCode());
+		}
 		// 校验要添加的特殊策略是否已经配置好
 		int count = discountStrategyService.countByStrategyId(request);
 		if (count == 0) {
@@ -72,5 +78,22 @@ public class SpecialStrategySettingServiceImpl extends ServiceImpl<SpecialStrate
 	@Override
 	public CommonResult<List<SpecialStrategySetting>> listAll() {
 		return CommonResult.success(list(), null);
+	}
+
+	@Override
+	@MethodCache
+	public SpecialStrategySetting findSpecialStrategySetting(String storeId, String userLevelId) {
+		Date now = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(now);
+		DateFormat timeInstance = DateFormat.getTimeInstance();
+		String format = timeInstance.format(now);
+		int weekday = c.get(Calendar.DAY_OF_WEEK) - 1;
+		weekday = weekday == 0 ? 7 : weekday;
+		QueryWrapper<SpecialStrategySetting> queryWrapper = new QueryWrapper<SpecialStrategySetting>().eq("store_id", storeId)
+				.eq("user_level_id", userLevelId).eq("week_day", weekday);
+		queryWrapper.ge("start_time", now).le("end_time", now);
+		queryWrapper.ge("special_start_time", format).le("special_end_time", format);
+		return this.baseMapper.selectOne(queryWrapper);
 	}
 }

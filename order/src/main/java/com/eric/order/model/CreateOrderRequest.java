@@ -23,6 +23,9 @@ public class CreateOrderRequest {
 	@NotBlank(message = "用户id不能为空")
 	private String userId;
 
+	@NotBlank(message = "商店id不能为空")
+	private String storeId;
+
 	/**
 	 * 收货人姓名
 	 */

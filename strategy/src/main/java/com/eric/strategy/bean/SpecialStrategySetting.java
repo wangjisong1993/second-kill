@@ -84,6 +84,10 @@ public class SpecialStrategySetting implements Serializable {
 
 	@Version
 	private Integer version;
+	/**
+	 * 用户等级
+	 */
+	private String userLevelId;
 
 	private static final long serialVersionUID = 1L;
 

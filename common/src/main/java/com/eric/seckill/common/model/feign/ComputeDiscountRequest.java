@@ -28,7 +28,4 @@ public class ComputeDiscountRequest {
 	@NotNull(message = "订单金额不能为空")
 	private Integer orderMoney;
 
-	@NotBlank(message = "策略类型不能为空")
-	private String strategyType;
-
 }

@@ -21,6 +21,6 @@ public interface UserInfoFeign {
 	 * @param userId
 	 * @return
 	 */
-	@RequestMapping(value = "/findUserLevelIdByUserId", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "/api/userInfo/findUserLevelIdByUserId", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
 	CommonResult<String> findUserLevelIdByUserId(@RequestParam("userId") String userId);
 }

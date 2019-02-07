@@ -2,6 +2,7 @@ package com.eric.strategy.service.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
@@ -32,11 +33,13 @@ public class DiscountStrategyServiceImpl extends ServiceImpl<DiscountStrategyMap
 	@Override
 	@ParamCheck
 	public CommonResult<Void> add(AddStrategyRequest request) {
+		if (request.getEndTime().getTime() <= request.getStartTime().getTime()) {
+			return CommonResult.fail(StrategyErrorCodeEnum.ERROR_END_TIME.getMessage(), StrategyErrorCodeEnum.ERROR_END_TIME.getErrCode());
+		}
 		// 根据storeId, userLevelId, strategyType进行计数
 		QueryWrapper<DiscountStrategy> queryWrapper = new QueryWrapper<DiscountStrategy>().eq("store_id", request.getStoreId())
-				.eq("user_level_id", request.getUserLevelId()).eq("strategy_type", request.getStrategyType())
-				.or(i -> i.le("start_time", request.getStartTime()).ge("end_time", request.getStartTime()))
-				.or(i -> i.le("start_time", request.getEndTime()).ge("end_time", request.getEndTime()));
+				.eq("user_level_id", request.getUserLevelId()).eq("strategy_type", request.getStrategyType());
+		queryWrapper.and(i -> i.and(k -> k.le("start_time", request.getStartTime()).ge("end_time", request.getStartTime())).or(j -> j.le("start_time", request.getEndTime()).ge("end_time", request.getEndTime())));
 		DiscountStrategy discountStrategy = this.baseMapper.selectOne(queryWrapper);
 		DiscountStrategy t = new DiscountStrategy();
 		dozerBeanMapper.map(request, t);
@@ -62,6 +65,18 @@ public class DiscountStrategyServiceImpl extends ServiceImpl<DiscountStrategyMap
 	@Override
 	public int countByStrategyId(AddSpecialStrategyRequest request) {
 		return count(new QueryWrapper<DiscountStrategy>().eq("id", request.getStrategyId()));
+	}
+
+	@Override
+	@MethodCache
+	public DiscountStrategy findDiscountStrategy(String storeId, int orderMoney, String strategyType, String userLevelId) {
+		QueryWrapper<DiscountStrategy> queryWrapper = new QueryWrapper<DiscountStrategy>().eq("strategy_type", strategyType)
+				.eq("store_id", storeId).le("base_money", orderMoney)
+				.eq("user_level_id", userLevelId);
+		Date now = new Date();
+		queryWrapper.le("start_time", now).ge("end_time", now);
+		queryWrapper.orderByDesc("priority_value");
+		return this.baseMapper.selectOne(queryWrapper);
 	}
 
 }

@@ -67,9 +67,9 @@ public class DiscountStrategy implements Serializable {
 	private String strategyType;
 
 	/**
-	 * 是否可以配合其他策略使用
+	 * 折扣率
 	 */
-	private String useOtherStrategy;
+	private Double discountRate;
 
 	/**
 	 * 创建时间
