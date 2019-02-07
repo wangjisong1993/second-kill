@@ -8,12 +8,16 @@ import com.eric.strategy.dao.DiscountStrategyMapper;
 import com.eric.strategy.model.AddSpecialStrategyRequest;
 import com.eric.strategy.model.AddStrategyRequest;
 import com.eric.strategy.service.DiscountStrategyService;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -46,9 +50,12 @@ public class StrategyTest {
 	}
 
 	@Test
-	public void t2() {
-		AddSpecialStrategyRequest request = new AddSpecialStrategyRequest().setEndTime(new Date())
-				.setSpecialEndTime(new Date()).setSpecialStartTime(new Date()).setStartTime(new Date())
+	public void t2() throws ParseException {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date parse = simpleDateFormat.parse("2019-02-01 00:00:00");
+		Date end = simpleDateFormat.parse("2019-04-01 00:00:00");
+		AddSpecialStrategyRequest request = new AddSpecialStrategyRequest().setEndTime(end)
+				.setSpecialEndTime(end).setSpecialStartTime(parse).setStartTime(parse)
 				.setStoreId("1").setStrategyType("1").setWeekDay("1");
 		System.out.println(JSON.toJSONString(request));
 	}

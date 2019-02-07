@@ -56,7 +56,7 @@ public class SpecialStrategySettingServiceImpl extends ServiceImpl<SpecialStrate
 			boolean update = update(entity, queryWrapper);
 			if (update) {
 				AddSpecialStrategyResponse response = new AddSpecialStrategyResponse();
-				return CommonResult.success(response, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
+				return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getMessage());
 			}
 			return CommonResult.fail(ErrorCodeEnum.UPDATE_FAIL.getMessage(), ErrorCodeEnum.UPDATE_FAIL.getErrCode());
 		}
