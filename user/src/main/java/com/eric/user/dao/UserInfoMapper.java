@@ -48,9 +48,17 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 	 *
 	 * @param userInfoId
 	 * @param point
+	 * @param userLevel
 	 * @return
 	 */
 	int updateUserPoint(@Param("userInfoId") String userInfoId, @Param("point") int point,
 	                    @Param("userLevel") String userLevel);
 
+	/**
+	 * 根据用户id获取用户等级
+	 *
+	 * @param userId
+	 * @return
+	 */
+	String findUserLevelIdByUserId(@Param("userId") String userId);
 }

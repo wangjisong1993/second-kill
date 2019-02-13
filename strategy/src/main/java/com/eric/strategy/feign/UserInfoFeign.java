@@ -1,11 +1,10 @@
-package com.eric.order.feign;
+package com.eric.strategy.feign;
 
 import com.eric.seckill.common.model.CommonResult;
-import com.eric.seckill.common.model.feign.ChangePointRequest;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 用户
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface UserInfoFeign {
 
 	/**
-	 * 积分变动
+	 * 根据用户id获取用户等级
 	 *
-	 * @param request
+	 * @param userId
 	 * @return
 	 */
-	@RequestMapping(value = "/api/userInfo/changePoint", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-	CommonResult<Void> changePoint(@RequestBody ChangePointRequest request);
+	@RequestMapping(value = "/api/userInfo/findUserLevelIdByUserId", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+	CommonResult<String> findUserLevelIdByUserId(@RequestParam("userId") String userId);
 }

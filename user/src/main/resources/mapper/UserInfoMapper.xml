@@ -25,4 +25,12 @@
     <select id="findUserPointByUserInfoId" resultType="java.lang.Integer">
         select user_point from user_info where user_info_id=#{userInfoId} for update
     </select>
+    <select id="findUserLevelIdByUserId" resultType="java.lang.String">
+        SELECT
+            user_level
+        FROM
+            user_info
+        WHERE
+            user_id = #{userId}
+    </select>
 </mapper>

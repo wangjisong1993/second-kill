@@ -174,4 +174,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 		baseMapper.updateUserPoint(userInfo.getUserInfoId(), request.getChangePoint(), userLevelDetailId);
 		return CommonResult.success(null, ErrorCodeEnum.UPDATE_SUCCESS.getErrorMsg());
 	}
+
+	@Override
+	public CommonResult<String> findUserLevelIdByUserId(String userId) {
+		return CommonResult.success(this.baseMapper.findUserLevelIdByUserId(userId), null);
+	}
 }

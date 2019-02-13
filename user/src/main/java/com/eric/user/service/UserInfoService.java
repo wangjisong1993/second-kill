@@ -13,6 +13,7 @@ public interface UserInfoService {
 
 	/**
 	 * 保存用户信息
+	 *
 	 * @param userMaster
 	 * @param mobile
 	 * @return
@@ -21,6 +22,7 @@ public interface UserInfoService {
 
 	/**
 	 * 根据手机号判断是否已经注册过
+	 *
 	 * @param phone
 	 * @return
 	 */
@@ -28,6 +30,7 @@ public interface UserInfoService {
 
 	/**
 	 * 更新用户信息
+	 *
 	 * @param userInfo
 	 * @return
 	 */
@@ -35,6 +38,7 @@ public interface UserInfoService {
 
 	/**
 	 * 更新用户余额
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -42,6 +46,7 @@ public interface UserInfoService {
 
 	/**
 	 * 积分变更
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -49,8 +54,17 @@ public interface UserInfoService {
 
 	/**
 	 * 积分变动
+	 *
 	 * @param request
 	 * @return
 	 */
 	CommonResult<Void> changePoint(ChangePointRequest request);
+
+	/**
+	 * 根据用户id获取用户的等级
+	 *
+	 * @param userId
+	 * @return
+	 */
+	CommonResult<String> findUserLevelIdByUserId(String userId);
 }

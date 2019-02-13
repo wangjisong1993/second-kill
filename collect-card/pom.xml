@@ -60,6 +60,15 @@
         </dependency>
         <!-- 配置服务链路追踪结束 -->
 
+        <!--apollo配置中心依赖开始-->
+        <!-- https://mvnrepository.com/artifact/com.ctrip.framework.apollo/apollo-client -->
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!--apollo配置中心依赖结束-->
+
         <dependency>
             <groupId>com.eric</groupId>
             <artifactId>common</artifactId>

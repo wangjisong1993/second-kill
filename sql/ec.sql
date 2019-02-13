@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50724
+Source Server Version : 50622
 Source Host           : localhost:3306
 Source Database       : ec
 
 Target Server Type    : MYSQL
-Target Server Version : 50724
+Target Server Version : 50622
 File Encoding         : 65001
 
-Date: 2019-01-29 18:32:22
+Date: 2019-02-08 00:00:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -981,6 +981,72 @@ INSERT INTO `card_logs` VALUES ('2b5cdc9e-03d3-4d6b-8249-77c109a19f2b', '2', '19
 INSERT INTO `card_logs` VALUES ('7640a392-c8c4-49f3-924e-7003253a3bfd', '1', '188', '9ee51518-4cfd-49e3-9b83-f22d5766aaf2', '1', '2019-01-29 18:31:49', '2019-01-29 18:31:49');
 INSERT INTO `card_logs` VALUES ('00ce7299-7fc1-4eb6-bf36-0af97f284fad', '2', '199', '2d2bbbe1-3955-43c7-800d-1940ffef5cae', '1', '2019-01-29 18:31:49', '2019-01-29 18:31:49');
 INSERT INTO `card_logs` VALUES ('e75c8128-9fc0-47cb-b37e-470665e35da1', '2', '197', '86578d77-33c2-4146-80bc-f219d688ea20', '1', '2019-01-29 18:31:50', '2019-01-29 18:31:50');
+INSERT INTO `card_logs` VALUES ('36f1e4a2-16ef-4bfa-b359-91c49db94500', '2', '9', '57a1dad8-e8f5-4d28-9df0-a4a88e9bee4f', '1', '2019-01-30 22:43:28', '2019-01-30 22:43:28');
+INSERT INTO `card_logs` VALUES ('388f92bf-9061-4258-9398-50bc9e6bfbe9', '3', '9', '79f0ec46-a470-4481-a2e3-70a2206f3f87', '1', '2019-01-30 23:12:04', '2019-01-30 23:12:04');
+INSERT INTO `card_logs` VALUES ('c180d6fe-2cfc-4567-8205-09885272b714', '1', '29', '3a4e8a0f-3b43-46da-9a02-966ebd5e2b86', '1', '2019-01-30 23:16:20', '2019-01-30 23:16:20');
+INSERT INTO `card_logs` VALUES ('a5e843a8-40de-42ea-b857-c52e71d26240', '2', '29', 'b8cf9c92-ddcc-4ed5-b013-6604d1b62e66', '1', '2019-01-30 23:16:21', '2019-01-30 23:16:21');
+INSERT INTO `card_logs` VALUES ('2728787d-aae0-49fc-9c8a-bc3e7432851c', '4', '59', 'a7853a1c-517b-410b-960b-6efa567fd716', '1', '2019-01-30 23:18:41', '2019-01-30 23:18:41');
+INSERT INTO `card_logs` VALUES ('60fb6dc2-5abd-4f37-a338-8ba381968775', '2', '59', 'e40c1071-9885-46e6-97c6-e85154d143f4', '1', '2019-01-30 23:18:45', '2019-01-30 23:18:45');
+INSERT INTO `card_logs` VALUES ('b1fe7d5d-7141-4cc6-9ba2-1740eab975ae', '5', '{{userId}}', '9da22ac7-a119-4629-a129-52dc3bbfbeff', '1', '2019-01-31 22:44:55', '2019-01-31 22:44:55');
+INSERT INTO `card_logs` VALUES ('eb1e13af-77be-4108-bd76-f637d5b08626', '3', '{{userId}}', '7fdf689f-347f-4d67-9c79-0db2f3491891', '1', '2019-01-31 22:45:12', '2019-01-31 22:45:12');
+INSERT INTO `card_logs` VALUES ('827a0132-f89e-4bba-b914-fadc1f672b1c', '1', '1236', '8ebf75b5-6f2c-4234-a77a-0e22c1bbf59e', '1', '2019-01-31 23:12:00', '2019-01-31 23:12:00');
+INSERT INTO `card_logs` VALUES ('ba69b251-d820-4011-9c36-326538f1ae05', '1', '1236', '205218cf-2e70-4a5e-85c7-45211cbae7b9', '1', '2019-01-31 23:13:32', '2019-01-31 23:13:32');
+INSERT INTO `card_logs` VALUES ('025de84d-ce04-4183-aece-cee553d49382', '4', '123', 'eb63180a-7fe9-4885-803d-5874faf1327a', '1', '2019-02-01 20:09:12', '2019-02-01 20:09:12');
+INSERT INTO `card_logs` VALUES ('5a54cc65-016c-4ab2-aeb3-b5184234fa94', '2', '123', '25621a61-6c11-427e-9920-9665834b90ef', '1', '2019-02-01 20:10:18', '2019-02-01 20:10:18');
+INSERT INTO `card_logs` VALUES ('378269ff-955b-4e80-bc6a-796d5d3d6223', '3', '1', '1c0475ed-0631-4015-9875-759ffcf83c4a', '1', '2019-02-01 20:37:00', '2019-02-01 20:37:00');
+INSERT INTO `card_logs` VALUES ('857e6293-5c1c-4e0a-95a7-df00018494ee', '2', '1', '6cdabb2f-cd4b-437e-a00b-4c110d799314', '1', '2019-02-01 20:37:01', '2019-02-01 20:37:01');
+INSERT INTO `card_logs` VALUES ('7175800b-6595-4f78-acf0-b2873592e97e', '2', '2', '17ca9aa1-43ab-4c73-976a-222f2ea4c7ee', '1', '2019-02-01 20:57:55', '2019-02-01 20:57:55');
+INSERT INTO `card_logs` VALUES ('86a3b2dc-81e2-45c5-8c16-af08e0607504', '2', '2', '2f051cd4-ee10-4d0a-91e0-3bd120b7dafe', '1', '2019-02-01 20:58:39', '2019-02-01 20:58:39');
+INSERT INTO `card_logs` VALUES ('1e53f013-63f9-45d5-92ba-28cbef1b4e78', '4', '3', 'f99f7b1c-1e37-44dc-93c4-e7857f0eaeef', '1', '2019-02-01 21:05:24', '2019-02-01 21:05:24');
+INSERT INTO `card_logs` VALUES ('8ddcf299-5494-4d4f-9a3c-e207e87c9764', '4', '3', '55b8e00f-27cc-44a9-bd06-07dba5957d50', '1', '2019-02-01 21:05:42', '2019-02-01 21:05:42');
+INSERT INTO `card_logs` VALUES ('ba74b386-bd0e-4919-bfb3-bb70d0e855dd', '4', '4', '3cca50b6-de6a-47fb-b081-21172be4ff46', '1', '2019-02-01 21:06:44', '2019-02-01 21:06:44');
+INSERT INTO `card_logs` VALUES ('d65ae872-5c1a-4af5-bda0-cbc3cdeec7e1', '4', '4', 'b39939ec-46ac-4130-b415-319cdd1fade6', '1', '2019-02-01 21:07:07', '2019-02-01 21:07:07');
+INSERT INTO `card_logs` VALUES ('329ca0a7-2692-4bb3-9072-e82fcdc6cc93', '1', '5', '8a6cb8a7-3143-49a1-bb47-34959f6ea1e7', '1', '2019-02-01 21:07:23', '2019-02-01 21:07:23');
+INSERT INTO `card_logs` VALUES ('6d178fab-fd16-4f54-b2ab-be20b9c64580', '2', '5', '4b5022bb-784c-47c0-a174-f7b3e7bf92c2', '1', '2019-02-01 21:07:28', '2019-02-01 21:07:28');
+INSERT INTO `card_logs` VALUES ('cce49d00-dc81-4338-8ad1-f60edc5a2f4a', '2', '6', '2719d691-aa7e-4757-afc7-6a4fb2d8c4d7', '1', '2019-02-01 21:07:51', '2019-02-01 21:07:51');
+INSERT INTO `card_logs` VALUES ('71740860-2516-4b63-b67d-d21f1b0ec0c2', '4', '7', '420d88f2-71b6-4d0c-aec2-efd81f678da6', '1', '2019-02-01 21:10:52', '2019-02-01 21:10:52');
+INSERT INTO `card_logs` VALUES ('fcf16a2a-71c7-426c-a710-f721879071ea', '1', '8', '9dd7e8eb-f50e-44fc-928b-ce9024b7aeff', '1', '2019-02-01 21:15:16', '2019-02-01 21:15:16');
+INSERT INTO `card_logs` VALUES ('399e005f-d811-443d-81c2-118d65b2e2ce', '2', '8', '639f3c52-bf3e-4a39-a38e-4495d5d39979', '1', '2019-02-01 21:15:17', '2019-02-01 21:15:17');
+INSERT INTO `card_logs` VALUES ('744e66c0-f99e-4722-b9eb-3ca2f3985c09', '3', '9', '83cb8487-9199-40e7-8419-1f4c000f9240', '1', '2019-02-01 21:26:11', '2019-02-01 21:26:11');
+INSERT INTO `card_logs` VALUES ('5a1183ce-66dc-4d5c-85d7-99578208e7e1', '2', '10', 'f11712cd-996e-453b-a255-4adf168cae0f', '1', '2019-02-01 21:31:22', '2019-02-01 21:31:22');
+INSERT INTO `card_logs` VALUES ('4ab124a2-1612-4b4e-901f-5c23e088212b', '4', '11', '273512f1-03f4-4748-b05e-493f1723014e', '1', '2019-02-01 21:31:46', '2019-02-01 21:31:46');
+INSERT INTO `card_logs` VALUES ('54524fe7-47a9-4ddd-ae5b-725de734b7bc', '2', '12', '0835563f-28aa-4a92-ab71-3e5da76d1ab0', '1', '2019-02-01 21:34:18', '2019-02-01 21:34:18');
+INSERT INTO `card_logs` VALUES ('7911c3d6-6a02-46a5-9865-e7627099eab7', '4', '59', 'ced05bcb-70db-4ae5-9148-572e2e975af1', '1', '2019-02-01 21:34:54', '2019-02-01 21:34:54');
+INSERT INTO `card_logs` VALUES ('fda6bdad-d2a6-4b8e-b2f5-4d647a965973', '1', '59', 'e294ccc1-41b4-44e2-949f-6e919cf5fc22', '1', '2019-02-01 21:34:59', '2019-02-01 21:34:59');
+INSERT INTO `card_logs` VALUES ('dbadcce8-f878-4c9a-a385-f95e5937c93a', '4', '59', 'a385ac06-64bb-4fbb-a21f-a41cf9a6731d', '1', '2019-02-02 11:03:35', '2019-02-02 11:03:35');
+INSERT INTO `card_logs` VALUES ('a9ad43dd-d17e-4175-8dcb-b5f0caa1acf6', '1', '59', 'a88be80e-f916-41d5-ac54-e49109ead185', '1', '2019-02-02 12:07:53', '2019-02-02 12:07:53');
+INSERT INTO `card_logs` VALUES ('b547f0c4-b7c4-4381-a65a-a1b26c711b55', '2', '60', '0eff3f6b-68cf-44b7-a4ac-595ecb0d662e', '1', '2019-02-02 12:36:12', '2019-02-02 12:36:12');
+INSERT INTO `card_logs` VALUES ('74dc4051-0abc-47cc-9538-36607c05373e', '1', '60', 'a2efa881-b655-423b-83f2-8fe6eca2e3f4', '1', '2019-02-02 12:39:07', '2019-02-02 12:39:07');
+INSERT INTO `card_logs` VALUES ('769be7f0-00f5-4e51-bc0f-d4222b6d5ad3', '1', '61', 'd417e29f-45c7-4f97-98b6-dc3782a3dffd', '1', '2019-02-02 12:53:35', '2019-02-02 12:53:35');
+INSERT INTO `card_logs` VALUES ('93b2313b-78a1-4def-8156-753d25faee2f', '3', '1', '3a34cee0-4d6c-47fb-82eb-b8a074b8757c', '1', '2019-02-02 12:53:56', '2019-02-02 12:53:56');
+INSERT INTO `card_logs` VALUES ('0a93aa65-87f2-4097-86ec-d85b66d426a1', '4', '1', 'b8ef93c0-bea8-4e45-9486-81c8fd89bc82', '1', '2019-02-02 16:27:42', '2019-02-02 16:27:42');
+INSERT INTO `card_logs` VALUES ('02bfac36-735c-4ff2-9102-72583c867902', '2', '2', '6fb1fa73-7d63-4dd4-a732-eacc3d032833', '1', '2019-02-02 17:00:54', '2019-02-02 17:00:54');
+INSERT INTO `card_logs` VALUES ('9e37366f-2707-4b7f-9592-fac5544b260d', '2', '2', 'f172610a-416b-42c5-8450-07f26c99832c', '1', '2019-02-02 17:03:44', '2019-02-02 17:03:44');
+INSERT INTO `card_logs` VALUES ('8017d657-4dc5-4f31-8114-a40ed42d7881', '1', '3', '0cd75441-8083-4160-b7fd-ac0c4556323c', '1', '2019-02-02 17:04:05', '2019-02-02 17:04:05');
+INSERT INTO `card_logs` VALUES ('442406c2-3457-4473-9dad-25880d32f015', '4', '3', '64a87d55-682d-442e-8c2b-0d39714f084a', '1', '2019-02-02 17:04:06', '2019-02-02 17:04:06');
+INSERT INTO `card_logs` VALUES ('db9de363-60f7-40a1-a590-3914e370dbec', '2', '4', '85e9d152-f907-497d-8daf-a7d408056f66', '1', '2019-02-02 17:04:22', '2019-02-02 17:04:22');
+INSERT INTO `card_logs` VALUES ('b6d036dd-2cec-4c81-8199-89d655d986bc', '2', '4', '3080ddd5-036c-4b44-9e70-12ff741b4270', '1', '2019-02-02 17:05:42', '2019-02-02 17:05:42');
+INSERT INTO `card_logs` VALUES ('0a9bb343-70c1-4127-8102-4bac08c35d67', '1', '5', 'ff461d0b-2543-4df7-aabc-0b6cbec47464', '1', '2019-02-02 17:06:26', '2019-02-02 17:06:26');
+INSERT INTO `card_logs` VALUES ('4cc8fcb9-78f0-43c4-bbef-f745fe7250f5', '1', '5', '9559a2aa-09ca-4c04-a9f8-6b72083decd7', '1', '2019-02-02 17:10:47', '2019-02-02 17:10:47');
+INSERT INTO `card_logs` VALUES ('3938ffc7-a446-4c9f-b9ff-221a8da939ee', '1', '6', '9cc3410b-d3c5-43c7-ba24-6f3c9bfb1aa5', '1', '2019-02-02 19:07:00', '2019-02-02 19:07:00');
+INSERT INTO `card_logs` VALUES ('bd79f238-948e-4713-8f25-ca57671f79a6', '3', '6', 'eb7e7566-9bb7-493b-9682-4c1522890cca', '1', '2019-02-02 19:07:21', '2019-02-02 19:07:21');
+INSERT INTO `card_logs` VALUES ('fcd33022-fba6-466d-870e-1ce38fea9de4', '1', '7', '33a1438f-d560-468c-b660-488d5efff610', '1', '2019-02-02 19:10:08', '2019-02-02 19:10:08');
+INSERT INTO `card_logs` VALUES ('a25593f4-9d76-42ea-82ab-3f8283a2a904', '3', '7', '9bd459e2-64db-469c-994b-a0867d60e6b4', '1', '2019-02-02 20:26:11', '2019-02-02 20:26:11');
+INSERT INTO `card_logs` VALUES ('76f5dcdf-c543-4b2a-8738-0ea5e1002f29', '1', '8', 'f591ba3e-3e8a-47e7-b01a-358848f1b7f8', '1', '2019-02-02 20:31:48', '2019-02-02 20:31:48');
+INSERT INTO `card_logs` VALUES ('a9532abb-5871-4aac-bbde-3c6ca391ff19', '2', '8', '1b75204a-8655-4dd7-9a3f-73d359a1be2b', '1', '2019-02-02 20:32:08', '2019-02-02 20:32:08');
+INSERT INTO `card_logs` VALUES ('d176b014-205c-49bf-8730-6a33cccfae76', '2', '9', '6c5c34d1-162d-4e37-a728-057af2fd9cf7', '1', '2019-02-02 21:01:40', '2019-02-02 21:01:40');
+INSERT INTO `card_logs` VALUES ('a250a820-a0eb-4fbc-8958-903e66c7c9ad', '5', '10', 'b693f13e-22b3-4f15-a769-ad942924a536', '1', '2019-02-02 21:46:46', '2019-02-02 21:46:46');
+INSERT INTO `card_logs` VALUES ('642653e9-3959-435a-8973-72a278f71ed9', '3', '10', 'ed2febbb-edc9-4397-8428-709d9d84dde9', '1', '2019-02-02 21:47:07', '2019-02-02 21:47:07');
+INSERT INTO `card_logs` VALUES ('36aad412-274d-4745-bc65-9e8cc0533e43', '2', '11', 'ba8080ec-3209-4022-861a-bfd6b1cac3ef', '1', '2019-02-02 21:50:01', '2019-02-02 21:50:01');
+INSERT INTO `card_logs` VALUES ('a110985f-69bd-4456-b347-5d3e162944c5', '2', '11', '528d6670-3cdd-4d7c-8de8-ef892a2d5a97', '1', '2019-02-02 21:54:48', '2019-02-02 21:54:48');
+INSERT INTO `card_logs` VALUES ('5e1b540c-1b12-4b2c-ad0f-812c719a9313', '3', '11', '406ac75f-2cfc-46c2-851f-f93f56aa87b7', '1', '2019-02-03 09:52:48', '2019-02-03 09:52:48');
+INSERT INTO `card_logs` VALUES ('536b456c-b41c-4573-b5ef-8e406db51a7e', '1', '11', '963e01af-3947-4299-837e-b1a89b7ae924', '1', '2019-02-03 09:53:06', '2019-02-03 09:53:06');
+INSERT INTO `card_logs` VALUES ('db1ccd73-cda2-46c6-a2c0-23db3a22dc76', '2', '12', '7ff82c62-4b2d-41d7-8ce6-0594e452fbf1', '1', '2019-02-03 11:10:15', '2019-02-03 11:10:15');
+INSERT INTO `card_logs` VALUES ('5dc7a2e9-2a37-449c-b2a1-eed5556a8d85', '2', '12', '186134f6-a609-4354-bee8-c8fddf9ffb16', '1', '2019-02-03 11:12:52', '2019-02-03 11:12:52');
+INSERT INTO `card_logs` VALUES ('87feab54-1ac2-4dae-8ea2-d8bb51c6d297', '2', '13', '23e7532c-eae9-4da6-82ef-d30553c52a73', '1', '2019-02-03 12:54:44', '2019-02-03 12:54:44');
+INSERT INTO `card_logs` VALUES ('8d91091b-7e50-43ae-a0aa-c0fdc63fc726', '3', '13', '8363ad45-05dc-4cd5-9c37-c63ca049cbec', '1', '2019-02-03 12:54:47', '2019-02-03 12:54:47');
+INSERT INTO `card_logs` VALUES ('e18e2cef-7b46-4e52-912a-6cfc6df593cd', '2', '13', '2470b669-2039-4c20-b900-614741357611', '1', '2019-02-05 11:02:22', '2019-02-05 11:02:22');
+INSERT INTO `card_logs` VALUES ('90fc970a-5f25-40da-a657-eff2929cb9ac', '3', '13', '54cde57b-8d28-4024-978e-6626a7ac2c86', '1', '2019-02-05 11:02:32', '2019-02-05 11:02:32');
 
 -- ----------------------------
 -- Table structure for card_rate
@@ -1105,6 +1171,37 @@ CREATE TABLE `coupon_template` (
 -- Records of coupon_template
 -- ----------------------------
 INSERT INTO `coupon_template` VALUES ('ccd6df6d-0402-413e-bfd8-c4818fdb33b8', '-1', '1', '100元优惠券', 'http://www.baidu.com', '2019-01-26 11:33:37', '2019-12-30 00:00:00', '10000', '1', null, null, '0');
+
+-- ----------------------------
+-- Table structure for discount_strategy
+-- ----------------------------
+DROP TABLE IF EXISTS `discount_strategy`;
+CREATE TABLE `discount_strategy` (
+  `id` varchar(40) DEFAULT NULL COMMENT '策略id',
+  `strategy_name` varchar(40) DEFAULT NULL COMMENT '策略名称',
+  `store_id` varchar(40) DEFAULT NULL COMMENT '商店id',
+  `user_level_id` varchar(40) DEFAULT NULL COMMENT '用户等级',
+  `base_money` int(11) DEFAULT NULL COMMENT '起始金额',
+  `start_time` datetime DEFAULT NULL COMMENT '生效时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `max_coupon_discount` int(11) DEFAULT NULL COMMENT '优惠券最大使用金额',
+  `max_discount_money` int(11) DEFAULT NULL COMMENT '最大优惠金额',
+  `priority_value` int(2) DEFAULT NULL COMMENT '优先级',
+  `strategy_type` varchar(4) DEFAULT NULL COMMENT '策略类型',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_user_id` varchar(40) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_user_id` varchar(40) DEFAULT NULL COMMENT '更新人',
+  `delete_status` varchar(1) DEFAULT '0' COMMENT '是否删除',
+  `version` int(11) DEFAULT '1',
+  `discount_rate` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of discount_strategy
+-- ----------------------------
+INSERT INTO `discount_strategy` VALUES ('9928c58e-3d25-46d3-838d-c3d174d8d2ed', '会员日优惠', '1', '1', '20000', '2019-05-01 00:00:00', '2019-06-01 00:00:00', '4000', '5000', '1', '1', '2019-02-06 12:58:28', 'admin', '2019-02-07 17:59:39', 'admin', '0', '10', '0.25');
+INSERT INTO `discount_strategy` VALUES ('20e8f771-b05e-48f0-b0d4-bf01586e9418', '普通日优惠', '1', '1', '20000', '2019-02-01 00:00:00', '2019-04-01 00:00:00', '4000', '5000', '1', '1', '2019-02-07 18:01:10', 'admin', '2019-02-07 18:01:21', 'admin', '0', '4', '0.1');
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -1673,6 +1770,72 @@ INSERT INTO `receive_log` VALUES ('8c1313d4-c095-47c7-b584-11583ed2885a', '196',
 INSERT INTO `receive_log` VALUES ('87139ec9-4f86-42ad-b67f-d9371b4d4040', '188', '9ee51518-4cfd-49e3-9b83-f22d5766aaf2', '2019-01-29 18:31:49', '2019-01-29 18:31:49');
 INSERT INTO `receive_log` VALUES ('01a1d8aa-dafe-4460-938e-037dcb2eccef', '199', '2d2bbbe1-3955-43c7-800d-1940ffef5cae', '2019-01-29 18:31:49', '2019-01-29 18:31:49');
 INSERT INTO `receive_log` VALUES ('90f7f116-e25c-4504-b03b-6f34f5ff2c78', '197', '86578d77-33c2-4146-80bc-f219d688ea20', '2019-01-29 18:31:50', '2019-01-29 18:31:50');
+INSERT INTO `receive_log` VALUES ('2473bcfd-4d04-4150-97cf-b10a9909bca4', '9', '57a1dad8-e8f5-4d28-9df0-a4a88e9bee4f', '2019-01-30 22:43:28', '2019-01-30 22:43:28');
+INSERT INTO `receive_log` VALUES ('42c729e4-62f2-431e-bc63-2736893d5f28', '9', '79f0ec46-a470-4481-a2e3-70a2206f3f87', '2019-01-30 23:12:04', '2019-01-30 23:12:04');
+INSERT INTO `receive_log` VALUES ('01c05f0e-1890-4612-8e25-5d337f98c19e', '29', '3a4e8a0f-3b43-46da-9a02-966ebd5e2b86', '2019-01-30 23:16:20', '2019-01-30 23:16:20');
+INSERT INTO `receive_log` VALUES ('2ebaea28-4de7-4ee3-bed6-2417a1749a17', '29', 'b8cf9c92-ddcc-4ed5-b013-6604d1b62e66', '2019-01-30 23:16:21', '2019-01-30 23:16:21');
+INSERT INTO `receive_log` VALUES ('943f5a0b-c9e6-46fa-afaf-66db91a2f3f2', '59', 'a7853a1c-517b-410b-960b-6efa567fd716', '2019-01-30 23:18:41', '2019-01-30 23:18:41');
+INSERT INTO `receive_log` VALUES ('32ce561c-4a6f-4aaa-b9b0-843fb3c2018d', '59', 'e40c1071-9885-46e6-97c6-e85154d143f4', '2019-01-30 23:18:45', '2019-01-30 23:18:45');
+INSERT INTO `receive_log` VALUES ('bebefdc8-9272-4faf-80b7-a103afe2ca2e', '{{userId}}', '9da22ac7-a119-4629-a129-52dc3bbfbeff', '2019-01-31 22:44:56', '2019-01-31 22:44:56');
+INSERT INTO `receive_log` VALUES ('04eec237-f18b-4d88-afba-9e5ed951abff', '{{userId}}', '7fdf689f-347f-4d67-9c79-0db2f3491891', '2019-01-31 22:45:12', '2019-01-31 22:45:12');
+INSERT INTO `receive_log` VALUES ('8f28fe7b-263a-425d-9934-cc4de9242cc6', '1236', '8ebf75b5-6f2c-4234-a77a-0e22c1bbf59e', '2019-01-31 23:12:00', '2019-01-31 23:12:00');
+INSERT INTO `receive_log` VALUES ('89d92b72-a7e1-403f-93a5-4eef51371649', '1236', '205218cf-2e70-4a5e-85c7-45211cbae7b9', '2019-01-31 23:13:32', '2019-01-31 23:13:32');
+INSERT INTO `receive_log` VALUES ('878ece31-530c-4a93-b22c-25729b94ce31', '123', 'eb63180a-7fe9-4885-803d-5874faf1327a', '2019-02-01 20:09:12', '2019-02-01 20:09:12');
+INSERT INTO `receive_log` VALUES ('384e909c-e83a-4ab6-893a-0e250428585d', '123', '25621a61-6c11-427e-9920-9665834b90ef', '2019-02-01 20:10:18', '2019-02-01 20:10:18');
+INSERT INTO `receive_log` VALUES ('74978b58-448b-4bf3-95dc-710f9c09a240', '1', '1c0475ed-0631-4015-9875-759ffcf83c4a', '2019-02-01 20:37:00', '2019-02-01 20:37:00');
+INSERT INTO `receive_log` VALUES ('bac2c198-762a-412f-8c25-a18d4cd187e0', '1', '6cdabb2f-cd4b-437e-a00b-4c110d799314', '2019-02-01 20:37:01', '2019-02-01 20:37:01');
+INSERT INTO `receive_log` VALUES ('6432150d-dc2b-4da8-9d8a-89fda313616e', '2', '17ca9aa1-43ab-4c73-976a-222f2ea4c7ee', '2019-02-01 20:57:55', '2019-02-01 20:57:55');
+INSERT INTO `receive_log` VALUES ('723f2785-574e-4019-92b0-0100ec3af3a0', '2', '2f051cd4-ee10-4d0a-91e0-3bd120b7dafe', '2019-02-01 20:58:39', '2019-02-01 20:58:39');
+INSERT INTO `receive_log` VALUES ('329935bf-4a82-4243-ae0b-16532a008055', '3', 'f99f7b1c-1e37-44dc-93c4-e7857f0eaeef', '2019-02-01 21:05:24', '2019-02-01 21:05:24');
+INSERT INTO `receive_log` VALUES ('5b49809d-b9c5-4b3a-8161-c4b6c34f070e', '3', '55b8e00f-27cc-44a9-bd06-07dba5957d50', '2019-02-01 21:05:42', '2019-02-01 21:05:42');
+INSERT INTO `receive_log` VALUES ('c60da8d4-c5b1-4524-8281-9517f387bf91', '4', '3cca50b6-de6a-47fb-b081-21172be4ff46', '2019-02-01 21:06:44', '2019-02-01 21:06:44');
+INSERT INTO `receive_log` VALUES ('6c221179-a09d-4405-8441-6f05b0a663f9', '4', 'b39939ec-46ac-4130-b415-319cdd1fade6', '2019-02-01 21:07:07', '2019-02-01 21:07:07');
+INSERT INTO `receive_log` VALUES ('2c45f458-2e9a-4d6b-a679-36cf78324f2f', '5', '8a6cb8a7-3143-49a1-bb47-34959f6ea1e7', '2019-02-01 21:07:23', '2019-02-01 21:07:23');
+INSERT INTO `receive_log` VALUES ('5e372442-1925-44ee-bd59-66de54514f80', '5', '4b5022bb-784c-47c0-a174-f7b3e7bf92c2', '2019-02-01 21:07:28', '2019-02-01 21:07:28');
+INSERT INTO `receive_log` VALUES ('cfdcd1b7-489b-446b-8c51-9f221ece996e', '6', '2719d691-aa7e-4757-afc7-6a4fb2d8c4d7', '2019-02-01 21:07:51', '2019-02-01 21:07:51');
+INSERT INTO `receive_log` VALUES ('7f0e4a2e-be7f-4a9e-ae69-02850fb65bdf', '7', '420d88f2-71b6-4d0c-aec2-efd81f678da6', '2019-02-01 21:10:52', '2019-02-01 21:10:52');
+INSERT INTO `receive_log` VALUES ('c83f5c7d-d559-4550-b01b-130dee55abc2', '8', '9dd7e8eb-f50e-44fc-928b-ce9024b7aeff', '2019-02-01 21:15:16', '2019-02-01 21:15:16');
+INSERT INTO `receive_log` VALUES ('a379689a-0f29-4332-964d-e0f658beed2e', '8', '639f3c52-bf3e-4a39-a38e-4495d5d39979', '2019-02-01 21:15:17', '2019-02-01 21:15:17');
+INSERT INTO `receive_log` VALUES ('3d704d5c-ce72-4454-9b42-0e422f0c7bdd', '9', '83cb8487-9199-40e7-8419-1f4c000f9240', '2019-02-01 21:26:11', '2019-02-01 21:26:11');
+INSERT INTO `receive_log` VALUES ('ddaf46bb-6ec3-4162-a221-20973dd52cf5', '10', 'f11712cd-996e-453b-a255-4adf168cae0f', '2019-02-01 21:31:22', '2019-02-01 21:31:22');
+INSERT INTO `receive_log` VALUES ('65343bbe-3436-4575-963c-b5aadcdb06dd', '11', '273512f1-03f4-4748-b05e-493f1723014e', '2019-02-01 21:31:46', '2019-02-01 21:31:46');
+INSERT INTO `receive_log` VALUES ('c2f04de8-0142-48f4-ab94-d1069b779c8d', '12', '0835563f-28aa-4a92-ab71-3e5da76d1ab0', '2019-02-01 21:34:18', '2019-02-01 21:34:18');
+INSERT INTO `receive_log` VALUES ('f1e9f34a-7237-4985-8516-95f51f780822', '59', 'ced05bcb-70db-4ae5-9148-572e2e975af1', '2019-02-01 21:34:54', '2019-02-01 21:34:54');
+INSERT INTO `receive_log` VALUES ('960f31a6-77c5-4acc-b52a-c6bdf2c76a89', '59', 'e294ccc1-41b4-44e2-949f-6e919cf5fc22', '2019-02-01 21:34:59', '2019-02-01 21:34:59');
+INSERT INTO `receive_log` VALUES ('c9594bc0-65b4-4614-8373-f0edecf64442', '59', 'a385ac06-64bb-4fbb-a21f-a41cf9a6731d', '2019-02-02 11:03:35', '2019-02-02 11:03:35');
+INSERT INTO `receive_log` VALUES ('28e8ef6d-712c-4374-837f-87962b86acf6', '59', 'a88be80e-f916-41d5-ac54-e49109ead185', '2019-02-02 12:07:53', '2019-02-02 12:07:53');
+INSERT INTO `receive_log` VALUES ('27dc8c03-dee5-43df-b224-a2c7f7e4f467', '60', '0eff3f6b-68cf-44b7-a4ac-595ecb0d662e', '2019-02-02 12:36:12', '2019-02-02 12:36:12');
+INSERT INTO `receive_log` VALUES ('9d4d69ba-8f99-4a92-a2e6-f44954ee1b20', '60', 'a2efa881-b655-423b-83f2-8fe6eca2e3f4', '2019-02-02 12:39:07', '2019-02-02 12:39:07');
+INSERT INTO `receive_log` VALUES ('c8ded25f-9780-4f2e-8b81-e1a17312c57c', '61', 'd417e29f-45c7-4f97-98b6-dc3782a3dffd', '2019-02-02 12:53:35', '2019-02-02 12:53:35');
+INSERT INTO `receive_log` VALUES ('fa99175d-5b4f-4911-a198-3f8c9ef9a4e1', '1', '3a34cee0-4d6c-47fb-82eb-b8a074b8757c', '2019-02-02 12:53:57', '2019-02-02 12:53:57');
+INSERT INTO `receive_log` VALUES ('e9760e1d-a98c-403d-aa4b-e7dc747dbee7', '1', 'b8ef93c0-bea8-4e45-9486-81c8fd89bc82', '2019-02-02 16:27:42', '2019-02-02 16:27:42');
+INSERT INTO `receive_log` VALUES ('10a36b75-78bc-4a76-9c8c-90fa15cc8682', '2', '6fb1fa73-7d63-4dd4-a732-eacc3d032833', '2019-02-02 17:00:54', '2019-02-02 17:00:54');
+INSERT INTO `receive_log` VALUES ('d25bfaa0-532b-4cd5-8873-37c41af9864e', '2', 'f172610a-416b-42c5-8450-07f26c99832c', '2019-02-02 17:03:44', '2019-02-02 17:03:44');
+INSERT INTO `receive_log` VALUES ('e2ee4270-b82e-4f30-86fc-b0e06e67dc81', '3', '0cd75441-8083-4160-b7fd-ac0c4556323c', '2019-02-02 17:04:05', '2019-02-02 17:04:05');
+INSERT INTO `receive_log` VALUES ('fdd6c62f-b9f4-4901-99f0-4f4f9bf76c48', '3', '64a87d55-682d-442e-8c2b-0d39714f084a', '2019-02-02 17:04:06', '2019-02-02 17:04:06');
+INSERT INTO `receive_log` VALUES ('ea886fa3-c3a8-4552-a918-f2cd53af60f4', '4', '85e9d152-f907-497d-8daf-a7d408056f66', '2019-02-02 17:04:22', '2019-02-02 17:04:22');
+INSERT INTO `receive_log` VALUES ('c6a93eeb-8bf2-42ff-8797-3a5b2b7be263', '4', '3080ddd5-036c-4b44-9e70-12ff741b4270', '2019-02-02 17:05:42', '2019-02-02 17:05:42');
+INSERT INTO `receive_log` VALUES ('2a5d1c1c-f736-47fa-b1ee-a2fa86365890', '5', 'ff461d0b-2543-4df7-aabc-0b6cbec47464', '2019-02-02 17:06:26', '2019-02-02 17:06:26');
+INSERT INTO `receive_log` VALUES ('4e39f4c5-07d9-47e8-9a8a-e1dc9f455a0d', '5', '9559a2aa-09ca-4c04-a9f8-6b72083decd7', '2019-02-02 17:10:47', '2019-02-02 17:10:47');
+INSERT INTO `receive_log` VALUES ('c8aaf5f2-1c76-4cc5-9ac4-0ff8dc07533d', '6', '9cc3410b-d3c5-43c7-ba24-6f3c9bfb1aa5', '2019-02-02 19:07:01', '2019-02-02 19:07:01');
+INSERT INTO `receive_log` VALUES ('49956c84-43de-47ca-82b0-70ea6e97efef', '6', 'eb7e7566-9bb7-493b-9682-4c1522890cca', '2019-02-02 19:07:21', '2019-02-02 19:07:21');
+INSERT INTO `receive_log` VALUES ('26668d11-7a64-423d-a4de-3558fb98f344', '7', '33a1438f-d560-468c-b660-488d5efff610', '2019-02-02 19:10:08', '2019-02-02 19:10:08');
+INSERT INTO `receive_log` VALUES ('87f41501-77e1-4f01-95e5-29c16b7e83e7', '7', '9bd459e2-64db-469c-994b-a0867d60e6b4', '2019-02-02 20:26:11', '2019-02-02 20:26:11');
+INSERT INTO `receive_log` VALUES ('96b01091-479e-45ce-a240-3ba9bf49b130', '8', 'f591ba3e-3e8a-47e7-b01a-358848f1b7f8', '2019-02-02 20:31:52', '2019-02-02 20:31:52');
+INSERT INTO `receive_log` VALUES ('f7b2a4ba-2fd1-4de9-b6c8-583984fc8e13', '8', '1b75204a-8655-4dd7-9a3f-73d359a1be2b', '2019-02-02 20:32:08', '2019-02-02 20:32:08');
+INSERT INTO `receive_log` VALUES ('759ae402-0a94-4f25-814b-fe2fb2a0f2b1', '9', '6c5c34d1-162d-4e37-a728-057af2fd9cf7', '2019-02-02 21:01:40', '2019-02-02 21:01:40');
+INSERT INTO `receive_log` VALUES ('f6a1f9b3-5344-405b-a528-97e6c248d483', '10', 'b693f13e-22b3-4f15-a769-ad942924a536', '2019-02-02 21:46:46', '2019-02-02 21:46:46');
+INSERT INTO `receive_log` VALUES ('6eda30f4-988d-4c72-86bc-7df8aaece3b5', '10', 'ed2febbb-edc9-4397-8428-709d9d84dde9', '2019-02-02 21:47:07', '2019-02-02 21:47:07');
+INSERT INTO `receive_log` VALUES ('a654b9ea-4dc7-47c4-bb74-a3ebe9458c63', '11', 'ba8080ec-3209-4022-861a-bfd6b1cac3ef', '2019-02-02 21:50:01', '2019-02-02 21:50:01');
+INSERT INTO `receive_log` VALUES ('b79f17e1-bb81-4722-a5e5-07a474fb8437', '11', '528d6670-3cdd-4d7c-8de8-ef892a2d5a97', '2019-02-02 21:54:48', '2019-02-02 21:54:48');
+INSERT INTO `receive_log` VALUES ('a5164ef4-9308-4210-b501-8216dd702b02', '11', '406ac75f-2cfc-46c2-851f-f93f56aa87b7', '2019-02-03 09:52:48', '2019-02-03 09:52:48');
+INSERT INTO `receive_log` VALUES ('e278b34c-39e5-4783-92ef-faef826e6c4e', '11', '963e01af-3947-4299-837e-b1a89b7ae924', '2019-02-03 09:53:06', '2019-02-03 09:53:06');
+INSERT INTO `receive_log` VALUES ('be488e80-6f42-4907-8ba8-c6cf53c8db52', '12', '7ff82c62-4b2d-41d7-8ce6-0594e452fbf1', '2019-02-03 11:10:15', '2019-02-03 11:10:15');
+INSERT INTO `receive_log` VALUES ('2230ac8a-f235-4a65-9464-82e280026fdd', '12', '186134f6-a609-4354-bee8-c8fddf9ffb16', '2019-02-03 11:12:52', '2019-02-03 11:12:52');
+INSERT INTO `receive_log` VALUES ('7c5c5960-bd60-4dbc-9bb7-188e758137a1', '13', '23e7532c-eae9-4da6-82ef-d30553c52a73', '2019-02-03 12:54:45', '2019-02-03 12:54:45');
+INSERT INTO `receive_log` VALUES ('390ba363-9ab5-499c-bf3a-571af30a808e', '13', '8363ad45-05dc-4cd5-9c37-c63ca049cbec', '2019-02-03 12:54:47', '2019-02-03 12:54:47');
+INSERT INTO `receive_log` VALUES ('899a9ccb-0fb3-461e-abd3-279592cef0bd', '13', '2470b669-2039-4c20-b900-614741357611', '2019-02-05 11:02:22', '2019-02-05 11:02:22');
+INSERT INTO `receive_log` VALUES ('c8500f81-de09-4924-8113-e627d7e1581f', '13', '54cde57b-8d28-4024-978e-6626a7ac2c86', '2019-02-05 11:02:32', '2019-02-05 11:02:32');
 
 -- ----------------------------
 -- Table structure for shipping_info
@@ -1693,6 +1856,34 @@ CREATE TABLE `shipping_info` (
 -- ----------------------------
 -- Records of shipping_info
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for special_strategy_setting
+-- ----------------------------
+DROP TABLE IF EXISTS `special_strategy_setting`;
+CREATE TABLE `special_strategy_setting` (
+  `id` varchar(40) DEFAULT NULL COMMENT '数据库主键',
+  `store_id` varchar(40) DEFAULT NULL COMMENT '商店id',
+  `week_day` varchar(1) DEFAULT NULL COMMENT '会员日(周几)',
+  `start_time` datetime DEFAULT NULL COMMENT '生效时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `special_start_time` time DEFAULT NULL COMMENT '更新人',
+  `special_end_time` time DEFAULT NULL COMMENT '时间段结束',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_user_id` varchar(40) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_user_id` varchar(40) DEFAULT NULL COMMENT '更新人',
+  `delete_status` varchar(1) DEFAULT '0' COMMENT '是否删除',
+  `strategy_type` varchar(2) DEFAULT NULL COMMENT '策略类型',
+  `version` int(11) DEFAULT '1',
+  `user_level_id` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of special_strategy_setting
+-- ----------------------------
+INSERT INTO `special_strategy_setting` VALUES ('2a35da19-b78e-4b8f-9786-e096333d44b4', '1', '1', '2019-04-02 00:00:00', '2019-05-01 00:00:00', '09:00:00', '12:00:00', '2019-02-07 17:52:13', 'admin', '2019-02-07 17:53:29', 'admin', '0', '1', '8', '1');
+INSERT INTO `special_strategy_setting` VALUES ('01801b20-5267-49fc-81a6-f50d3ed09bf4', '1', '4', '2019-02-01 00:00:00', '2019-04-01 00:00:00', '10:00:00', '12:00:00', '2019-02-07 18:07:27', 'admin', '2019-02-07 18:07:35', 'admin', '0', '1', '4', '1');
 
 -- ----------------------------
 -- Table structure for supplier_info
