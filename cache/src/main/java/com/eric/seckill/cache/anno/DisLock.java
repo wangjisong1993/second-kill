@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 分布式锁的注解
+ * 分布式锁的注解, 通过指定key作为分布式锁的key
  *
  * @author wang.js on 2019/1/29.
  * @version 1.0

@@ -62,6 +62,11 @@ public class DisLockAspect {
 
 		String disKey = disLock.biz() + actualKey;
 		boolean lock = disLockUtil.lock(disKey, expireTIme);
+		int count = 1;
+		while (!lock && count < 3) {
+			lock = disLockUtil.lock(disKey, expireTIme);
+			count++;
+		}
 		Object proceed = null;
 		if (lock) {
 			// 允许查询
