@@ -32,7 +32,7 @@ import java.util.List;
  * @copyright yougou.com
  */
 @Aspect
-@Order(value = 1)
+@Order(value = 2)
 @Component
 public class MethodCacheAspect {
 

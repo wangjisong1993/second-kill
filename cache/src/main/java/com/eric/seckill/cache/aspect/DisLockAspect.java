@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 处理@DisLock注解的切面
@@ -66,6 +67,7 @@ public class DisLockAspect {
 		while (!lock && count < 3) {
 			lock = disLockUtil.lock(disKey, expireTIme);
 			count++;
+			TimeUnit.SECONDS.sleep(1);
 		}
 		Object proceed = null;
 		if (lock) {

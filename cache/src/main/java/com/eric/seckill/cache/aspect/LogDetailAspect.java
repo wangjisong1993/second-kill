@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  * @version 1.0
  */
 @Aspect
-@Order(value = 1)
+@Order(value = 2)
 @Component
 public class LogDetailAspect {
 
