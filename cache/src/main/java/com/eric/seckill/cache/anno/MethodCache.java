@@ -28,20 +28,6 @@ public @interface MethodCache {
 	String key() default "";
 
 	/**
-	 * 缓存防击穿的标志, 默认是开启防击穿功能
-	 *
-	 * @return boolean
-	 */
-	boolean limitQuery() default true;
-
-	/**
-	 * 防击穿的时限
-	 *
-	 * @return int
-	 */
-	int limitQuerySeconds() default 5;
-
-	/**
 	 * 是否保存空的结果
 	 *
 	 * @return boolean
