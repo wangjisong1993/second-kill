@@ -1,6 +1,8 @@
 package com.eric.seckill.service.impl;
 
+import com.eric.seckill.cache.anno.DisLock;
 import com.eric.seckill.cache.anno.LogDetail;
+import com.eric.seckill.cache.constant.CommonBizConstant;
 import com.eric.seckill.common.bean.SkProject;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
@@ -38,6 +40,7 @@ public class SecondKillServiceImpl implements SecondKillService {
 
 	@Override
 	@LogDetail
+	@DisLock(key = "#userId", biz = CommonBizConstant.JOIN_SECOND_KILL)
 	public CommonResult<Void> join(String projectId, String userId) {
 		// 判断秒杀项目是否已经开始
 		SkProject skProject = skProjectService.checkCanJoin(projectId);

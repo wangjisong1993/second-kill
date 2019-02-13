@@ -2,6 +2,8 @@ package com.eric.seckill.cache.aspect;
 
 import com.eric.seckill.cache.anno.DisLock;
 import com.eric.seckill.cache.utils.DisLockUtil;
+import com.eric.seckill.common.constant.ErrorCodeEnum;
+import com.eric.seckill.common.exception.CustomException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -79,9 +81,7 @@ public class DisLockAspect {
 				disLockUtil.unlock(disKey, false);
 			}
 		} else {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("key:{}没有获取到锁", disKey);
-			}
+			throw new CustomException(ErrorCodeEnum.DUPLICATE_REQUEST.getMessage());
 		}
 		return proceed;
 	}

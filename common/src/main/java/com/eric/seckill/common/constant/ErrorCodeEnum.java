@@ -25,6 +25,7 @@ public enum ErrorCodeEnum {
 	NO_TOKEN("无token，请重新登录", "506"),
 	ERROR_TOKEN("token不合法", "507"),
 	EMPTY_RESULT("暂无数据", "508"),
+	DUPLICATE_REQUEST("重复请求", "509"),
 	;
 
 	/**

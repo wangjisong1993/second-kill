@@ -2,7 +2,9 @@ package com.eric.seckill.service.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eric.seckill.cache.anno.DisLock;
 import com.eric.seckill.cache.anno.MethodCache;
+import com.eric.seckill.cache.constant.CommonBizConstant;
 import com.eric.seckill.common.bean.SkProject;
 import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.dao.SkProjectMapper;
@@ -23,6 +25,7 @@ public class SkProjectServiceImpl extends ServiceImpl<SkProjectMapper, SkProject
 
 	@Override
 	@MethodCache
+	@DisLock(key = "#id", biz = CommonBizConstant.SECOND_KILL)
 	public SkProject findProjectById(String id) {
 		QueryWrapper<SkProject> wrapper = new QueryWrapper<>();
 		wrapper.eq("project_id", id).eq("is_active", "1");

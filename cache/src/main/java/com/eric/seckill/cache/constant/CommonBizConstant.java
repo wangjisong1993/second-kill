@@ -20,4 +20,12 @@ public class CommonBizConstant {
 	 * 列出用户所有的卡
 	 */
 	public static final String COLLECT_CARD_LIST = "biz_collect_card_list";
+	/**
+	 * 秒杀项目
+	 */
+	public static final String SECOND_KILL = "biz_second_kill_";
+	/**
+	 * 参加秒杀项目
+	 */
+	public static final String JOIN_SECOND_KILL = "biz_second_kill_join_";
 }
