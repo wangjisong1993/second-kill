@@ -41,4 +41,11 @@ public @interface MethodCache {
 	 */
 	int limitQuerySeconds() default 5;
 
+	/**
+	 * 是否保存空的结果
+	 *
+	 * @return boolean
+	 */
+	boolean saveEmptyResult() default true;
+
 }

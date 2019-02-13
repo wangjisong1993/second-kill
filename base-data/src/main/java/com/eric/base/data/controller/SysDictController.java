@@ -50,7 +50,11 @@ public class SysDictController {
 		if (StringUtils.isBlank(dataCode) || StringUtils.isBlank(dataType)) {
 			return CommonResult.fail(ErrorCodeEnum.EMPTY_PARAM.getMessage(), ErrorCodeEnum.EMPTY_PARAM.getErrCode());
 		}
-		return sysDictService.findDataValueByDataCode(dataCode, dataType);
+		CommonResult<String> result = sysDictService.findDataValueByDataCode(dataCode, dataType);
+		if (result == null) {
+			return CommonResult.fail(ErrorCodeEnum.EMPTY_RESULT.getMessage(), ErrorCodeEnum.EMPTY_RESULT.getErrCode());
+		}
+		return result;
 	}
 
 	/**
@@ -65,7 +69,11 @@ public class SysDictController {
 		if (CollectionUtils.isEmpty(requests)) {
 			return CommonResult.fail(ErrorCodeEnum.EMPTY_PARAM.getMessage(), ErrorCodeEnum.EMPTY_PARAM.getErrCode());
 		}
-		return sysDictService.findDataValueByDataCode(requests);
+		CommonResult<List<DictQueryRequest>> result = sysDictService.findDataValueByDataCode(requests);
+		if (result == null) {
+			return CommonResult.fail(ErrorCodeEnum.EMPTY_RESULT.getMessage(), ErrorCodeEnum.EMPTY_RESULT.getErrCode());
+		}
+		return result;
 	}
 
 	/**

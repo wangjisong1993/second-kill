@@ -24,6 +24,7 @@ public enum ErrorCodeEnum {
 	USER_STATUS_ABNORMAL("用户状态异常", "505"),
 	NO_TOKEN("无token，请重新登录", "506"),
 	ERROR_TOKEN("token不合法", "507"),
+	EMPTY_RESULT("暂无数据", "508"),
 	;
 
 	/**

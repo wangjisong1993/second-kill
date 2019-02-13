@@ -39,7 +39,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
 	private DozerBeanMapper dozerBeanMapper;
 
 	@Override
-	@MethodCache
+	@MethodCache(saveEmptyResult = false)
 	public CouponTemplate findCouponTemplateById(String couponTemplateId) {
 		return baseMapper.selectOne(new QueryWrapper<CouponTemplate>().eq("template_id", couponTemplateId));
 	}

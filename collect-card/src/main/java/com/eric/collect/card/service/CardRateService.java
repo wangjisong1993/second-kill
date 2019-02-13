@@ -1,7 +1,6 @@
 package com.eric.collect.card.service;
 
 import com.eric.collect.card.model.CollectCardRegion;
-import com.eric.seckill.cache.anno.MethodCache;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ public interface CardRateService {
 	 *
 	 * @return
 	 */
-	@MethodCache(expireSeconds = 120)
 	List<CollectCardRegion> listAllRegion();
 
 	/**

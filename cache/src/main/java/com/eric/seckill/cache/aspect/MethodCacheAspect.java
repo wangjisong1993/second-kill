@@ -92,12 +92,14 @@ public class MethodCacheAspect {
 				// 允许查询
 				proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
 				// 缓存中不存在, 需要执行方法查询
-				if (proceed == null) {
+				if (proceed == null && methodCache.saveEmptyResult()) {
 					proceed = EMPTY_RESULT;
 				}
-				try (Jedis jedis = jedisPool.getResource()) {
-					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
-					jedis.expire(key, methodCache.expireSeconds());
+				if (proceed != null) {
+					try (Jedis jedis = jedisPool.getResource()) {
+						jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
+						jedis.expire(key, methodCache.expireSeconds());
+					}
 				}
 			} else {
 				LOGGER.warn("设置防击穿锁失败, key为:{}", mutexKey);
