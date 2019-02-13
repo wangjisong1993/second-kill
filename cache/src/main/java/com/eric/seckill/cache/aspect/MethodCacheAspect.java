@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.utils.DisLockUtil;
 import com.eric.seckill.cache.utils.KryoUtil;
+import com.eric.seckill.common.constant.ErrorCodeEnum;
+import com.eric.seckill.common.exception.CustomException;
 import com.eric.seckill.common.utils.HashAlgorithms;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,6 +27,7 @@ import java.lang.reflect.Method;
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wang.js
@@ -70,22 +73,59 @@ public class MethodCacheAspect {
 		}
 		Object deserialize = tryGetFromCache(key);
 		if (deserialize != null) {
+			// 防止缓存击穿, 查询不到数据时也会设置空结果的标记, 避免直接把压力落到DB上
 			if (EMPTY_RESULT.equals(deserialize)) {
 				return null;
 			}
 			return deserialize;
 		}
-		// 允许查询
-		Object proceed = proceedingJoinPoint.proceed();
-		// 缓存中不存在, 需要执行方法查询
-		if (proceed == null && methodCache.saveEmptyResult()) {
-			proceed = EMPTY_RESULT;
-		}
-		if (proceed != null) {
-			try (Jedis jedis = jedisPool.getResource()) {
-				jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
-				jedis.expire(key, methodCache.expireSeconds());
+		Object proceed;
+		String mutexKey = "mutex_" + key;
+		proceed = null;
+		if (methodCache.limitQuery()) {
+			boolean lock = disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds());
+			// 如果第一次设置分布式锁失败, 最多允许重试三次
+			int count = 1;
+			while (!lock && count < 3) {
+				lock = disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds());
+				count++;
+				TimeUnit.SECONDS.sleep(1);
 			}
+			if (lock) {
+				// 允许查询
+				proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
+				// 缓存中不存在, 需要执行方法查询
+				if (proceed == null) {
+					proceed = EMPTY_RESULT;
+				}
+				try (Jedis jedis = jedisPool.getResource()) {
+					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
+					jedis.expire(key, methodCache.expireSeconds());
+				}
+			} else {
+				LOGGER.warn("设置防击穿锁失败, key为:{}", mutexKey);
+				throw new CustomException(ErrorCodeEnum.DUPLICATE_REQUEST.getMessage());
+			}
+		} else {
+			// 允许查询
+			proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
+		}
+		return proceed;
+	}
+
+	/**
+	 * 执行具体的方法
+	 *
+	 * @param proceedingJoinPoint 切面
+	 * @return Object
+	 * @throws Throwable 异常
+	 */
+	private Object executeConcreteMethod(ProceedingJoinPoint proceedingJoinPoint, String mutexKey) throws Throwable {
+		Object proceed;
+		try {
+			proceed = proceedingJoinPoint.proceed();
+		} finally {
+			disLockUtil.unlock(mutexKey, false);
 		}
 		return proceed;
 	}
@@ -115,7 +155,7 @@ public class MethodCacheAspect {
 	 * 解析请求参数
 	 *
 	 * @param proceedingJoinPoint 切面
-	 * @param size                参数个数
+	 * @param size 参数个数
 	 * @return List<Object>
 	 */
 	private List<Object> parseRequestParam(ProceedingJoinPoint proceedingJoinPoint, int size) {
