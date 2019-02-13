@@ -27,6 +27,7 @@
         <module>collect-card</module>
         <module>service-admin</module>
         <module>sleuth</module>
+        <module>red-package</module>
     </modules>
 
     <parent>

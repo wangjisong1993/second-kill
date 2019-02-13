@@ -28,4 +28,13 @@ public class CommonBizConstant {
 	 * 参加秒杀项目
 	 */
 	public static final String JOIN_SECOND_KILL = "biz_second_kill_join_";
+	/**
+	 * 发红包
+	 */
+	public static final String SEND_RED_PACKAGE = "biz_send_red_package_";
+
+	/**
+	 * 抢红包
+	 */
+	public static final String RECEIVE_RED_PACKAGE = "biz_receive_red_package_";
 }

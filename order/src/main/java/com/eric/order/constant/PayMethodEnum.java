@@ -6,7 +6,7 @@ package com.eric.order.constant;
  * @author Eric on 2019/1/26.
  * @version 1.0
  */
-public enum payMethodEnum {
+public enum PayMethodEnum {
 	WECHAT_PAY("微信支付", "1"),
 	ALI_PAY("支付宝支付", "2"),
 	JD_PAY("京东支付", "3"),
@@ -21,7 +21,7 @@ public enum payMethodEnum {
 	 */
 	private String payMethodCode;
 
-	payMethodEnum(String payMethodDesc, String payMethodCode) {
+	PayMethodEnum(String payMethodDesc, String payMethodCode) {
 		this.payMethodDesc = payMethodDesc;
 		this.payMethodCode = payMethodCode;
 	}
