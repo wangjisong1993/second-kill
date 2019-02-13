@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wang.js
@@ -43,6 +44,8 @@ public class MethodCacheAspect {
 	private DisLockUtil disLockUtil;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodCacheAspect.class);
+
+	private static final String EMPTY_RESULT = "NULL";
 
 	/**
 	 * 切面具体的操作
@@ -68,6 +71,9 @@ public class MethodCacheAspect {
 		}
 		Object deserialize = tryGetFromCache(key);
 		if (deserialize != null) {
+			if (EMPTY_RESULT.equals(deserialize)) {
+				return null;
+			}
 			return deserialize;
 		}
 		Object proceed;
@@ -75,15 +81,23 @@ public class MethodCacheAspect {
 		proceed = null;
 		if (methodCache.limitQuery()) {
 			boolean lock = disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds());
+			// 如果第一次设置分布式锁失败, 最多允许重试三次
+			int count = 1;
+			while (!lock && count < 3) {
+				lock = disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds());
+				count++;
+				TimeUnit.SECONDS.sleep(1);
+			}
 			if (lock) {
 				// 允许查询
 				proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
 				// 缓存中不存在, 需要执行方法查询
-				if (proceed != null) {
-					try (Jedis jedis = jedisPool.getResource()) {
-						jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
-						jedis.expire(key, methodCache.expireSeconds());
-					}
+				if (proceed == null) {
+					proceed = EMPTY_RESULT;
+				}
+				try (Jedis jedis = jedisPool.getResource()) {
+					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
+					jedis.expire(key, methodCache.expireSeconds());
 				}
 			} else {
 				LOGGER.warn("设置防击穿锁失败, key为:{}", mutexKey);
