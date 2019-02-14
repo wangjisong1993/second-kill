@@ -78,6 +78,7 @@ public class ReceiveRedPackageServiceImpl implements ReceiveRedPackageService {
 					receiveMoney = leftMoney;
 				} else {
 					// 还有剩余
+					// 分配金额按照两倍均值算法, 每次抢到的金额 = 随机区间 (0, M/N *2)
 					int upMoney = new BigDecimal(leftMoney).divide(new BigDecimal(decr + 1), BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(2)).subtract(new BigDecimal(decr)).setScale(8, BigDecimal.ROUND_HALF_UP).intValue();
 					receiveMoney = RandomUtils.nextInt(1, upMoney);
 					jedis.decrBy(RedPackageKeyConstant.RED_PACKAGE_KEY_MONEY + request.getRedPackageId(), receiveMoney);
