@@ -20,6 +20,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -77,7 +78,8 @@ public class ReceiveRedPackageServiceImpl implements ReceiveRedPackageService {
 					receiveMoney = leftMoney;
 				} else {
 					// 还有剩余
-					receiveMoney = RandomUtils.nextInt(1, (int) (leftMoney - decr));
+					int upMoney = new BigDecimal(leftMoney).divide(new BigDecimal(decr + 1), BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(2)).subtract(new BigDecimal(decr)).setScale(8, BigDecimal.ROUND_HALF_UP).intValue();
+					receiveMoney = RandomUtils.nextInt(1, upMoney);
 					jedis.decrBy(RedPackageKeyConstant.RED_PACKAGE_KEY_MONEY + request.getRedPackageId(), receiveMoney);
 				}
 			}

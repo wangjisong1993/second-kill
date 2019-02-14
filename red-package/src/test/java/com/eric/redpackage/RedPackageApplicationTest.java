@@ -32,7 +32,7 @@ public class RedPackageApplicationTest {
 
 	@Test
 	public void t1() {
-		SendRedPackageRequest request = new SendRedPackageRequest().setMoney(100).setNum(10)
+		SendRedPackageRequest request = new SendRedPackageRequest().setMoney(1000).setNum(10)
 				.setSender("1").setRedPackageType(RedPackageType.NOT_FIXED.getTypeCode());
 		sendRedPackageService.send(request);
 	}
