@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50622
+Source Server Version : 50724
 Source Host           : localhost:3306
 Source Database       : ec
 
 Target Server Type    : MYSQL
-Target Server Version : 50622
+Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-02-08 00:00:29
+Date: 2019-02-15 14:19:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1836,6 +1836,59 @@ INSERT INTO `receive_log` VALUES ('7c5c5960-bd60-4dbc-9bb7-188e758137a1', '13', 
 INSERT INTO `receive_log` VALUES ('390ba363-9ab5-499c-bf3a-571af30a808e', '13', '8363ad45-05dc-4cd5-9c37-c63ca049cbec', '2019-02-03 12:54:47', '2019-02-03 12:54:47');
 INSERT INTO `receive_log` VALUES ('899a9ccb-0fb3-461e-abd3-279592cef0bd', '13', '2470b669-2039-4c20-b900-614741357611', '2019-02-05 11:02:22', '2019-02-05 11:02:22');
 INSERT INTO `receive_log` VALUES ('c8500f81-de09-4924-8113-e627d7e1581f', '13', '54cde57b-8d28-4024-978e-6626a7ac2c86', '2019-02-05 11:02:32', '2019-02-05 11:02:32');
+
+-- ----------------------------
+-- Table structure for red_package_master
+-- ----------------------------
+DROP TABLE IF EXISTS `red_package_master`;
+CREATE TABLE `red_package_master` (
+  `red_package_id` varchar(40) DEFAULT NULL COMMENT '红包id',
+  `sender_id` varchar(40) DEFAULT NULL COMMENT '发送人',
+  `red_package_type` varchar(1) DEFAULT NULL COMMENT '红包类型',
+  `red_package_money` int(11) DEFAULT NULL COMMENT '红包金额',
+  `red_package_num` int(11) DEFAULT NULL COMMENT '红包个数',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `expire_time` datetime DEFAULT NULL COMMENT '过期时间',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `del_status` varchar(1) DEFAULT '0' COMMENT '删除状态'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of red_package_master
+-- ----------------------------
+INSERT INTO `red_package_master` VALUES ('21a6321f-a374-4e68-89da-df67bdeb0c8f', '1', '2', '100', '10', '2019-02-14 11:09:52', '2019-02-14 11:09:52', '2019-02-15 11:09:52', '1', '0');
+INSERT INTO `red_package_master` VALUES ('4787000d-e819-4500-939c-633af54c0939', '1', '2', '1000', '10', '2019-02-14 11:13:36', '2019-02-14 11:13:36', '2019-02-15 11:13:36', '1', '0');
+
+-- ----------------------------
+-- Table structure for red_package_receive_log
+-- ----------------------------
+DROP TABLE IF EXISTS `red_package_receive_log`;
+CREATE TABLE `red_package_receive_log` (
+  `log_id` varchar(40) DEFAULT NULL COMMENT '记录id',
+  `red_package_id` varchar(40) DEFAULT NULL COMMENT '红包id',
+  `receiver_id` varchar(40) DEFAULT NULL COMMENT '接收人',
+  `receive_money` int(11) DEFAULT NULL COMMENT '接受金额',
+  `receive_time` datetime DEFAULT NULL COMMENT '接收时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `del_status` varchar(1) DEFAULT '0' COMMENT '删除状态'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of red_package_receive_log
+-- ----------------------------
+INSERT INTO `red_package_receive_log` VALUES ('42fb3e02-7f6a-456c-b6a7-a44da11d1ced', '4787000d-e819-4500-939c-633af54c0939', '45120', '107', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('3a992f2a-9147-495d-a5ed-1e57bdb29201', '4787000d-e819-4500-939c-633af54c0939', '22624', '169', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('dcf1cf79-3577-4041-a466-13944500f8b8', '4787000d-e819-4500-939c-633af54c0939', '34655', '88', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('cdf86372-c3f5-4909-a06f-319bd93c471e', '4787000d-e819-4500-939c-633af54c0939', '4114', '121', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('eb68b8c6-db24-4336-b6b8-ff7d4e09ae5b', '4787000d-e819-4500-939c-633af54c0939', '4009', '16', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('86ef01cb-f121-4981-bd1e-c8c023f8ae8f', '4787000d-e819-4500-939c-633af54c0939', '20121', '139', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('842a2cd0-fd23-4dd8-a904-a0dc48e3322d', '4787000d-e819-4500-939c-633af54c0939', '41404', '30', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('20e233ff-8d5a-43c8-a131-a8a20decec0f', '4787000d-e819-4500-939c-633af54c0939', '44446', '109', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('c28c5c00-7234-4067-ac17-ed5a5523bde3', '4787000d-e819-4500-939c-633af54c0939', '49524', '126', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
+INSERT INTO `red_package_receive_log` VALUES ('c79e1c56-359a-4127-ae4e-21175c05c8ac', '4787000d-e819-4500-939c-633af54c0939', '37184', '95', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '2019-02-14 11:14:12', '1', '0');
 
 -- ----------------------------
 -- Table structure for shipping_info
