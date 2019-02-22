@@ -74,6 +74,7 @@ public class TokenFilter extends ZuulFilter {
 			initErrorMsg(ctx, ErrorCodeEnum.NO_TOKEN);
 			return null;
 		}
+		// TODO 网关工程需要接入权限控制, 负载, 安全,
 		// 验证 token
 		JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(result.getData().getPassword())).build();
 		try {
