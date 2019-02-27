@@ -1,5 +1,6 @@
 package com.eric.lottery.service.impl;
 
+import com.alibaba.fescar.spring.annotation.GlobalTransactional;
 import com.eric.lottery.constant.LotteryConstant;
 import com.eric.lottery.feign.UserInfoFeign;
 import com.eric.lottery.service.LotteryService;
@@ -50,6 +51,7 @@ public class LotteryServiceImpl implements LotteryService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LotteryServiceImpl.class);
 
 	@Override
+	@GlobalTransactional
 	public CommonResult<Void> join(String projectId, String userId) {
 		List<LotteryRegion> regions = lotteryItemService.findLotteryRegionByProjectId(projectId);
 		if (regions == null) {

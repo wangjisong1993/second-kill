@@ -11,9 +11,14 @@
 
     <artifactId>lottery</artifactId>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <fescar.version>0.2.2</fescar.version>
+    </properties>
 
     <dependencies>
-
         <!-- springcloud相关依赖开始-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -154,6 +159,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.fescar</groupId>
+            <artifactId>fescar-all</artifactId>
+            <version>${fescar.version}</version>
         </dependency>
 
         <!-- 日志包...开始 -->
