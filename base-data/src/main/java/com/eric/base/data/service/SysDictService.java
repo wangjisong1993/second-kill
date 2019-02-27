@@ -2,6 +2,7 @@ package com.eric.base.data.service;
 
 import com.eric.base.data.model.DisableDictRequest;
 import com.eric.base.data.model.SaveSysDictRequest;
+import com.eric.seckill.cache.anno.RedisCache;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.DictQueryRequest;
 
@@ -53,4 +54,12 @@ public interface SysDictService {
 	 * @return
 	 */
 	CommonResult<List<DictQueryRequest>> findDataValueByDataCode(List<DictQueryRequest> requests);
+
+	/**
+	 * 测试rediscache注解
+	 *
+	 * @param id 传入的id
+	 * @return String
+	 */
+	String testRedisCache(String id);
 }

@@ -81,7 +81,6 @@ public class MethodCacheAspect {
 		}
 		Object proceed;
 		String mutexKey = "mutex_" + key;
-		proceed = null;
 		if (methodCache.limitQuery()) {
 			boolean lock = disLockUtil.lock(mutexKey, methodCache.limitQuerySeconds());
 			// 如果第一次设置分布式锁失败, 最多允许重试三次

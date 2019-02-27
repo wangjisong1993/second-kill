@@ -23,7 +23,7 @@ spring:
   application:
     name: baseData
   redis:
-    host: 127.0.0.1
+    host: mini7
     port: 6379
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

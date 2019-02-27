@@ -11,11 +11,14 @@ import com.eric.base.data.model.SaveSysDictRequest;
 import com.eric.base.data.service.SysDictService;
 import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.anno.ParamCheck;
+import com.eric.seckill.cache.anno.RedisCache;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
 import com.eric.seckill.common.model.feign.DictQueryRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,6 +35,8 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
 	@Resource
 	private DozerBeanMapper dozerBeanMapper;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(SysDictServiceImpl.class);
 
 	@Override
 	@ParamCheck
@@ -112,6 +117,13 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 			request.setDataValue(findDictValue(request.getDataCode(), request.getDataType()));
 		}
 		return CommonResult.success(requests, null);
+	}
+
+	@RedisCache(cacheKey = "#id")
+	@Override
+	public String testRedisCache(String id) {
+		LOGGER.info("调用方法获取值");
+		return "大傻逼";
 	}
 
 }
