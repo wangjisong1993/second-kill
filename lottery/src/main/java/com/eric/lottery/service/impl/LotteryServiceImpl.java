@@ -5,6 +5,7 @@ import com.eric.lottery.feign.UserInfoFeign;
 import com.eric.lottery.service.LotteryService;
 import com.eric.lottery.service.base.LotteryItemService;
 import com.eric.lottery.service.base.LotteryRecordService;
+import com.eric.seckill.cache.anno.ServiceLimit;
 import com.eric.seckill.common.bean.LotteryRecord;
 import com.eric.seckill.common.constant.UserPointSourceEnum;
 import com.eric.seckill.common.exception.CustomException;
@@ -50,6 +51,7 @@ public class LotteryServiceImpl implements LotteryService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LotteryServiceImpl.class);
 
 	@Override
+	@ServiceLimit
 	public CommonResult<Void> join(String projectId, String userId) {
 		List<LotteryRegion> regions = lotteryItemService.findLotteryRegionByProjectId(projectId);
 		if (regions == null) {

@@ -46,7 +46,7 @@ spring:
   application:
     name: lottery
   redis:
-    host: 127.0.0.1
+    host: mini7
     port: 6379
   datasource:
     dynamic:
