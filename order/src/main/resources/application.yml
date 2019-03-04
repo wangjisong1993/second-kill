@@ -39,6 +39,44 @@ server:
       enabled: true
       pattern: '%t %a "%r" %s (%D ms)'
 
+# sharding-jdbc分库分表的配置
+sharding:
+  jdbc:
+    datasource:
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds0
+        username: root
+        password: 123456
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds1
+        username: root
+        password: 123456
+      names: ds0,ds1
+    config:
+      sharding:
+        tables:
+          order_detail:
+            table-strategy:
+              inline:
+                sharding-column: order_id
+                algorithm-expression: order_detail$->{order_id % 2}
+            key-generator-column-name: order_detail_id
+            actual-data-nodes: ds$->{0..1}.order_detail$->{0..1}
+          order_master:
+            table-strategy:
+              inline:
+                sharding-column: order_id
+                algorithm-expression: order_master$->{order_id % 2}
+            key-generator-column-name: order_id
+            actual-data-nodes: ds$->{0..1}.order_master$->{0..1}
+        default-database-strategy:
+          inline:
+            sharding-column: user_id
+            algorithm-expression: ds$->{user_id % 2}
 
 spring:
   zipkin:
@@ -48,23 +86,23 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/ec?useUnicode=true&characterEncoding=utf8"
-    username: root
-    password: 123456
-    maxActive: 50
-    maxWait: 5000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 'x'
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    maxOpenPreparedStatements: 20
-    removeAbandoned: true
-    removeAbandonedTimeout: 1800
-    logAbandoned: true
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: "jdbc:mysql://localhost:3306/ec?useUnicode=true&characterEncoding=utf8"
+#    username: root
+#    password: 123456
+#    maxActive: 50
+#    maxWait: 5000
+#    timeBetweenEvictionRunsMillis: 60000
+#    minEvictableIdleTimeMillis: 300000
+#    validationQuery: SELECT 'x'
+#    testWhileIdle: true
+#    testOnBorrow: false
+#    testOnReturn: false
+#    maxOpenPreparedStatements: 20
+#    removeAbandoned: true
+#    removeAbandonedTimeout: 1800
+#    logAbandoned: true
 
 mybatis-plus:
   datasource: dataSource

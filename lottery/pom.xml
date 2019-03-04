@@ -161,12 +161,6 @@
             <version>18.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba.fescar</groupId>
-            <artifactId>fescar-all</artifactId>
-            <version>${fescar.version}</version>
-        </dependency>
-
         <!-- 日志包...开始 -->
         <!-- log配置：Log4j2 + Slf4j -->
         <dependency>
