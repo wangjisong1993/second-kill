@@ -21,6 +21,7 @@ import com.eric.seckill.common.model.feign.ComputeDiscountRequest;
 import com.eric.seckill.common.model.feign.ComputeDiscountResponse;
 import com.eric.seckill.common.model.feign.ProductQueryResponse;
 import com.eric.seckill.common.model.feign.WarehouseQueryRequest;
+import io.shardingsphere.core.keygen.DefaultKeyGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Value;
