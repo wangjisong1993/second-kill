@@ -30,19 +30,22 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 	@Resource
 	private DozerBeanMapper dozerBeanMapper;
 
+	@Resource
+	private OrderMasterMapper mapper;
+
 	@Override
 	public int insert(OrderMaster orderMaster) {
-		return baseMapper.insert(orderMaster);
+		return mapper.insert(orderMaster);
 	}
 
 	@Override
 	public String findOrderStatusByOrderId(String orderSn) {
-		return baseMapper.findOrderStatusByOrderId(orderSn);
+		return mapper.findOrderStatusByOrderId(orderSn);
 	}
 
 	@Override
 	public Integer findPaymentMoneyByOrderId(String orderId) {
-		return baseMapper.findPaymentMoneyByOrderId(orderId);
+		return mapper.findPaymentMoneyByOrderId(orderId);
 	}
 
 	@Override
@@ -58,14 +61,14 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 
 	@Override
 	public OrderMaster findOrderMasterByOrderId(String orderId) {
-		return baseMapper.findOrderMasterByOrderId(orderId);
+		return mapper.findOrderMasterByOrderId(orderId);
 	}
 
 	@Override
 	public int updateOrderPaying(String orderId, String payMethod) {
 		OrderMaster t = new OrderMaster().setOrderStatus(OrderStatusEnum.PAYING.getOrderStatusCode())
 				.setUpdateTime(new Date()).setPaymentMethod(payMethod);
-		return this.baseMapper.update(t, new QueryWrapper<OrderMaster>().eq("order_id", orderId)
+		return this.mapper.update(t, new QueryWrapper<OrderMaster>().eq("order_id", orderId)
 				.eq("order_status", OrderStatusEnum.CREATED.getOrderStatusCode()));
 	}
 
@@ -79,7 +82,7 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 	public List<OrderMaster> listOrderMastersByUserId(OrderQueryRequest request) {
 		// 允许分页查询用户的订单
 		PageHelper.startPage(request.getPageNum(), request.getPageSize());
-		return baseMapper.selectList(new QueryWrapper<OrderMaster>().eq("user_id", request.getUserId()));
+		return mapper.selectList(new QueryWrapper<OrderMaster>().eq("user_id", request.getUserId()));
 	}
 
 	@Override

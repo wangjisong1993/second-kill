@@ -63,6 +63,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	@Resource
 	private DiscountStrategyFeign discountStrategyFeign;
 
+	@Resource
+	private DefaultKeyGenerator defaultKeyGenerator;
+
 	@Value("${order.noShippingMoney}")
 	private Integer noShippingMoney;
 
@@ -74,7 +77,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	public CommonResult<CreateOrderResponse> createOrder(CreateOrderRequest request) {
 		checkSign(request, request.getSign());
 		checkUserActive(request.getUserId());
-		String orderId = UUID.randomUUID().toString();
+		String orderId = String.valueOf(defaultKeyGenerator.generateKey().longValue());
 		List<OrderDetail> details = new ArrayList<>();
 		BigDecimal orderMoney = new BigDecimal(0);
 		Integer shippingMoney = 1000;

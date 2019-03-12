@@ -1,6 +1,7 @@
 package com.eric.order.bean;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
+@TableName("order_detail")
 public class OrderDetail implements Serializable {
 	/**
 	 * 订单详情表ID
