@@ -68,7 +68,7 @@ public class DiscountStrategyServiceImpl extends ServiceImpl<DiscountStrategyMap
 	}
 
 	@Override
-	@MethodCache
+//	@MethodCache
 	public DiscountStrategy findDiscountStrategy(String storeId, int orderMoney, String strategyType, String userLevelId) {
 		QueryWrapper<DiscountStrategy> queryWrapper = new QueryWrapper<DiscountStrategy>().eq("strategy_type", strategyType)
 				.eq("store_id", storeId).le("base_money", orderMoney)

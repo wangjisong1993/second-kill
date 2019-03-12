@@ -81,7 +81,7 @@ public class SpecialStrategySettingServiceImpl extends ServiceImpl<SpecialStrate
 	}
 
 	@Override
-	@MethodCache
+//	@MethodCache
 	public SpecialStrategySetting findSpecialStrategySetting(String storeId, String userLevelId) {
 		Date now = new Date();
 		Calendar c = Calendar.getInstance();
