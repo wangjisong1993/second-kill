@@ -62,9 +62,9 @@ sharding:
           order_detail:
             table-strategy:
               inline:
-                sharding-column: order_id
-                algorithm-expression: order_detail$->{order_id % 2}
-            key-generator-column-name: order_id
+                sharding-column: order_detail_id
+                algorithm-expression: order_detail$->{order_detail_id % 2}
+            key-generator-column-name: order_detail_id
             actual-data-nodes: ds$->{0..1}.order_detail$->{0..1}
           order_master:
             table-strategy:

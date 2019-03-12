@@ -21,7 +21,7 @@ public class OrderMaster implements Serializable {
 	 * 订单ID
 	 */
 	@TableId
-	private String orderId;
+	private Long orderId;
 
 	/**
 	 * 订单编号
@@ -31,7 +31,7 @@ public class OrderMaster implements Serializable {
 	/**
 	 * 下单人ID
 	 */
-	private String userId;
+	private Long userId;
 
 	/**
 	 * 收货人姓名

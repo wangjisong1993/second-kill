@@ -56,7 +56,7 @@ public class OrderQueryServiceImpl extends BaseOrderService implements OrderQuer
 			OrderQueryResponse response = new OrderQueryResponse();
 			dozerBeanMapper.map(orderMaster, response);
 			// 添加订单明细
-			List<OrderDetailQueryResponse> orderDetails = orderDetailService.listOrderDetailQueryResponseByOrderId(orderMaster.getOrderId());
+			List<OrderDetailQueryResponse> orderDetails = orderDetailService.listOrderDetailQueryResponseByOrderId(String.valueOf(orderMaster.getOrderId()));
 			response.setOrderDetails(orderDetails);
 			// 批量查询字典项
 			queryDictValue(orderMaster, response);

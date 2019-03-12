@@ -21,12 +21,17 @@ public class OrderDetail implements Serializable {
 	 * 订单详情表ID
 	 */
 	@TableId
-	private String orderDetailId;
+	private Long orderDetailId;
 
 	/**
 	 * 订单表ID
 	 */
-	private String orderId;
+	private Long orderId;
+
+	/**
+	 * 下单人ID
+	 */
+	private Long userId;
 
 	/**
 	 * 订单商品ID
