@@ -2,6 +2,7 @@ package com.eric.strategy.service.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eric.seckill.cache.anno.MethodCache;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.model.CommonResult;
@@ -80,7 +81,7 @@ public class SpecialStrategySettingServiceImpl extends ServiceImpl<SpecialStrate
 	}
 
 	@Override
-//	@MethodCache
+	@MethodCache
 	public SpecialStrategySetting findSpecialStrategySetting(String storeId, String userLevelId) {
 		Date now = new Date();
 		Calendar c = Calendar.getInstance();

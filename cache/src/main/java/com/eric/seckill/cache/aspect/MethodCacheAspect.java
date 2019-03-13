@@ -93,12 +93,13 @@ public class MethodCacheAspect {
 			if (lock) {
 				// 允许查询
 				proceed = executeConcreteMethod(proceedingJoinPoint, mutexKey);
+				Object cacheResult = proceed;
 				// 缓存中不存在, 需要执行方法查询
-				if (proceed == null) {
-					proceed = EMPTY_RESULT;
+				if (cacheResult == null) {
+					cacheResult = EMPTY_RESULT;
 				}
 				try (Jedis jedis = jedisPool.getResource()) {
-					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(proceed));
+					jedis.setnx(key.getBytes(), KryoUtil.writeToByteArray(cacheResult));
 					jedis.expire(key, methodCache.expireSeconds());
 				}
 			} else {
