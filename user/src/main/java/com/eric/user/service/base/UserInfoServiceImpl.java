@@ -57,7 +57,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int insert(UserMaster userMaster, String mobile) {
 		UserInfo t = new UserInfo().setMobilePhone(mobile)
-				.setRegisterTime(new Date()).setUserId(userMaster.getUserId())
+				.setRegisterTime(new Date()).setUserId(String.valueOf(userMaster.getUserId()))
 				.setUserInfoId(UUID.randomUUID().toString())
 				.setUserLevel(userLevelDetailService.findBaseLevel());
 		initCreateTime(t);

@@ -18,6 +18,7 @@ import com.eric.user.exception.ExceptionName;
 import com.eric.user.model.*;
 import com.eric.user.service.*;
 import com.eric.user.utils.PasswordUtil;
+import io.shardingjdbc.core.keygen.DefaultKeyGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
@@ -51,13 +52,16 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 	@Resource
 	private UserAddressService userAddressService;
 
+	@Resource
+	private DefaultKeyGenerator defaultKeyGenerator;
+
 	@Override
 	@ParamCheck
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public CommonResult<RegisterUser> registerUser(RegisterUserRequest registerUserRequest) {
 		// 判断用户是否注册过(loginName和phone)
 		checkRegistered(registerUserRequest);
-		UserMaster userMaster = new UserMaster().setUserId(UUID.randomUUID().toString())
+		UserMaster userMaster = new UserMaster().setUserId(defaultKeyGenerator.generateKey().longValue())
 				.setUserStats(UserStatus.ACTIVE.getStatusCode())
 				.setLoginName(registerUserRequest.getLoginName())
 				.setPassword(PasswordUtil.generate(registerUserRequest.getPassword()));
@@ -70,7 +74,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		// 保存用户信息
 		userInfoService.insert(userMaster, registerUserRequest.getPhone());
 		// 保存用户地址信息
-		userAddressService.insertBlankAddress(userMaster.getUserId());
+		userAddressService.insertBlankAddress(String.valueOf(userMaster.getUserId()));
 
 		RegisterUser registerUser = new RegisterUser();
 		dozerBeanMapper.map(userMaster, registerUser);
@@ -101,7 +105,7 @@ public class UserMasterServiceImpl extends ServiceImpl<UserMasterMapper, UserMas
 		if (verify) {
 			UserLoginResponse response = new UserLoginResponse();
 			dozerBeanMapper.map(userMaster, response);
-			response.setToken(TokenUtil.getToken(userMaster.getUserId(), userMaster.getPassword()));
+			response.setToken(TokenUtil.getToken(String.valueOf(userMaster.getUserId()), userMaster.getPassword()));
 			return CommonResult.success(response, ErrorCodeEnum.LOGIN_SUCCESS.getErrorMsg());
 		}
 		return CommonResult.fail(ErrorCodeEnum.ERROR_PASSWORD.getErrorMsg(), ErrorCodeEnum.ERROR_PASSWORD.getErrorCode());
