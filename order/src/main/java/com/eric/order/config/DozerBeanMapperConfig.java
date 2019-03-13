@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class DozerBeanMapperConfig {
 
     @Bean
-    public DozerBeanMapper mapper() {
+    public DozerBeanMapper dozerBeanMapper() {
         DozerBeanMapper mapper = new DozerBeanMapper();
         return mapper;
     }

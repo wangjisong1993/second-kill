@@ -21,6 +21,7 @@ import com.eric.seckill.common.model.feign.ComputeDiscountRequest;
 import com.eric.seckill.common.model.feign.ComputeDiscountResponse;
 import com.eric.seckill.common.model.feign.ProductQueryResponse;
 import com.eric.seckill.common.model.feign.WarehouseQueryRequest;
+import io.shardingsphere.core.keygen.DefaultKeyGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,6 +63,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	@Resource
 	private DiscountStrategyFeign discountStrategyFeign;
 
+	@Resource
+	private DefaultKeyGenerator defaultKeyGenerator;
+
 	@Value("${order.noShippingMoney}")
 	private Integer noShippingMoney;
 
@@ -73,7 +77,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	public CommonResult<CreateOrderResponse> createOrder(CreateOrderRequest request) {
 		checkSign(request, request.getSign());
 		checkUserActive(request.getUserId());
-		String orderId = UUID.randomUUID().toString();
+		long orderId = defaultKeyGenerator.generateKey().longValue();
 		List<OrderDetail> details = new ArrayList<>();
 		BigDecimal orderMoney = new BigDecimal(0);
 		Integer shippingMoney = 1000;
@@ -84,7 +88,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 				throw new CustomException(OrderErrorCodeEnum.PRODUCT_NOT_FOUND.getMessage());
 			}
 			WarehouseQueryRequest warehouseProductRequest = new WarehouseQueryRequest().setProductCnt(detail.getProductCnt())
-					.setProductId(detail.getProductId()).setOrderId(orderId);
+					.setProductId(detail.getProductId()).setOrderId(String.valueOf(orderId));
 			warehouseProductRequest.setSign(getSign(warehouseProductRequest));
 			CommonResult<String> commonResult = warehouseProductFeign.find(warehouseProductRequest);
 			if (!commonResult.isSuccess()) {
@@ -94,7 +98,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 			if (StringUtils.isBlank(warehouseId)) {
 				throw new CustomException(productMaster.getProductName() + OrderErrorCodeEnum.STOCK_NOT_ENOUGH.getMessage());
 			}
-			OrderDetail orderDetail = new OrderDetail().setOrderDetailId(UUID.randomUUID().toString())
+			OrderDetail orderDetail = new OrderDetail().setOrderDetailId(defaultKeyGenerator.generateKey().longValue())
 					.setOrderId(orderId).setCreateTime(new Date()).setProductCnt(detail.getProductCnt())
 					.setProductId(detail.getProductId()).setProductName(productMaster.getProductName())
 					.setProductPrice(productMaster.getPrice()).setUpdateTime(new Date()).setWId(warehouseId)
@@ -103,7 +107,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 			orderMoney = orderMoney.add(new BigDecimal(productMaster.getPrice()).multiply(new BigDecimal(detail.getProductCnt())).setScale(SCALE, BigDecimal.ROUND_HALF_UP));
 		}
 		ComputeDiscountRequest discountStrategyRequest = new ComputeDiscountRequest().setOrderMoney(orderMoney.intValue())
-				.setOrderNumber(orderId).setStoreId(request.getStoreId()).setUserId(request.getUserId());
+				.setOrderNumber(String.valueOf(orderId)).setStoreId(request.getStoreId()).setUserId(request.getUserId());
 		CommonResult<ComputeDiscountResponse> compute = discountStrategyFeign.compute(discountStrategyRequest);
 		BigDecimal districtMoney = new BigDecimal(0);
 		if (!compute.isSuccess()) {
@@ -111,7 +115,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		}
 		// 实付金额超过200可以免运费
 		shippingMoney = orderMoney.intValue() > noShippingMoney ? 0 : shippingMoney;
-		OrderMaster orderMaster = new OrderMaster().setOrderId(orderId).setUserId(request.getUserId())
+		OrderMaster orderMaster = new OrderMaster().setOrderId(orderId).setUserId(Long.parseLong(request.getUserId()))
 				.setCreateTime(new Date()).setUpdateTime(new Date())
 				.setOrderMoney(orderMoney.intValue()).setOrderSn(UUID.randomUUID().toString())
 				.setOrderStatus(OrderStatusEnum.CREATED.getOrderStatusCode())

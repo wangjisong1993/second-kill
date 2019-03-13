@@ -22,7 +22,7 @@ public class UserMaster extends BaseProperty {
 	 * 用户id
 	 */
 	@TableId
-	private String userId;
+	private long userId;
 	/**
 	 * 登录名
 	 */

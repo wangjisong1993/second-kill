@@ -59,7 +59,7 @@ public class OrderSuccessServiceImpl extends BaseOrderService implements OrderSu
 			return CommonResult.fail(OrderErrorCodeEnum.PAYMENT_MONEY_ERROR.getMessage(), OrderErrorCodeEnum.PAYMENT_MONEY_ERROR.getErrCode());
 		}
 		// 修改订单状态
-		OrderMaster t = new OrderMaster().setOrderId(request.getOrderId()).setOrderStatus(OrderStatusEnum.PAY_SUCCESS.getOrderStatusCode())
+		OrderMaster t = new OrderMaster().setOrderId(Long.parseLong(request.getOrderId())).setOrderStatus(OrderStatusEnum.PAY_SUCCESS.getOrderStatusCode())
 				.setUpdateTime(new Date()).setOrderPoint(request.getPaymentMoney()).setPayTime(new Date());
 		orderMasterService.updateOrderSuccess(t);
 		// 赠送积分和消费优惠券

@@ -6,12 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author wang.js on 2019/1/16.
  * @version 1.0
  */
 @SpringBootApplication
+@EnableTransactionManagement
 @MapperScan("com.eric.order.dao")
 @ComponentScan("com.eric")
 @EnableFeignClients
