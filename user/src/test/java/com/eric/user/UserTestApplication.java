@@ -50,7 +50,7 @@ public class UserTestApplication {
 		String outTradeNo = "5";
 		request.setChangePoint(-10).setCreateTime(new Date()).setOutTradeNo(outTradeNo)
 				.setPointSource(UserPointSourceEnum.USER_CHARGE.getSourceType())
-				.setUserId("f2414da0-9b78-4152-955f-049c398d3990");
+				.setUserId("1");
 		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
 		CommonResult<UserPointChangeResponse> response = userPointService.changePoint(request);
 		System.out.println(JSON.toJSONString(response));

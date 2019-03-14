@@ -110,7 +110,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 				.setOrderNumber(String.valueOf(orderId)).setStoreId(request.getStoreId()).setUserId(request.getUserId());
 		CommonResult<ComputeDiscountResponse> compute = discountStrategyFeign.compute(discountStrategyRequest);
 		BigDecimal districtMoney = new BigDecimal(0);
-		if (!compute.isSuccess()) {
+		if (compute.isSuccess()) {
 			districtMoney.add(new BigDecimal(compute.getData().getActualDiscountMoney()));
 		}
 		// 实付金额超过200可以免运费

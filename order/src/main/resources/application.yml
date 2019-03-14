@@ -84,7 +84,7 @@ spring:
   application:
     name: order
   redis:
-    host: 127.0.0.1
+    host: mini7
     port: 6379
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
@@ -141,3 +141,7 @@ order:
 management:
   security:
     enabled: false
+
+snowflake:
+  datacenter: 1 # 数据中心的id
+  bizType: sharding_order_id_ # 业务类型

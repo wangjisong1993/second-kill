@@ -4,6 +4,9 @@ import io.shardingsphere.core.keygen.DefaultKeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.Resource;
+import java.net.UnknownHostException;
+
 /**
  * sharding-jdbc-id 生成
  *
@@ -13,9 +16,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShardingIdConfig {
 
+	@Resource
+	private WorkerIdConfig workerIdConfig;
+
 	@Bean
-	public DefaultKeyGenerator defaultKeyGenerator() {
-		return new DefaultKeyGenerator();
+	public DefaultKeyGenerator defaultKeyGenerator() throws UnknownHostException {
+		DefaultKeyGenerator generator = new DefaultKeyGenerator();
+		// 最大值小于1024
+		DefaultKeyGenerator.setWorkerId(workerIdConfig.getWorkerId());
+		return generator;
 	}
 
 }

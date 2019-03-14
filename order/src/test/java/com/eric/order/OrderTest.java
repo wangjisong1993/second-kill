@@ -61,4 +61,11 @@ public class OrderTest {
 		}
 	}
 
+	@Test
+	public void t3() {
+		for (int i = 0 ; i < 100; i++) {
+			System.out.println(defaultKeyGenerator.generateKey().longValue());
+		}
+	}
+
 }
