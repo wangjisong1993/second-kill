@@ -49,6 +49,22 @@ public class OrderController {
 	private ReceiveOrderService receiveOrderService;
 
 	/**
+	 * 测试分布式主键的生成
+	 *
+	 * @return
+	 */
+	@GetMapping("/generateId")
+	public String generateId() {
+		long id = createOrderService.generateId();
+		if (id % 2 == 0) {
+			System.out.println("生成的id:" + id + "是偶数");
+		} else {
+			System.out.println("生成的id:" + id + "是奇数");
+		}
+		return String.valueOf(id);
+	}
+
+	/**
 	 * 创建订单
 	 *
 	 * @param request

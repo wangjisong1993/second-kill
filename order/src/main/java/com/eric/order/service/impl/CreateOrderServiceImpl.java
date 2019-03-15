@@ -13,6 +13,7 @@ import com.eric.order.service.CreateOrderService;
 import com.eric.order.service.OrderDetailService;
 import com.eric.order.service.OrderMasterService;
 import com.eric.order.service.ProductMasterService;
+import com.eric.order.snowflake.SnowFlakeGenerator;
 import com.eric.seckill.cache.anno.ParamCheck;
 import com.eric.seckill.common.constant.ErrorCodeEnum;
 import com.eric.seckill.common.exception.CustomException;
@@ -66,6 +67,9 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	@Resource
 	private DefaultKeyGenerator defaultKeyGenerator;
 
+	@Resource
+	private SnowFlakeGenerator snowFlakeGenerator;
+
 	@Value("${order.noShippingMoney}")
 	private Integer noShippingMoney;
 
@@ -77,7 +81,7 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 	public CommonResult<CreateOrderResponse> createOrder(CreateOrderRequest request) {
 		checkSign(request, request.getSign());
 		checkUserActive(request.getUserId());
-		long orderId = defaultKeyGenerator.generateKey().longValue();
+		long orderId = generateId();
 		List<OrderDetail> details = new ArrayList<>();
 		BigDecimal orderMoney = new BigDecimal(0);
 		Integer shippingMoney = 1000;
@@ -137,6 +141,12 @@ public class CreateOrderServiceImpl extends BaseOrderService implements CreateOr
 		CreateOrderResponse response = new CreateOrderResponse();
 		dozerBeanMapper.map(orderMaster, response);
 		return CommonResult.success(response, OrderErrorCodeEnum.PLACE_ORDER_SUCCESS.getMessage());
+	}
+
+	@Override
+	public long generateId() {
+//		return defaultKeyGenerator.generateKey().longValue();
+		return snowFlakeGenerator.nextId();
 	}
 
 }

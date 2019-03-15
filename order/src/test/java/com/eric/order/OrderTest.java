@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 订单测试
@@ -43,21 +44,26 @@ public class OrderTest {
 
 	@Test
 	public void t1() {
-		List<CreateOrderDetail> details = new ArrayList<>();
-		details.add(new CreateOrderDetail().setProductCnt(100).setProductId("1"));
-		CreateOrderRequest request = new CreateOrderRequest().setDetails(details)
-				.setShippingUser("大傻逼").setUserId("d629c855-d147-4701-b0e9-383b27bb5126");
-		request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
-		System.out.println(JSON.toJSONString(request));
-		createOrderService.createOrder(request);
+		for (int i = 0; i < 100; i++) {
+			List<CreateOrderDetail> details = new ArrayList<>();
+
+			details.add(new CreateOrderDetail().setProductCnt(100).setProductId("1"));
+			CreateOrderRequest request = new CreateOrderRequest().setDetails(details)
+					.setShippingUser("大傻逼").setUserId("312523479482105856")
+					.setStoreId("1");
+			request.setSign(SignUtil.getSignForObject(request, appSecret, SignUtil.DEFAULT_EXCLUDE));
+			System.out.println(JSON.toJSONString(request));
+			createOrderService.createOrder(request);
+		}
 	}
 
 	@Test
-	public void t2() {
+	public void t2() throws InterruptedException {
 		Random random = new Random();
 		for (long i = 1; i < 100L; i++) {
-			OrderMaster t = new OrderMaster().setOrderId(defaultKeyGenerator.generateKey().longValue()).setUserId((long) (random.nextInt(100) + 1));
+			OrderMaster t = new OrderMaster().setOrderId(defaultKeyGenerator.generateKey().longValue()).setUserId(1L);
 			orderMasterService.insert(t);
+			TimeUnit.SECONDS.sleep(1);
 		}
 	}
 

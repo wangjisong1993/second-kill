@@ -17,4 +17,11 @@ public interface CreateOrderService {
 	 * @return
 	 */
 	CommonResult<CreateOrderResponse> createOrder(CreateOrderRequest request);
+
+	/**
+	 * 生成id
+	 *
+	 * @return
+	 */
+	long generateId();
 }
