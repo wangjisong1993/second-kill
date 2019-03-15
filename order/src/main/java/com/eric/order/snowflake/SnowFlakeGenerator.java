@@ -44,14 +44,15 @@ public class SnowFlakeGenerator {
 		if (timestamp < lastTimestamp) {
 			throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
 		}
-		if (lastTimestamp == timestamp) {
-			sequence = (sequence + 1) & sequenceMask;
-			if (sequence == 0) {
-				timestamp = tilNextMillis(lastTimestamp);
-			}
-		} else {
-			sequence = 0L;
-		}
+		sequence = (sequence + 1) & sequenceMask;
+//		if (lastTimestamp == timestamp) {
+//			sequence = (sequence + 1) & sequenceMask;
+//			if (sequence == 0) {
+//				timestamp = tilNextMillis(lastTimestamp);
+//			}
+//		} else {
+//			sequence = 0L;
+//		}
 		lastTimestamp = timestamp;
 		return ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift) | (workerId << workerIdShift) | sequence;
 	}

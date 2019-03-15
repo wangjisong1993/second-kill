@@ -36,11 +36,11 @@ public class WorkerIdConfig {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WorkerIdConfig.class);
 
-	public int getWorkerId() throws UnknownHostException {
+	public int getWorkerId(int size) throws UnknownHostException {
 		String ipAddress = getIPAddress();
 		Long ip = Long.parseLong(ipAddress.replaceAll("\\.", ""));
 		//这里取128,为后续机器Ip调整做准备。
-		workerId = ip.hashCode() % 1024;
+		workerId = ip.hashCode() % size;
 		try (Jedis jedis = jedisPool.getResource()) {
 			Long setnx = jedis.setnx(bizType + dataCenterId + workerId, ipAddress);
 			if (setnx > 0) {
