@@ -69,8 +69,9 @@ public class MethodCacheAspect {
 		// 根据方法获取相应的key
 		String key = methodCache.key();
 		if (StringUtils.isBlank(key)) {
-			key = getSignature(method) + HashAlgorithms.mixHash(JSON.toJSONString(list));
+			key = getSignature(method);
 		}
+		key += HashAlgorithms.mixHash(JSON.toJSONString(list));
 		Object deserialize = tryGetFromCache(key);
 		if (deserialize != null) {
 			// 防止缓存击穿, 查询不到数据时也会设置空结果的标记, 避免直接把压力落到DB上
